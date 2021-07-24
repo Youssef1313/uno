@@ -390,6 +390,20 @@ namespace SamplesApp.UITests
 
 		[Test]
 		[AutoRetry]
+		public void TextBox_Comma()
+		{
+			Run("UITests.Shared.Windows_UI_Xaml_Controls.TextBoxTests.TextBox_Comma");
+
+			const string Entered = "23,2";
+			const string Final = "23,2";
+
+			var textBox = TypeInto("TextBox1", Entered, Final);
+
+			Assert.AreEqual(Final, GetText(textBox));
+		}
+
+		[Test]
+		[AutoRetry]
 		[ActivePlatforms(Platform.iOS, Platform.Browser)] // Android is disabled https://github.com/unoplatform/uno/issues/1630
 		public void TextBox_Disable()
 		{
