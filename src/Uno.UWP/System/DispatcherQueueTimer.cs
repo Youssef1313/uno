@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 using Uno.Extensions;
 using Uno.Logging;
 using Windows.Foundation;
+using DateTimeOffset = System.DateTimeOffset;
 
 namespace Windows.System
 {
@@ -15,9 +17,10 @@ namespace Windows.System
 			public const int Running = 1;
 		}
 
+		private readonly Stopwatch _elapsed = new Stopwatch();
+
 		private int _state = States.Idle;
 		private TimeSpan _interval;
-		private DateTimeOffset _lastTick;
 
 		public event TypedEventHandler<DispatcherQueueTimer, object> Tick;
 
@@ -47,6 +50,14 @@ namespace Windows.System
 		public bool IsRepeating { get; set; } = true;
 
 		/// <summary>
+		/// Gets the elapsed time on last <see cref="Tick"/> since the last time that this timer has been [re]-started.
+		/// NOTE:
+		///		This is updated **BEFORE** the event is being raised.
+		///		It can safely be used to get the absolute time in the Tick event handler.
+		/// </summary>
+		internal TimeSpan LastTickElapsed { get; private set; }
+
+		/// <summary>
 		/// An internal state that can be used to store a value in order to prevent a closure in the click handler.
 		/// </summary>
 		internal object State { get; set; }
@@ -62,6 +73,7 @@ namespace Windows.System
 		{
 			if (Interlocked.CompareExchange(ref _state, States.Running, States.Idle) == States.Idle)
 			{
+				_elapsed.Restart();
 				StartNative(Interval);
 			}
 			else
@@ -69,6 +81,8 @@ namespace Windows.System
 				// As of 2018-04-24: "If the timer has already started, then it is restarted."
 				// https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.dispatchertimer.start#Windows_UI_Xaml_DispatcherTimer_Start
 				StopNative();
+
+				_elapsed.Restart();
 				StartNative(Interval);
 			}
 		}
@@ -92,23 +106,23 @@ namespace Windows.System
 		 */
 		private void Restart(TimeSpan interval)
 		{
-			var now = DateTimeOffset.Now;
-
 			// First be sure to stop the pending timer
 			StopNative();
 
-			var elapsed = now - _lastTick;
+			var elapsed = _elapsed.Elapsed - LastTickElapsed;
 			if (elapsed >= interval)
 			{
 				RaiseTick(isTickForRestart: true);
 
 				if (IsRunning) // be sure to not self restart if the timer was Stopped by the Tick event handler
 				{
+					_elapsed.Restart();
 					StartNative(interval);
 				}
 			}
 			else
 			{
+				_elapsed.Restart();
 				StartNative(interval - elapsed, interval);
 			}
 		}
@@ -126,7 +140,7 @@ namespace Windows.System
 
 				if (isRunning)
 				{
-					_lastTick = DateTimeOffset.UtcNow;
+					LastTickElapsed = _elapsed.Elapsed;
 
 					Tick?.Invoke(this, null);
 				}

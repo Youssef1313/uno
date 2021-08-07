@@ -256,11 +256,6 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 			return IsType(xamlType, XamlConstants.Types.Panel);
 		}
 
-		private bool IsLinearGradientBrush(XamlType xamlType)
-		{
-			return IsType(xamlType, XamlConstants.Types.LinearGradientBrush);
-		}
-
 		private bool IsFrameworkElement(XamlType xamlType)
 		{
 			return IsType(xamlType, XamlConstants.Types.FrameworkElement);
@@ -285,6 +280,12 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 		{
 			return IsType(xamlType, _appKitViewSymbol);
 		}
+
+		private bool IsDependencyObject(XamlObjectDefinition component)
+			=> GetType(component.Type).GetAllInterfaces().Any(i => SymbolEqualityComparer.Default.Equals(i, _dependencyObjectSymbol));
+
+		private bool IsUIElement(XamlObjectDefinition component)
+			=> IsType(component.Type, _uiElementSymbol);
 
 		/// <summary>
 		/// Is the type derived from the native view type on a Xamarin platform?

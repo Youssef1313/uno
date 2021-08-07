@@ -74,8 +74,6 @@ namespace Windows.UI.Xaml.Controls
 
 		protected abstract FrameworkElement AnchorControl { get; }
 
-		protected abstract Point? PositionInAnchorControl { get; }
-
 		protected override Size ArrangeOverride(Size finalSize)
 		{
 			foreach (var child in Children)
@@ -94,29 +92,35 @@ namespace Windows.UI.Xaml.Controls
 			return finalSize;
 		}
 
-		protected virtual Rect CalculateFlyoutPlacement(Size desiredSize, Size maxSize)
+		private Rect? GetAnchorRect()
 		{
+#if __ANDROID__ || __IOS__
+			if (NativeAnchor != null)
+			{
+				return NativeAnchor.GetBoundsRectRelativeTo(this);
+			}
+#endif
 			var anchor = AnchorControl;
 			if (anchor == null)
 			{
 				return default;
 			}
 
+			return anchor.GetBoundsRectRelativeTo(this);
+		}
+
+		protected virtual Rect CalculateFlyoutPlacement(Size desiredSize, Size maxSize)
+		{
+			if (!(GetAnchorRect() is { } anchorRect))
+			{
+				return default;
+			}
+
 			var visibleBounds = ApplicationView.GetForCurrentView().VisibleBounds;
-			var anchorRect = anchor.GetBoundsRectRelativeTo(this);
 
 			// Make sure the desiredSize fits in the panel
 			desiredSize.Width = Math.Min(desiredSize.Width, visibleBounds.Width);
 			desiredSize.Height = Math.Min(desiredSize.Height, visibleBounds.Height);
-
-			if (PositionInAnchorControl is Point point)
-			{
-				return new Rect(
-					x: anchorRect.X + point.X,
-					y: anchorRect.Y + point.Y,
-					width: desiredSize.Width,
-					height: desiredSize.Height);
-			}
 
 			// Try all placements...
 			var preferredPlacement = FlyoutBase.GetMajorPlacementFromPlacement(PopupPlacement);
@@ -228,11 +232,12 @@ namespace Windows.UI.Xaml.Controls
 			{
 				this.Log().LogDebug($"Calculated placement, finalRect={finalRect}");
 			}
+
 			return finalRect;
 		}
 
 		// Return true if placement is along vertical axis, false otherwise.
-		private static bool IsPlacementModeVertical(
+		protected static bool IsPlacementModeVertical(
 			FlyoutBase.MajorPlacementMode placementMode)
 		{
 			// We are safe even if placementMode is Full. because the case for placementMode is Full has already been put in another if branch in function PerformPlacement.
