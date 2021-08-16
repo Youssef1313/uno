@@ -83,6 +83,50 @@ namespace Windows.UI.Composition
 			};
 		}
 
+		private string[] WrapText(float maxLineWidth)
+		{
+			var inputLines = _owner.Text.Split(
+					new[] { "\r\n", "\r", "\n" },
+					StringSplitOptions.None
+				);
+			if (_owner.TextWrapping == Xaml.TextWrapping.NoWrap)
+			{
+				return inputLines;
+			}
+
+			var outputLines = new List<string>();
+			if (_owner.TextWrapping == Xaml.TextWrapping.WrapWholeWords)
+			{
+				foreach (var line in inputLines)
+				{
+					if (_paint.MeasureText(line) <= maxLineWidth)
+					{
+						outputLines.Add(line);
+					}
+					else
+					{
+						var currentLine = new StringBuilder();
+						foreach (var word in line.Split(' '))
+						{
+							currentLine.Append(word).Append(' ');
+							if (_paint.MeasureText(currentLine.ToString()) >= maxLineWidth)
+							{
+								outputLines.Add(currentLine.ToString());
+								currentLine.Clear();
+							}
+						}
+					}
+				}
+			}
+			else if (_owner.TextWrapping == Xaml.TextWrapping.Wrap)
+			{
+				foreach (var line in inputLines)
+				{
+
+				}
+			}
+		}
+
 		internal Size Measure(Size availableSize)
 		{
 			if (_owner.FontFamily?.Source != null)
