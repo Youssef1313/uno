@@ -39,5 +39,6 @@ jobs:
         title: 'Sync with MUX'
         commit-message: 'fix: Sync with MUX'
         base: 'master'
+        path: uno
         branch: 'sync-with-mux'
         branch-suffix: 'timestamp'
