@@ -35,6 +35,6 @@ jobs:
       uses: peter-evans/create-pull-request@v3.10.0
       with:
         title: 'Sync with MUX'
-        commit-message: 'fix: Synx with MUX'
+        commit-message: 'fix: Sync with MUX'
         base: 'master'
-
+        path: 'src' # Avoids committing MUX repository

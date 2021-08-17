@@ -43,7 +43,6 @@ namespace ActionRunner
 				}
 			}
 
-			Directory.Delete(MUXPathPrefix, recursive: true);
 			return 0;
         }
 
