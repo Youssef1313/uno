@@ -39,9 +39,11 @@ namespace ActionRunner
 				if (muxContent != unoContent)
 				{
 					GitHubLogger.LogError($"Files '{muxPath}' and '{unoPath}' are not identical!!!");
+					File.Copy(muxPath, unoPath, overwrite: true);
 				}
 			}
 
+			Directory.Delete(MUXPathPrefix, recursive: true);
 			return 0;
         }
 
