@@ -29,8 +29,11 @@ namespace ActionRunner
 				GitHubLogger.LogInformation($"Mapped '{unoPath}' to '{muxPath}'.");
 				if (!File.Exists(muxPath))
 				{
-					GitHubLogger.LogError($"Path '{muxPath}' was not found.");
+					GitHubLogger.LogWarning($"Path '{muxPath}' was not found.");
+					continue;
 				}
+
+				GitHubLogger.LogInformation($"Found '{muxPath}'.");
 			}
 
 			return 0;
