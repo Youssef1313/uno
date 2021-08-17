@@ -34,6 +34,12 @@ namespace ActionRunner
 				}
 
 				GitHubLogger.LogInformation($"Found '{muxPath}'.");
+				var muxContent = File.ReadAllText(muxPath);
+				var unoContent = File.ReadAllText(unoPath);
+				if (muxContent != unoContent)
+				{
+					GitHubLogger.LogError($"Files '{muxPath}' and '{unoPath}' are not identical!!!");
+				}
 			}
 
 			return 0;
