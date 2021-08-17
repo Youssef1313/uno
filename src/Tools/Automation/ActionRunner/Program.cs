@@ -1,16 +1,46 @@
 ﻿using System;
 using System.IO;
 
-namespace Automation.ActionRunner
+namespace ActionRunner
 {
-	class Program
+	internal class Program
     {
-		private static void Main()
+		private const string UnoPathPrefix = "src/Uno.UI/Microsoft/UI/Xaml/Controls";
+		private const string MUXPathPrefix = "microsoft-ui-xaml/dev";
+
+		private static int Main()
         {
-			if (!Directory.Exists("microsoft-ui-xaml/dev"))
+			if (!Directory.Exists(MUXPathPrefix))
 			{
-				throw new Exception("Can't find microsoft-ui-xaml/dev directory.");
+				GitHubLogger.LogError("Can't find microsoft-ui-xaml/dev directory.");
+				return 1;
 			}
+
+			string[] unoResourceFiles = CollectResourcesFromUno();
+			foreach (string unoPath in unoResourceFiles)
+			{
+				var muxPath = MapUnoToMUX(unoPath);
+				GitHubLogger.LogInformation($"Mapped '{unoPath}' to '{muxPath}'.");
+				if (!File.Exists(muxPath))
+				{
+					GitHubLogger.LogError($"Path '{muxPath}' was not found.");
+				}
+			}
+
+			return 0;
         }
+
+		private static string[] CollectResourcesFromUno()
+			=> Directory.GetFiles(UnoPathPrefix, "*.resw");
+
+		private static string MapUnoToMUX(string unoPath)
+		{
+			if (!unoPath.StartsWith(UnoPathPrefix))
+			{
+				throw new InvalidOperationException($"Expected path to start with '{UnoPathPrefix}'. Found: '{MUXPathPrefix}'.");
+			}
+
+			return Path.Combine(MUXPathPrefix, Path.GetRelativePath(relativeTo: UnoPathPrefix, unoPath));
+		}
     }
 }
