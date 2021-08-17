@@ -32,7 +32,7 @@ jobs:
         echo 'Reason: ${{ github.event.inputs.reason }}'
     - name: Sync with MUX
       id: sync-mux
-      uses: ./src/Tools/Automation
+      uses: ./uno//src/Tools/Automation
     - name: create-pull-request
       uses: peter-evans/create-pull-request@v3.10.0
       with:
