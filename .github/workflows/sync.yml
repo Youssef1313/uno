@@ -11,15 +11,18 @@ on:
         default: 'Manual run'
 
 jobs:
-  version-sweep:
+  sync-mux:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-#    - uses: actions/checkout@v2
-#      with:
-#        repository: 'microsoft/microsoft-ui-xaml'
-
+    - name: Test 1
+      run: ls
+    - uses: actions/checkout@v2
+      with:
+        repository: 'microsoft/microsoft-ui-xaml'
+    - name: Test 2
+      run: ls
     - name: 'Print manual run reason'
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: |
