@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        path: uno
     - name: Test 1
       run: ls
     - uses: actions/checkout@v2
@@ -37,6 +39,5 @@ jobs:
         title: 'Sync with MUX'
         commit-message: 'fix: Sync with MUX'
         base: 'master'
-        path: 'src' # Avoids committing MUX repository
         branch: 'sync-with-mux'
         branch-suffix: 'timestamp'

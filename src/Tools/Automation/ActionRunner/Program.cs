@@ -5,7 +5,7 @@ namespace ActionRunner
 {
 	internal class Program
     {
-		private const string UnoPathPrefix = "src/Uno.UI/Microsoft/UI/Xaml/Controls";
+		private const string UnoPathPrefix = "uno/src/Uno.UI/Microsoft/UI/Xaml/Controls";
 		private const string MUXPathPrefix = "microsoft-ui-xaml/dev";
 
 		private static int Main()
