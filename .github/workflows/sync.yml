@@ -31,3 +31,10 @@ jobs:
     - name: Sync with MUX
       id: sync-mux
       uses: ./src/Tools/Automation
+    - name: create-pull-request
+      uses: peter-evans/create-pull-request@v3.10.0
+      with:
+        title: 'Sync with MUX'
+        commit-message: 'fix: Synx with MUX'
+        base: 'master'
+
