@@ -38,3 +38,5 @@ jobs:
         commit-message: 'fix: Sync with MUX'
         base: 'master'
         path: 'src' # Avoids committing MUX repository
+        branch: 'sync-with-mux'
+        branch-suffix: 'timestamp'
