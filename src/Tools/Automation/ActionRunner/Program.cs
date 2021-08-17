@@ -37,7 +37,7 @@ namespace ActionRunner
         }
 
 		private static string[] CollectResourcesFromUno()
-			=> Directory.GetFiles(UnoPathPrefix, "*.resw");
+			=> Directory.GetFiles(UnoPathPrefix, "*.resw", SearchOption.AllDirectories);
 
 		private static string MapUnoToMUX(string unoPath)
 		{
