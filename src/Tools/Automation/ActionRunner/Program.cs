@@ -9,7 +9,7 @@ namespace Automation.ActionRunner
         {
 			if (!Directory.Exists("microsoft-ui-xaml/dev"))
 			{
-				throw new Exception("Can't find microsoft-ui-xaml/dev directory.")
+				throw new Exception("Can't find microsoft-ui-xaml/dev directory.");
 			}
         }
     }
