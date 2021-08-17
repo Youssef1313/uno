@@ -12,11 +12,17 @@ namespace ActionRunner
         {
 			if (!Directory.Exists(MUXPathPrefix))
 			{
-				GitHubLogger.LogError("Can't find microsoft-ui-xaml/dev directory.");
+				GitHubLogger.LogError($"Can't find '{MUXPathPrefix}' directory.");
 				return 1;
+			}
+			else if (!Directory.Exists(UnoPathPrefix))
+			{
+				GitHubLogger.LogError($"Can't find '{UnoPathPrefix}' directory.");
 			}
 
 			string[] unoResourceFiles = CollectResourcesFromUno();
+			GitHubLogger.LogInformation($"Found {unoResourceFiles.Length} resources files.");
+
 			foreach (string unoPath in unoResourceFiles)
 			{
 				var muxPath = MapUnoToMUX(unoPath);
