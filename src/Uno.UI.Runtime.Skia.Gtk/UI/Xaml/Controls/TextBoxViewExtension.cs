@@ -329,5 +329,7 @@ namespace Uno.UI.Runtime.Skia.GTK.Extensions.UI.Xaml.Controls
 
 			return 0;
 		}
+
+		public void SetForeground(Windows.UI.Xaml.Media.Brush brush) { } // Nothing for now.
 	}
 }
