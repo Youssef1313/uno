@@ -96,7 +96,7 @@ namespace Windows.UI.Xaml.Controls
 				typeof(string), 
 				typeof(RadioButton), 
 				new FrameworkPropertyMetadata(
-					(string)null, 
+					string.Empty, 
 					propertyChangedCallback: (s, e) => (s as RadioButton)?.OnGroupNameChanged((string)e.OldValue, (string)e.NewValue)
 				)
 			);
