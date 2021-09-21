@@ -20,6 +20,7 @@ using Uno.UI;
 using Uno.Logging;
 using Uno.Disposables;
 using Windows.Foundation;
+using Uno.Helpers;
 
 namespace Windows.UI.Xaml.Controls
 {
@@ -84,6 +85,12 @@ namespace Windows.UI.Xaml.Controls
 			{
 				CreateAndLaunchMailtoIntent(_webView.Context, uri.AbsoluteUri);
 				return;
+			}
+
+			if (uri.IsAppData())
+			{
+				var path = AppDataUriEvaluator.ToPath(uri);
+				_webView.LoadUrl(path);
 			}
 
 			//The replace is present because the uri cuts off any slashes that are more than two when it creates the uri.
@@ -156,7 +163,7 @@ namespace Windows.UI.Xaml.Controls
 
 		public IAsyncOperation<string> InvokeScriptAsync(string scriptName, IEnumerable<string> arguments) =>
 			AsyncOperation.FromTask(ct => InvokeScriptAsync(ct, scriptName, arguments?.ToArray()));
-			
+
 
 		#region Navigation History
 
@@ -307,7 +314,7 @@ namespace Windows.UI.Xaml.Controls
 #pragma warning restore 0672, 618
 
 			public override void OnPageFinished(Android.Webkit.WebView view, string url)
-			{				
+			{
 				_webView.DocumentTitle = view.Title;
 
 				_webView.OnNavigationHistoryChanged();
