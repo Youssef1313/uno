@@ -91,6 +91,7 @@ namespace Windows.UI.Xaml.Controls
 			{
 				var path = AppDataUriEvaluator.ToPath(uri);
 				_webView.LoadUrl(path);
+				return;
 			}
 
 			//The replace is present because the uri cuts off any slashes that are more than two when it creates the uri.
