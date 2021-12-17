@@ -6,14 +6,14 @@ This article discusses the particularities of the native `Frame` navigation in d
 
 It is recommended to be familiar with the concept of navigation in UWP, here are some good starting points:
 
-- [Navigation design basics for Windows apps](https://docs.microsoft.com/en-us/windows/uwp/design/basics/navigation-basics)
-- [`Windows.UI.Xaml.Controls.Frame`](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Frame)
+- [Navigation design basics for Windows apps](https://docs.microsoft.com/windows/uwp/design/basics/navigation-basics)
+- [`Windows.UI.Xaml.Controls.Frame`](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Frame)
 
 ## Native Frame Navigation
 
 On Android and iOS, there is the option to enable native frame navigation. Enabling this feature replaces the default styles and templates of the controls below:
 
-- `Windows.UI.Xaml.Controls.Frame`<superscript>*</superscript>
+- `Windows.UI.Xaml.Controls.Frame`<sup>*</sup>
 - `Windows.UI.Xaml.Controls.CommandBar`
 - `Windows.UI.Xaml.Controls.AppBarButton`
 

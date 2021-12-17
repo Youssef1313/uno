@@ -37,7 +37,7 @@ The format is the same as Windows, as follows:
 <Setter Property="FontFamily" Value="/Assets/Fonts/yourfont01.ttf#Roboto" />
 ```
 
-    or
+or
 
 ```xml
 <Setter Property="FontFamily" Value="ms-appx:///Assets/Fonts/yourfont01.ttf#Roboto" />
@@ -110,7 +110,7 @@ The format is the same as Windows, as follows:
 <Setter Property="FontFamily" Value="/Assets/Fonts/yourfont01.ttf#Roboto" />
 ```
 
-    or
+or
 
 ```xml
 <Setter Property="FontFamily" Value="ms-appx:///Assets/Fonts/yourfont01.ttf#Roboto" />

@@ -90,7 +90,7 @@ Add the following to your AndroidManifest.xml
 - Playback rate support
 - React to audio focus changes (pause/stop playback or reduce audio volume)
 - Subtitles support
-- Languages support 
+- Languages support
 - Display poster for audio media
 - Buffering of next playlist element when using MediaPlaybackList
 
