@@ -1,6 +1,7 @@
 # Uno.Material Controls: Extra setup
 
 ## Table of Contents
+
 - [ToggleSwitch](#toggleswitch)
 - [DatePicker & TimePicker](#datepickers-and-timepickers)
 
@@ -14,6 +15,7 @@ The reasoning for this is to apply the native android shadowing on the off value
     - colorControlActivated: the on color for your ToggleSwitches thumb
     - colorSwitchThumbNormal: the off color for your ToggleSwitches thumb)
     > you may add your colors here directly, for example #ffffff, or by files (see our example code below)
+
     ```xml
     <?xml version="1.0" encoding="utf-8" ?>
     <resources>
@@ -28,12 +30,15 @@ The reasoning for this is to apply the native android shadowing on the off value
 
 1. (_optional_) If your application uses Light/Dark color palettes.
     1. Inside the `Styles.xml` file change the `AppTheme`'s parent to `Theme.Compat.DayNight`:
+
         ```diff
         -<style name="AppTheme" parent="Theme.AppCompat.Light">
         +<style name="AppTheme" parent="Theme.AppCompat.DayNight">
         ```
+
     1. Create a file named `colors.xml` under `Resources/values`.
         And, include your "Light" theme colors:
+
         ```xml
         <?xml version="1.0" encoding="utf-8" ?>
         <resources>
@@ -42,9 +47,11 @@ The reasoning for this is to apply the native android shadowing on the off value
             <color name="MaterialSurfaceVariantColor">#FFFFFF</color>
         </resources>
         ```
+
     1. Create a folder named `values-night` under `Resources/`
     1. Create a file named `colors.xml` under `Resources/values-night`
         And, include your "Dark" theme colors:
+
         ```xml
         <?xml version="1.0" encoding="utf-8" ?>
         <resources>
@@ -72,6 +79,7 @@ To apply your material colors to these android components, do the following (thi
     - timePickerDialogTheme
 
     And add a new `<style>` as shown below:
+
     ```xml
     <?xml version="1.0" encoding="utf-8" ?>
     <resources>
@@ -90,24 +98,29 @@ To apply your material colors to these android components, do the following (thi
 
 2. (_optional_) If your application uses Light/Dark color palettes.
     1. Inside the `Styles.xml` file change the `AppTheme`'s parent to `Theme.Compat.DayNight`:
+
         ```diff
         -<style name="AppTheme" parent="Theme.AppCompat.Light">
         +<style name="AppTheme" parent="Theme.AppCompat.DayNight">
         ```
+
     1. Create a file named `colors.xml` under `Resources/values`.
         And, include your "Light" theme colors:
+
         ```xml
         <?xml version="1.0" encoding="utf-8" ?>
         <resources>
             <color name="MaterialPrimaryColor">#5B4CF5</color>
         </resources>
         ```
+
     1. Create a folder named `values-night` under `Resources/`
     1. Create a file named `colors.xml` under `Resources/values-night`
         And, include your "Dark" theme colors:
+
         ```xml
         <?xml version="1.0" encoding="utf-8" ?>
         <resources>
-	        <color name="MaterialPrimaryColor">#B6A8FB</color>
+         <color name="MaterialPrimaryColor">#B6A8FB</color>
         </resources>
         ```

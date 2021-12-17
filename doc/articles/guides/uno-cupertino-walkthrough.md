@@ -9,7 +9,9 @@ This guide will walk you through the necessary steps to set up and use the [`Uno
 > For a step-by-step guide to installing the prerequisites for your preferred IDE and environment, consult the [Get Started guide](../get-started.md).
 
 ## Step-by-steps
+
 ### Section 1: Setup Uno.Cupertino
+
 1. Create a new Uno Platform application, following the instructions [here](../get-started.md).
 1. Add NuGet package `Uno.Cupertino` to each of project heads by:
     > [!NOTE]
@@ -17,6 +19,7 @@ This guide will walk you through the necessary steps to set up and use the [`Uno
 
     > [!NOTE]
     > The project heads refer to the projects targeted to a specific platforms:
+    >
     > - UnoCupertinoSample.Droid
     > - UnoCupertinoSample.iOS
     > - UnoCupertinoSample.macOS
@@ -34,6 +37,7 @@ This guide will walk you through the necessary steps to set up and use the [`Uno
         The app may not compile, crash at runtime, or behave strangely as a result of this.
         solution: You need to update the version of `Uno.UI` packages for all project heads that you are using to the higher version.
         > note: By `Uno.UI` packages, it includes:
+        >
         > - Uno.UI
         > - Uno.UI.RemoteControl
         > - Uno.UI.WebAssembly
@@ -42,14 +46,17 @@ This guide will walk you through the necessary steps to set up and use the [`Uno
         > - Uno.UI.Skia.Wpf
 
     - When building the `.Droid` project, the project failed to build with:
+
         ```
         error : Could not find 1 Android X assemblies, make sure to install the following NuGet packages:
             - Xamarin.AndroidX.Lifecycle.LiveData
         You can also copy-and-paste the following snippet into your .csproj file:
             <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.1.0" />
         ```
+
         solution: Add the mentioned version of `Xamarin.AndroidX.Lifecycle.LiveData` to the `.Droid` project
 1. Add the following code inside `App.xaml`:
+
     ```xml
     <Application.Resources>
         <ResourceDictionary>
@@ -67,7 +74,9 @@ This guide will walk you through the necessary steps to set up and use the [`Uno
     ```
 
 ### Section 2: Using Uno.Cupertino library
+
 1. Let's add a few controls with the Cupertino style to `MainPage.xaml`:
+
     ```xml
     <Page x:Class="UnoCupertinoSample.MainPage"
           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -93,22 +102,25 @@ This guide will walk you through the necessary steps to set up and use the [`Uno
 
 > [!TIP]
 > You can find the style names using these methods:
-> - "Feature" section of Uno.Themes README: https://github.com/unoplatform/Uno.Themes#features
-> - Going through the source code of control styles: https://github.com/unoplatform/Uno.Themes/tree/master/src/library/Uno.Cupertino/Styles/Controls
+>
+> - "Feature" section of Uno.Themes README: <https://github.com/unoplatform/Uno.Themes#features>
+> - Going through the source code of control styles: <https://github.com/unoplatform/Uno.Themes/tree/master/src/library/Uno.Cupertino/Styles/Controls>
 > - Check out the [Uno.Gallery web app](https://gallery.platform.uno/) (Click on the `<>` button to view xaml source)
 
 ### Section 3: Overriding Color Palette
+
 1. Create the nested folders `Styles\` and then `Styles\Application\` under the `.Shared` project
 1. Add a new Resource Dictionary `ColorPaletteOverride.xaml` under `Styles\Application\`
-1. Replace the content of that `ResourceDictionary` with the source from: https://github.com/unoplatform/Uno.Themes/blob/master/src/library/Uno.Cupertino/Styles/Application/ColorPalette.xaml
+1. Replace the content of that `ResourceDictionary` with the source from: <https://github.com/unoplatform/Uno.Themes/blob/master/src/library/Uno.Cupertino/Styles/Application/ColorPalette.xaml>
 1. Make a few changes to the colors:
     > Here we are replacing the last 2 characters with 00, essentially dropping the blue-channel
+
     ```xml
     <!-- Light Theme -->
     <ResourceDictionary x:Key="Light">
         <Color x:Key="CupertinoBlueColor">#007B00</Color>
         <!-- ... -->
-	</ResourceDictionary>
+ </ResourceDictionary>
 
     <!-- Dark Theme -->
     <ResourceDictionary x:Key="Dark">
@@ -119,33 +131,36 @@ This guide will walk you through the necessary steps to set up and use the [`Uno
     <!-- ... -->
     ```
 
-1. In `App.xaml`, update the line that initializes the `CupertinoColors` to include the new palette override:    
+1. In `App.xaml`, update the line that initializes the `CupertinoColors` to include the new palette override:
+
     ```diff
     <Application.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<!-- ... -->
+  <ResourceDictionary>
+   <ResourceDictionary.MergedDictionaries>
+    <!-- ... -->
 
-	-			<CupertinoColors xmlns="using:Uno.Cupertino" />
-	+			<CupertinoColors xmlns="using:Uno.Cupertino" 
+ -   <CupertinoColors xmlns="using:Uno.Cupertino" />
+ +   <CupertinoColors xmlns="using:Uno.Cupertino" 
    +                            OverrideSource=ms-appx:///Styles/Application/ColorPaletteOverride.xaml" />
-				<CupertinoResources xmlns="using:Uno.Cupertino" />
+    <CupertinoResources xmlns="using:Uno.Cupertino" />
 
-				<!-- ... -->
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
-	</Application.Resources>
+    <!-- ... -->
+   </ResourceDictionary.MergedDictionaries>
+  </ResourceDictionary>
+ </Application.Resources>
     ```
+
 1. Run the app, you should now see the controls using your new color scheme.
 
-
 ### Section 4: Fonts
+
 By default, Uno.Cupertino will attempt to apply a FontFamily with a name of `SF Pro` to its controls. This FontFamily resource is given the key `CupertinoFontFamily`. If there is no FontFamily with name `SF Pro` loaded into your application, the default system font will be used. You can override this default behavior by providing an `OverrideSource` to the `<CupertinoFonts />` initialization within your `App.xaml`.
 
 1. Install your custom font following the steps [here](../features/custom-fonts.md)
 1. Create the nested folders `Styles\` and then `Styles\Application\` under the `.Shared` project
 1. Add a new Resource Dictionary `CupertinoFontsOverride.xaml` under `Styles\Application\`
 1. Add your custom font with the resource key `CupertinoFontFamily`:
+
     ```xml
     <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -155,7 +170,9 @@ By default, Uno.Cupertino will attempt to apply a FontFamily with a name of `SF 
         
     </ResourceDictionary>
     ```
+
 1. In `App.xaml`, add the line that initializes the `CupertinoFonts` to include the new font override:
+
     ```xml
     <Application.Resources>
     <ResourceDictionary>
@@ -174,17 +191,18 @@ By default, Uno.Cupertino will attempt to apply a FontFamily with a name of `SF 
     </ResourceDictionary>
     </Application.Resources>
     ```
-1. Run the app, you should now see the controls using your new FontFamily.
 
+1. Run the app, you should now see the controls using your new FontFamily.
 
 ## Get the complete code
 
 See the completed sample on GitHub: [UnoCupertinoSample](https://github.com/unoplatform/Uno.Samples/tree/master/UI/UnoCupertinoSample)
 
 ## Additional Resources
+
 - [Uno.Cupertino](../features/uno-cupertino.md) overview
-- Uno.Cupertino library repository: https://github.com/unoplatform/Uno.Themes
-- Cupertino colors: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color/
+- Uno.Cupertino library repository: <https://github.com/unoplatform/Uno.Themes>
+- Cupertino colors: <https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color/>
 
 <br>
 

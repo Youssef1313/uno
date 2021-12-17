@@ -82,7 +82,6 @@ In this task you will create a simple Single Page App with the Uno Platform. Thi
 
     ![Install System.Text.Json nuget package](Assets/how-to-webservice/json-install.png)
 
-
 1. To workaround a Visual studio issue regarding the XAML editor, you'll need to close any opened file in the editor, then close the solution or Visual Studio, then re-open it.
 
 1. To test the UWP version of the application, in the **Solution Explorer**,  right-click the **TheCatApiClient.UWP** project and click **Set as Startup Project**
@@ -762,7 +761,7 @@ In this task you will build the view-model that implements a simple breed search
 
     The final variable, **_breedSearchApi**, holds a reference to an instance of the **BreedSearchApi** you created earlier.
 
-    > [!TIP] 
+    > [!TIP]
     > You can learn more about **ObservableCollection** and its events here - [ObservableCollection<T> Class](https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=netcore-3.1)
 
 1. To add the properties that will be used in XAML bindings, locate the comment **// Insert properties below here** and replace it with the following code:
@@ -1677,7 +1676,6 @@ In this task, you will add the favorites capability to the Main view-model.
     There is a bit more going on in this method, but it follows a familiar pattern. If we have a **selectedBreed**, we set the **IsBusy** property and then use the **ImageApi** to retrieve a collection of images for the breed. If we find any (some breeds don't have images... you would show a message in a production app), we just grab the first image that is returned. We then call the **FavoritesApi** to add the image. We then check the **response** value and, if successful, use the ID that was returned via the **response** to retrieve the new **Favorite**. We then insert the favorite at the beginning of our **Favorites** collection.
 
     You should notice the use of the `.ConfigureAwait(false)` code throughout to ensure the UI is not blocked. You will also notice the use of the **DispatchAsync** helper to ensure the **CollectionChanged** event raised by the insertion is raised on the UI thread so any bound control updates correctly.
-
 
 1. Finally, to add support for deleting a favorite, locate the **// Insert DeleteFavorite below here** comment and replace it with the following code:
 

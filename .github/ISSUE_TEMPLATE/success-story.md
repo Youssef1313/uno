@@ -13,4 +13,3 @@ https://github.com/nventive/Uno/issues/18#issuecomment-494887105
 If you are feeling extra generous, how about authoring up a blog post and then letting us know about it so that we can retweet it?
 
 Thank-you!
-

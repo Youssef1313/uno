@@ -3,7 +3,7 @@
 ## `ContactPicker`
 
 The `ContactPicker` class allows picking contacts from the OS contact store.
- 
+
 To check whether the class is supported on the target platform, use `IsSupportedAsync()` method:
 
 ```

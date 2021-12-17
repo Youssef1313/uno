@@ -3,14 +3,14 @@
 ## Development Flow
 
 - Uno Platform's UWP XAML
-    - **Windows-first development**
-    - **Faster compilation** for most of the development cycle, including UI code. iOS, Android, WebAssembly, macOS and Linux can be tested for platform-specific features.
-    - Ability to develop responsive layout in Windowed mode using Windows 10.
-    - Allows for **edit and continue** support from VS2017+
-    - Allows for **UI and Non-UI code edit and continue** support
+  - **Windows-first development**
+  - **Faster compilation** for most of the development cycle, including UI code. iOS, Android, WebAssembly, macOS and Linux can be tested for platform-specific features.
+  - Ability to develop responsive layout in Windowed mode using Windows 10.
+  - Allows for **edit and continue** support from VS2017+
+  - Allows for **UI and Non-UI code edit and continue** support
 - Conditional platform features access
-    - All XAML controls have **access to native properties** through conditional XAML
-    - Ability to **add native controls in XAML**
+  - All XAML controls have **access to native properties** through conditional XAML
+  - Ability to **add native controls in XAML**
 - Full UWP availability at compile time
   - Allows for the **compilation of open-source libraries** that depend only on UWP and multi-targeted nuget packages
     - **XamlBehaviors library** support
@@ -46,6 +46,7 @@
 - RelativeSource.Self
 
 ### Design Fidelity
+
 - Text Inlines Binding
 - Text Independent trimming and wrapping
 - Text Character Spacing
@@ -156,6 +157,7 @@
 - ScrollBar
 
 ## WinUI Specific Controls (Pre 3.0)
+
 - [NumberBox](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.numberbox?view=winui-2.3)
 - [TwoPaneView](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.twopaneview?view=winui-2.3)
 

@@ -21,7 +21,7 @@ In some cases, Uno's existing API is close to UWP, but not identical. (Hypotheti
 
 In these cases, we do want to align Uno with UWP, even at the expense of a breaking change. However, we tend to be more careful with when we merge these changes, compared to other bugfixes. We prefer to 'batch' many such breaking changes into a single stable release cycle, rather than wear out consumers' patience with a steady trickle of breaking changes each release.
 
-The best way to proceed is to create an issue if one doesn't exist already, and open a discussion with the core team about the change in question, so we can jointly work out how best to manage it. 
+The best way to proceed is to create an issue if one doesn't exist already, and open a discussion with the core team about the change in question, so we can jointly work out how best to manage it.
 
 Note that some cases may be sufficiently benign that the breaking change is acceptable in a normal release cycle. (For example, removing a public constructor for an obscure `EventArgs` subclass that would presumably never be created from user code anyway.)
 
@@ -46,373 +46,562 @@ Below is a comparison report for Uno.UI **1.45.0** with Uno.UI **1.46.0-PullRequ
 You can find the report within the `NuGetPackages.zip` archive on the build server and attached to the pull-request job. The report uses this convention: `ApiDiff.1.46.0-PullRequest1300.2330.md`
 
 Key things to pay attention to:
+
 - the report is for each TFM and the assemblies for that TFM.
 - breaking changes which have been blessed have been ~~striked out~~.
 - `Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()` is the breaking change which has not been blessed and thus the process failed the build.
 
 ## MonoAndroid80 Platform
+
 #### Uno.dll
+
 ##### 0 missing types:
+
 ##### 8 missing or changed method in existing types:
+
 - `Windows.Phone.Devices.Notification.VibrationDevice`
-	* ~~``System.Void Windows.Phone.Devices.Notification.VibrationDevice..ctor()``~~
+  * ~~``System.Void Windows.Phone.Devices.Notification.VibrationDevice..ctor()``~~
 - `Windows.Devices.Sensors.Accelerometer`
-	* ~~``System.Void Windows.Devices.Sensors.Accelerometer..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.Accelerometer..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerReading..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerShakenEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerShakenEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerShakenEventArgs..ctor()``~~
 - `Windows.Devices.Sensors.Barometer`
-	* ~~``System.Void Windows.Devices.Sensors.Barometer..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.Barometer..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Foundation.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.UI.BindingHelper.Android.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.UI.dll
+
 ##### 0 missing types:
+
 ##### 15 missing or changed method in existing types:
+
 - `Windows.UI.Xaml.Controls.ComboBoxItem`
-	* ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
+  * ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextChangedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.Popup`
-	* ~~``Android.Views.View Windows.UI.Xaml.Controls.Popup.get_Anchor()``~~
-	* ~~``System.Void Windows.UI.Xaml.Controls.Popup.set_Anchor(Android.Views.View value)``~~
+  * ~~``Android.Views.View Windows.UI.Xaml.Controls.Popup.get_Anchor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.Popup.set_Anchor(Android.Views.View value)``~~
 - `Windows.UI.Xaml.Controls.TextBoxView`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView..ctor()``~~
-	* ~~``System.String Windows.UI.Xaml.Controls.TextBoxView.get_BindableText()``~~
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView.set_BindableText(System.String value)``~~
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView.NotifyTextChanged()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView..ctor()``~~
+  * ~~``System.String Windows.UI.Xaml.Controls.TextBoxView.get_BindableText()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView.set_BindableText(System.String value)``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView.NotifyTextChanged()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 3 missing or changed properties in existing types:
+
 - `Windows.UI.Xaml.ResourceDictionary`
-	* ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
+  * ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
 - `Windows.UI.Xaml.Controls.Popup`
-	* ~~``Android.Views.View Windows.UI.Xaml.Controls.Popup::Anchor()``~~
+  * ~~``Android.Views.View Windows.UI.Xaml.Controls.Popup::Anchor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxView`
-	* ~~``System.String Windows.UI.Xaml.Controls.TextBoxView::BindableText()``~~
+  * ~~``System.String Windows.UI.Xaml.Controls.TextBoxView::BindableText()``~~
+
 #### Uno.UI.Toolkit.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Xaml.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 ## MonoAndroid90 Platform
+
 #### Uno.dll
+
 ##### 0 missing types:
+
 ##### 8 missing or changed method in existing types:
+
 - `Windows.Phone.Devices.Notification.VibrationDevice`
-	* ~~``System.Void Windows.Phone.Devices.Notification.VibrationDevice..ctor()``~~
+  * ~~``System.Void Windows.Phone.Devices.Notification.VibrationDevice..ctor()``~~
 - `Windows.Devices.Sensors.Accelerometer`
-	* ~~``System.Void Windows.Devices.Sensors.Accelerometer..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.Accelerometer..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerReading..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerShakenEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerShakenEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerShakenEventArgs..ctor()``~~
 - `Windows.Devices.Sensors.Barometer`
-	* ~~``System.Void Windows.Devices.Sensors.Barometer..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.Barometer..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Foundation.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.UI.BindingHelper.Android.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.UI.dll
+
 ##### 0 missing types:
+
 ##### 15 missing or changed method in existing types:
+
 - `Windows.UI.Xaml.Controls.ComboBoxItem`
-	* ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
+  * ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextChangedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.Popup`
-	* ~~``Android.Views.View Windows.UI.Xaml.Controls.Popup.get_Anchor()``~~
-	* ~~``System.Void Windows.UI.Xaml.Controls.Popup.set_Anchor(Android.Views.View value)``~~
+  * ~~``Android.Views.View Windows.UI.Xaml.Controls.Popup.get_Anchor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.Popup.set_Anchor(Android.Views.View value)``~~
 - `Windows.UI.Xaml.Controls.TextBoxView`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView..ctor()``~~
-	* ~~``System.String Windows.UI.Xaml.Controls.TextBoxView.get_BindableText()``~~
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView.set_BindableText(System.String value)``~~
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView.NotifyTextChanged()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView..ctor()``~~
+  * ~~``System.String Windows.UI.Xaml.Controls.TextBoxView.get_BindableText()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView.set_BindableText(System.String value)``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxView.NotifyTextChanged()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 3 missing or changed properties in existing types:
+
 - `Windows.UI.Xaml.ResourceDictionary`
-	* ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
+  * ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
 - `Windows.UI.Xaml.Controls.Popup`
-	* ~~``Android.Views.View Windows.UI.Xaml.Controls.Popup::Anchor()``~~
+  * ~~``Android.Views.View Windows.UI.Xaml.Controls.Popup::Anchor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxView`
-	* ~~``System.String Windows.UI.Xaml.Controls.TextBoxView::BindableText()``~~
+  * ~~``System.String Windows.UI.Xaml.Controls.TextBoxView::BindableText()``~~
+
 #### Uno.UI.Toolkit.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Xaml.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 ## netstandard2.0 Platform
+
 #### Uno.dll
+
 ##### 0 missing types:
+
 ##### 7 missing or changed method in existing types:
+
 - `Windows.Phone.Devices.Notification.VibrationDevice`
-	* ~~``System.Void Windows.Phone.Devices.Notification.VibrationDevice..ctor()``~~
+  * ~~``System.Void Windows.Phone.Devices.Notification.VibrationDevice..ctor()``~~
 - `Windows.Devices.Sensors.Accelerometer`
-	* ~~``System.Void Windows.Devices.Sensors.Accelerometer..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.Accelerometer..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerReading..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerShakenEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerShakenEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerShakenEventArgs..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Foundation.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.UI.dll
+
 ##### 0 missing types:
+
 ##### 9 missing or changed method in existing types:
+
 - `Windows.UI.Xaml.Controls.ComboBoxItem`
-	* ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
+  * ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextChangedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 1 missing or changed properties in existing types:
+
 - `Windows.UI.Xaml.ResourceDictionary`
-	* ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
+  * ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
+
 #### Uno.UI.Toolkit.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.UI.Wasm.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Xaml.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 ## UAP Platform
+
 #### Uno.UI.Toolkit.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 ## xamarinios10 Platform
+
 #### Uno.dll
+
 ##### 0 missing types:
+
 ##### 8 missing or changed method in existing types:
+
 - `Windows.Phone.Devices.Notification.VibrationDevice`
-	* ~~``System.Void Windows.Phone.Devices.Notification.VibrationDevice..ctor()``~~
+  * ~~``System.Void Windows.Phone.Devices.Notification.VibrationDevice..ctor()``~~
 - `Windows.Devices.Sensors.Accelerometer`
-	* ~~``System.Void Windows.Devices.Sensors.Accelerometer..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.Accelerometer..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerReading..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs..ctor()``~~
 - `Windows.Devices.Sensors.AccelerometerShakenEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.AccelerometerShakenEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.AccelerometerShakenEventArgs..ctor()``~~
 - `Windows.Devices.Sensors.Barometer`
-	* ~~``System.Void Windows.Devices.Sensors.Barometer..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.Barometer..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Foundation.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.UI.dll
+
 ##### 0 missing types:
+
 ##### 10 missing or changed method in existing types:
+
 - `Windows.UI.Xaml.Controls.ComboBoxItem`
-	* ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
+  * ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextChangedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.VirtualizingPanelLayout`
-	* ~~``System.Void Windows.UI.Xaml.Controls.VirtualizingPanelLayout.UpdateLayoutAttributesForItem(UIKit.UICollectionViewLayoutAttributes layoutAttributes)``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.VirtualizingPanelLayout.UpdateLayoutAttributesForItem(UIKit.UICollectionViewLayoutAttributes layoutAttributes)``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 1 missing or changed properties in existing types:
+
 - `Windows.UI.Xaml.ResourceDictionary`
-	* ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
+  * ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
+
 #### Uno.UI.Toolkit.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Xaml.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 ## xamarinmac20 Platform
+
 #### Uno.dll
+
 ##### 0 missing types:
+
 ##### 2 missing or changed method in existing types:
+
 - `Windows.Devices.Sensors.BarometerReading`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReading..ctor()``~~
 - `Windows.Devices.Sensors.BarometerReadingChangedEventArgs`
-	* ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.Devices.Sensors.BarometerReadingChangedEventArgs..ctor()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.Foundation.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:
+
 #### Uno.UI.dll
+
 ##### 0 missing types:
+
 ##### 9 missing or changed method in existing types:
+
 - `Windows.UI.Xaml.Controls.ComboBoxItem`
-	* ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
+  * ~~``Windows.UI.Xaml.Controls.Popup Windows.UI.Xaml.Controls.ComboBoxItem.GetPopupControl()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogButtonClickEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosedEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingDeferral`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingDeferral..ctor()``~~
 - `Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.ContentDialogClosingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxBeforeTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextBoxTextChangingEventArgs..ctor()``~~
 - `Windows.UI.Xaml.Controls.TextChangedEventArgs`
-	* ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
+  * ~~``System.Void Windows.UI.Xaml.Controls.TextChangedEventArgs..ctor()``~~
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 1 missing or changed properties in existing types:
+
 - `Windows.UI.Xaml.ResourceDictionary`
-	* ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
+  * ``Windows.UI.Xaml.ResourceDictionary[] Windows.UI.Xaml.ResourceDictionary::MergedDictionaries()``
+
 #### Uno.Xaml.dll
+
 ##### 0 missing types:
+
 ##### 0 missing or changed method in existing types:
+
 ##### 0 missing or changed events in existing types:
+
 ##### 0 missing or changed fields in existing types:
+
 ##### 0 missing or changed properties in existing types:

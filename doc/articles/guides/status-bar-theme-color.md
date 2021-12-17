@@ -3,6 +3,7 @@
 The [`UISettings.ColorValuesChanged` event](https://docs.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.uisettings.colorvalueschanged) can be used to listen for notifications when dark mode is enabled or disabled at the system level.
 
 ## Example
+
 The complete sample code can be found here: [StatusBarThemeColor](https://github.com/unoplatform/Uno.Samples/tree/master/UI/StatusBarThemeColor)
 
 ## Step-by-step instructions
@@ -10,6 +11,7 @@ The complete sample code can be found here: [StatusBarThemeColor](https://github
 1. Create a new Uno Platform application, following the instructions [here](../get-started.md).
 2. In `MainPage.xaml`, add a `<CommandBar>`:
     > On iOS, the status bar color cannot be set directly, so it is done via through a `CommandBar` placed in the page. You could also use any XAML element like `<Grid>` or `<Border>` to achieve a similar effect, if your application doesn't use navigation or doesn't use native navigation. This is because the page content can go under the status bar. In fact, you usually have to add padding to avoid that (see next step).
+
     ```xml
     <Grid>
         <Grid.RowDefinitions>
@@ -28,7 +30,9 @@ The complete sample code can be found here: [StatusBarThemeColor](https://github
         </StackPanel>
     </Grid>
     ```
+
 3. Add a [`VisibleBoundsPadding.PaddingMask`](../features/VisibleBoundsPadding.md) to the root `<Grid>` to prevent the content being partially covered by the status and command bars:
+
     ```xml
     <Page ...
           xmlns:toolkit="using:Uno.UI.Toolkit"
@@ -36,7 +40,9 @@ The complete sample code can be found here: [StatusBarThemeColor](https://github
 
         <Grid toolkit:VisibleBoundsPadding.PaddingMask="Top">
     ```
+
 4. In `MainPage.xaml.cs`, expose the `MyCommandBar` which will be referenced in a later step:
+
     ```cs
     public static MainPage Instance { get; private set; }
 
@@ -51,6 +57,7 @@ The complete sample code can be found here: [StatusBarThemeColor](https://github
     ```
 
 5. In `App.xaml.cs`, enable the native frame navigation to use the native style for `CommandBar`, instead of the UWP style:
+
     ```cs
     public App()
     {
@@ -68,6 +75,7 @@ The complete sample code can be found here: [StatusBarThemeColor](https://github
 
 6. Subscribe to the `UISettings.ColorValuesChanged` event from `App.xaml.cs`:
     > Note that the instance of `UISettings` is kept to prevent it from being disposed when going out of scope, which would otherwise dispose the event subscription.
+
     ```cs
     public sealed partial class App : Application
     {
@@ -113,6 +121,7 @@ The complete sample code can be found here: [StatusBarThemeColor](https://github
     ```
 
 7. Implement the `UpdateStatusBar()` method:
+
     ```cs
     private void UpdateStatusBar()
     {
@@ -150,5 +159,6 @@ The complete sample code can be found here: [StatusBarThemeColor](https://github
 ## Concluding remarks
 
 This is just one way to show how it could be done. Alternatively, depending on the application, the following options can also be considered:
+
 - [Attached Property](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/attached-properties-overview) on the `CommandBar` (when multiple pages are used)
 - Xaml Grid/Border/Image that goes under the StatusBar (with `WindowManagerFlags.TranslucentStatus` on Android, no additional change on iOS)

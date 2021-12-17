@@ -9,6 +9,7 @@ As mentioned earlier, the server-side of this service is out-of-scope for the ar
 * **/identity/getusers** - GET
   * No parameters
   * Returns a JSON array containing a list of user names:
+
     ```json
     [
         {
@@ -25,24 +26,30 @@ As mentioned earlier, the server-side of this service is out-of-scope for the ar
         }
     ]
     ```
+
 * **/identity/validateuser** - POST
   * Request body:
+
     ```json
     {
         "userName": "string",
         "password": "string"
     }
     ```
+
   * Returns OK
     * "true" or "false"
 * **/identity/getauthenticateduser** - POST
   * Request body:
+
     ```json
     {
         "userName": "string"
     }
     ```
+
   * Return OK:
+
     ```json
     {
         "Id": int,
@@ -60,6 +67,7 @@ As mentioned earlier, the server-side of this service is out-of-scope for the ar
 
 > [!NOTE]
 > The implementation of the identity client API will be based heavily on the code discussed in the article below:
+>
 > * [How to consume a webservice](https://platform.uno/docs/articles/howto-consume-webservices.html)
 
 ## Adding a WebApiBase class
@@ -74,6 +82,7 @@ This class is an abstract base class that every web service API class inherits f
 
     > [!TIP]
     > The **WebApiBase** source can be found below:
+    >
     > * [WebApiBase.cs](https://github.com/unoplatform/Uno.Samples/blob/master/UI/TheCatApiClient/TheCatApiClient/TheCatApiClient.Shared/WebServices/WebApiBase.cs)
 
 ## Add a User class
@@ -281,7 +290,7 @@ This service will not only provide the means to login and logout a user, it will
     }
     ```
 
-1.  To ensure the service has a private constructor, add the following:
+1. To ensure the service has a private constructor, add the following:
 
     ```csharp
     private AuthenticationService()

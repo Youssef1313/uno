@@ -3,6 +3,7 @@
 This guide will walk you through the set-up process for building WebAssembly apps with Uno under Windows, Linux, or macOS.
 
 See these sections for information about using Uno Platform with:
+
 - [Codespaces](features/working-with-codespaces.md)
 - [Gitpod](features/working-with-gitpod.md)
 
@@ -10,7 +11,7 @@ See these sections for information about using Uno Platform with:
 
 * [**Visual Studio Code**](https://code.visualstudio.com/)
 * **.NET SDK**
-    * [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 6.0 (SDK 6.0.100)** or later)
+  * [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 6.0 (SDK 6.0.100)** or later)
     > Use `dotnet --version` from the terminal to get the version installed.
 * The [Uno Platform Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=unoplatform.vscode) Extension
 
@@ -71,24 +72,30 @@ This will create a solution that only contains the WebAssembly and Skia+GTK plat
 ## Run and Debug application
 
 ### WebAssembly
+
 1. In the debugger section of the Code activity bar, select `Debug (Chrome, WebAssembly)`
 1. Press `F5` to start the debugging session
 1. Place a breakpoint inside the `OnClick` method
 1. Click the button in the app, and the breakpoint will hit
 
 ### Skia GTK
+
 1. In the debugger section of the Code activity bar, select `Skia.GTK (Debug)`
 1. Press `F5` to start the debugging session
 1. Place a breakpoint inside the `OnClick` method
 1. Click the button in the app, and the breakpoint will hit
 
 Note that C# Hot Reload is not available when running with the debugger. In order to use C# Hot Reload, run the app using the following:
+
 - On Windows, type the following:
+
     ```
     $env:DOTNET_MODIFIABLE_ASSEMBLIES="debug"
     dotnet run
     ```
+
 - On Linux or macOS:
+
     ```
     export DOTNET_MODIFIABLE_ASSEMBLIES=debug
     dotnet run
@@ -97,6 +104,7 @@ Note that C# Hot Reload is not available when running with the debugger. In orde
 ## Using code snippets
 
 ### Adding a new Page
+
     1. In the MyApp.Shared folder, create a new file named `Page2.xaml`
     2. Type `page` then press the `tab` key to add the page markup
     3. Adjust the name and namespaces as needed
@@ -105,6 +113,7 @@ Note that C# Hot Reload is not available when running with the debugger. In orde
     6. Adjust the name and namespaces as needed
 
 ### Adding a new UserControl
+
     1. In the MyApp.Shared folder, create a new file named `UserControl1.xaml`
     2. Type `usercontrol` then press they `tab` key to add the page markup
     3. Adjust the name and namespaces as needed
@@ -113,10 +122,12 @@ Note that C# Hot Reload is not available when running with the debugger. In orde
     6. Adjust the name and namespaces as needed
 
 ### Adding a new ResourceDictionary
+
     1. In the MyApp.Shared folder, create a new file named `ResourceDictionary1.xaml`
     2. Type `resourcedic` then press they `tab` key to add the page markup
 
 ### Other snippets
+
     * `rd` creates a new `RowDefinition`
     * `cd` creates a new `ColumnDefinition`
     * `tag` creates a new XAML tag
@@ -132,6 +143,7 @@ An existing application needs additional changes to be debugged properly.
 3. Inside this folder, create a file named `tasks.json` and copy the [contents of this file](https://github.com/unoplatform/uno/blob/5b9d4b725459dbc4d684f47db1485d84579b443b/src/SolutionTemplate/Uno.ProjectTemplates.Dotnet/content/unoapp-net6/.vscode/tasks.json).
 
 ### Known limitations for Code support
+
 - C# Debugging is not supported when running in a remote Linux Container, Code Spaces or GitPod.
 - C# Hot Reload for WebAssembly only supports modifying method bodies. Any other modification is rejected by the compiler.
 - C# Hot Reload for Skia supports modifying method bodies, adding properties, adding methods, adding classes. A more accurate list is provided here in Microsoft's documentation.
@@ -141,6 +153,7 @@ An existing application needs additional changes to be debugged properly.
 If you're not sure whether your environment is correctly configured for Uno Platform development, running the [`uno-check` command-line tool](uno-check.md) should be your first step.
 
 The Uno Platform extension provides multiple output windows to troubleshoot its activities:
+
 - **Uno Platform**, which indicates general messages about the extension
 - **Uno Platform - Hot Reload**, which provides activity messages about the Hot Reload feature
 - **Uno Platform - XAML**, which provides activity messages about the XAML Code Completion feature
@@ -149,4 +162,4 @@ If the extension is not behaving properly, try using the `Developer: Reload Wind
 
 ## Getting Help
 
-If you continue experiencing issues with Visual Studio and Uno Platform, please visit our [Discord](https://www.platform.uno/discord) - #uno-platform channel or [StackOverflow](https://stackoverflow.com/questions/tagged/uno-platform) where our engineering team and community will be able to help you. 
+If you continue experiencing issues with Visual Studio and Uno Platform, please visit our [Discord](https://www.platform.uno/discord) - #uno-platform channel or [StackOverflow](https://stackoverflow.com/questions/tagged/uno-platform) where our engineering team and community will be able to help you.

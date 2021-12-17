@@ -5,6 +5,7 @@ By default, controls in Uno Platform applications are rendered exactly the same 
 ## About native control styles
 
 For supported controls, two pre-defined styles are provided:
+
 * NativeDefault[Control] which is customized to match the UI guidelines of the target platform.
 * XamlDefault[Control] which are consistent in look and behavior across platforms.
 
@@ -17,7 +18,7 @@ The full set of native control styles can be found in [Generic.Native.xaml](http
 > [!NOTE]
 > Third-party libraries can define native variants of default styles for custom controls, using the `xamarin:IsNativeStyle="True"` tag in XAML. These will be used if the consuming application is configured to use native styles.
 
-On WASM, the `NativeDefault[Control]` styles are currently only aliases to the `XamlDefault[Control]`, for code compatibility with other platforms. 
+On WASM, the `NativeDefault[Control]` styles are currently only aliases to the `XamlDefault[Control]`, for code compatibility with other platforms.
 
 ## Enabling native control styles globally
 
@@ -38,32 +39,31 @@ Since there are several controls that participate in navigation (`Frame`, `Comma
 This sample shows how you'd enable native styles globally for your whole app:
 
 ```csharp
-	public sealed partial class App : Application
-	{
-		/// <summary>
-		/// Initializes the singleton application object.  This is the first line of authored code
-		/// executed, and as such is the logical equivalent of main() or WinMain().
-		/// </summary>
-		public App()
-		{
-			ConfigureFilters(global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
+ public sealed partial class App : Application
+ {
+  /// <summary>
+  /// Initializes the singleton application object.  This is the first line of authored code
+  /// executed, and as such is the logical equivalent of main() or WinMain().
+  /// </summary>
+  public App()
+  {
+   ConfigureFilters(global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
 
-			this.InitializeComponent();
-			this.Suspending += OnSuspending;
+   this.InitializeComponent();
+   this.Suspending += OnSuspending;
 
 #if !NETFX_CORE
-			// Enable native styles on Android and iOS for all supported controls
-			Uno.UI.FeatureConfiguration.Style.UseUWPDefaultStyles = false;
+   // Enable native styles on Android and iOS for all supported controls
+   Uno.UI.FeatureConfiguration.Style.UseUWPDefaultStyles = false;
 
-			// Enable native styling only for ToggleSwitch instances
-			// Uno.UI.FeatureConfiguration.Style.UseUWPDefaultStylesOverride[typeof(ToggleSwitch)] = false;
+   // Enable native styling only for ToggleSwitch instances
+   // Uno.UI.FeatureConfiguration.Style.UseUWPDefaultStylesOverride[typeof(ToggleSwitch)] = false;
 
-			// Enable native frame navigation on Android and iOS
-			// Uno.UI.FeatureConfiguration.Style.ConfigureNativeFrameNavigation();
+   // Enable native frame navigation on Android and iOS
+   // Uno.UI.FeatureConfiguration.Style.ConfigureNativeFrameNavigation();
 #endif
-		}
+  }
 ```
-
 
 ## Enable native styling on a single control
 
@@ -73,21 +73,21 @@ For example, to use native styling on a single `CheckBox` in XAML:
 
 ```xml
 <Page x:Class="MyApp.MainPage"
-	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:local="using:MyApp"
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:not_win="http://uno.ui/not_win"
-	  mc:Ignorable="d not_win"
-	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:local="using:MyApp"
+   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:not_win="http://uno.ui/not_win"
+   mc:Ignorable="d not_win"
+   Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-	<Grid>
-		<!--This check box will use a platform-native style on Android and iOS-->
-		<CheckBox IsChecked="{Binding OptionSelected}"
-				  not_win:Style="{StaticResource NativeDefaultCheckBox}" />
-	</Grid>
+ <Grid>
+  <!--This check box will use a platform-native style on Android and iOS-->
+  <CheckBox IsChecked="{Binding OptionSelected}"
+      not_win:Style="{StaticResource NativeDefaultCheckBox}" />
+ </Grid>
 </Page>
 ```
 

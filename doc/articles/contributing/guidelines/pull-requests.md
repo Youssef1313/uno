@@ -1,6 +1,6 @@
 # Guidelines for pull-requests
 
-If you don't know what a pull request is read this article: https://help.github.com/articles/using-pull-requests. 
+If you don't know what a pull request is read this article: <https://help.github.com/articles/using-pull-requests>.
 
 ## Creating a PR
 
@@ -13,19 +13,27 @@ Pull requests should all be made to the **master** branch.
 ### Updating your branch on top of the latest of the default branch
 
 Make sure to rebase your work on the latest default branch of the Uno repository, when working on a fork:
+
 - Add the official uno repository to your remotes:
+
 ```bash
 git remote add uno-origin https://github.com/unoplatform/uno
 ```
+
 - Fetch the official repository
+
 ```bash
 git fetch uno-origin
 ```
+
 - Rebase your work on the default branch
+
 ```bash
 git rebase uno-origin/master
 ```
+
 - Then push your branch to your fork:
+
 ```bash
 git push -f
 ```
@@ -35,14 +43,17 @@ All commits **must** be in the [Conventional Commits format](../../uno-developme
 We use this convention to automatically generate release notes for new releases, and means that your commit messages will appear untouched in the release notes.
 
 Make sure that:
+
 - You create only the least possible commits, where each commit details a specific added feature or bug fix.
 - Try using the category feature as frequently as possible. (e.g. `feat(NavigationView): Updated the main panel`, or `fix(ProgressRing): Fix visibility`)
 - Squash your commits, using interactive rebase:
+
    ```
    git fetch uno-origin
    git rebase uno-origin/master -i # Rebase your branch on top of the latest master, squash using fixups
    git push -f
    ```
+
 - If you're fixing a regression introduced by a PR that has not been released in a stable version yet, use the `reg` category. Example: `fix(reg): Fixing issue of previous PR`.
 
 **Commit/Pull Request Format**
@@ -67,6 +78,7 @@ The history should be squashed to meaningful commits, and the branch should be r
 We typically don't merge pull-requests by hand, instead we rely on automation and a process of the pull-request initiator adding the `ready-for-merge` label. If the person who initiated the pull-request does not have permission to add a label then the reviewers can add it when the contribution is ready to ship:
 
 The automation logic is as follows:
+
 * When a pull-request to `master`
 * The `continuous integration tests` passes
 * Has `2 or more approvals`
@@ -80,4 +92,3 @@ This logic is defined in [this file](https://github.com/unoplatform/Uno/blob/mas
 Once a pull-request meets the above criteria Mergify will automatically update the pull-request with the contents of master. If CI passes, then Mergify will merge that pull-request. If multiple pull-requests are mergeable open then Mergify will queue the mergeable pull requests and update them one at a time serially, merging if CI passes.
 
 If the branch is within the `unoplatform/uno` repository then the branch will be automatically deleted after merging by the [delete-merged-branch](https://github.com/apps/delete-merged-branch) robot.
-

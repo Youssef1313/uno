@@ -35,16 +35,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
-
 AcrylicBrush implementation on Android
 --------------------------------------
 
-The AcrylicBrush implementation on Android is based on two open-source projects: 
+The AcrylicBrush implementation on Android is based on two open-source projects:
 
 **Sharpnado.MaterialFrame**
 
-https://github.com/roubachof/Sharpnado.MaterialFrame/
+<https://github.com/roubachof/Sharpnado.MaterialFrame/>
 
 MIT License
 
@@ -70,15 +68,15 @@ SOFTWARE.
 
 **RealtimeBlurView**
 
-https://github.com/mmin18/RealtimeBlurView
+<https://github.com/mmin18/RealtimeBlurView>
 
-Copyright 2016 Tu Yimin (http://github.com/mmin18)
+Copyright 2016 Tu Yimin (<http://github.com/mmin18>)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+   <http://www.apache.org/licenses/LICENSE-2.0>
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

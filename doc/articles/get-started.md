@@ -6,23 +6,23 @@ To set up your development environment, first select the operating system you're
 
 **I am developing on...**
 
- - [Windows](#developing-on-windows)
- - [macOS](#developing-on-macos)
- - [Linux](#developing-on-linux)
+- [Windows](#developing-on-windows)
+- [macOS](#developing-on-macos)
+- [Linux](#developing-on-linux)
 
- ## Developing on Windows
+## Developing on Windows
 
-If you're developing on Windows, we recommend you use **Visual Studio**, for the richest XAML development experience and broadest platform coverage. 
+If you're developing on Windows, we recommend you use **Visual Studio**, for the richest XAML development experience and broadest platform coverage.
 
 If you already use and love **JetBrains Rider** or **Visual Studio Code**, you can also use them to develop Uno Platform applications. Check the support matrix below to see which target platforms they support.
 
 **Choose the IDE you want to use:**
 
- - [Get started with Visual Studio for Windows](get-started-vs.md)
- - [Get started with VS Code, Codespaces and GitPod](get-started-vscode.md)
- - [Get started with Rider](get-started-rider.md)
+- [Get started with Visual Studio for Windows](get-started-vs.md)
+- [Get started with VS Code, Codespaces and GitPod](get-started-vscode.md)
+- [Get started with Rider](get-started-rider.md)
 
- #### Target platform coverage by IDE on Windows
+#### Target platform coverage by IDE on Windows
 
 |                                                  | Windows 10 (UWP/WinUI)     | Android | iOS | Web (WebAssembly) | macOS (Xamarin) | macOS (Skia-Gtk) | Linux (Skia-Gtk) | Windows 7+ (Skia-WPF) |
 |--------------------------------------------------|----------------------------|---------|-----|-------------------|---------------- |------------------|------------------|-----------------------|
@@ -31,23 +31,22 @@ If you already use and love **JetBrains Rider** or **Visual Studio Code**, you c
 | [**Codespaces / Gitpod**](get-started-vscode.md) | ❌                         | ❌     | ❌  | ✔️               | ❌             | ✔️               | ✔️              | ✔️                   |
 | [**JetBrains Rider**](get-started-rider.md)      | ✔️                         | ✔️     | ✔️† | ✔️               | ❌             | ✔️             | ✔️              | ✔️                   |
 
-
  † You'll need to be connected to a Mac to run and debug iOS apps from Windows.
 
  ***
  <br>
 
- ## Developing on macOS
+## Developing on macOS
 
 You can use **Visual Studio for Mac**, **JetBrains Rider**, or **Visual Studio Code** to build Uno Platform applications on macOS. See the support matrix below for supported target platforms.
 
 **Choose the IDE you want to use:**
 
- - [Get started with Visual Studio for Mac](get-started-vsmac.md)
- - [Get started with VS Code, Codespaces and GitPod](get-started-vscode.md)
- - [Get started with Rider](get-started-rider.md)
+- [Get started with Visual Studio for Mac](get-started-vsmac.md)
+- [Get started with VS Code, Codespaces and GitPod](get-started-vscode.md)
+- [Get started with Rider](get-started-rider.md)
 
- #### Target platform coverage by IDE on macOS
+#### Target platform coverage by IDE on macOS
 
 |                                                   | Windows 10 (UWP/WinUI) | Android | iOS | Web (WebAssembly) | macOS (Xamarin) | macOS (Skia-Gtk) | Linux (Skia-Gtk) | Windows 7+ (Skia-WPF) |
 |---------------------------------------------------|-------------------------|---------|-----|-------------------|-------|-------|------------------|-----------------------|
@@ -59,18 +58,18 @@ You can use **Visual Studio for Mac**, **JetBrains Rider**, or **Visual Studio C
 ***
  <br>
 
- ## Developing on Linux
+## Developing on Linux
 
  You can use either **JetBrains Rider** or **Visual Studio Code** to build Uno Platform applications on Linux. See the support matrix below for supported target platforms.
- 
+
 **Choose the IDE you want to use:**
 
- - [Get started with Visual Studio Code, Codespaces and GitPod](get-started-vscode.md)
-  - [Get started with Rider](get-started-rider.md)
+- [Get started with Visual Studio Code, Codespaces and GitPod](get-started-vscode.md)
+- [Get started with Rider](get-started-rider.md)
 
  There's [additional information here](get-started-with-linux.md) about developing from, and for, Linux with Uno Platform.
 
- #### Target platform coverage by IDE on Linux
+#### Target platform coverage by IDE on Linux
 
 |                                                   | Windows 10 (UWP/WinUI) | Android | iOS | Web (WebAssembly) | macOS (Xamarin) | macOS (Skia-Gtk) | Linux (Skia-Gtk) | Windows 7+ (Skia-WPF) |
 |---------------------------------------------------|------------------------|---------|-----|-------------------|-------|-------|------------------|-----------------------|

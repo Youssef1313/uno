@@ -1,6 +1,6 @@
 # Assets and image display
 
-In a standard Xamarin project, you must duplicate, rename, and manually add your assets to each target project (UWP, iOS, Android). 
+In a standard Xamarin project, you must duplicate, rename, and manually add your assets to each target project (UWP, iOS, Android).
 
 [Xamarin: Working with Images](https://developer.xamarin.com/samples/xamarin-forms/WorkingWithImages/)
 
@@ -36,7 +36,7 @@ This is just like adding an asset to any UWP project. Just make sure to add the 
 
 ## Qualify an asset
 
-On UWP, you can use qualifiers to load different assets depending on scale, language, etc. 
+On UWP, you can use qualifiers to load different assets depending on scale, language, etc.
 
 [Microsoft: Tailor your resources for language, scale, high contrast, and other qualifiers](https://docs.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast)
 
@@ -76,6 +76,7 @@ We recommend including assets for each of these scales: `100`, `150`, `200`, `30
 Use it as you would on UWP, but keep in mind that some language/region combinations might not work on all platforms.
 
 The following languages have been verified to work on all platforms:
+
 - `en`
 - `en-US`
 - `en-CA`
@@ -127,7 +128,7 @@ On UWP, you must add the following code to your `App.xaml.cs` constructor:
 
 ```csharp
 #if WINDOWS_UWP
-	Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("custom", "uwp");
+ Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("custom", "uwp");
 #endif
 ```
 
@@ -145,7 +146,7 @@ On UWP, you must add the following code to your `App.xaml.cs` constructor:
 
 ## Android: setting a custom image handler
 
-On Android, to handle the loading of images from a remote url, the Image control has to be provided a 
+On Android, to handle the loading of images from a remote url, the Image control has to be provided a
 ImageSource.DefaultImageLoader such as the [Android Universal Image Loader](https://github.com/nostra13/Android-Universal-Image-Loader).
 
 This package is installed by default when using the [Uno Cross-Platform solution templates](https://marketplace.visualstudio.com/items?itemName=nventivecorp.uno-platform-addin). If not using the solution template, you can install the [nventive.UniversalImageLoader](https://www.nuget.org/packages/nventive.UniversalImageLoader/) NuGet package and call the following code from your application's App constructor:
@@ -153,14 +154,14 @@ This package is installed by default when using the [Uno Cross-Platform solution
 ```csharp
 private void ConfigureUniversalImageLoader()
 {
-	// Create global configuration and initialize ImageLoader with this config
-	ImageLoaderConfiguration config = new ImageLoaderConfiguration
-		.Builder(Context)
-		.Build();
+ // Create global configuration and initialize ImageLoader with this config
+ ImageLoaderConfiguration config = new ImageLoaderConfiguration
+  .Builder(Context)
+  .Build();
 
-	ImageLoader.Instance.Init(config);
+ ImageLoader.Instance.Init(config);
 
-	ImageSource.DefaultImageLoader = ImageLoader.Instance.LoadImageAsync;
+ ImageSource.DefaultImageLoader = ImageLoader.Instance.LoadImageAsync;
 }
 ```
 

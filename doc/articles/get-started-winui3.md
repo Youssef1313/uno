@@ -4,14 +4,15 @@ Uno Platform apps can be created in both UWP-compatible (`Windows.UI.Xaml`, also
 
 ## Prerequisites
 
- * [Visual Studio 2019 16.10 preview 1 or higher](https://visualstudio.microsoft.com/vs/preview/) (for Live Visual Tree, Live Property Explorer and XAML Hot Reload), with following workloads installed:
-    * Universal Windows Platform development
-    * .NET desktop development
- * [.NET SDK](https://docs.microsoft.com/dotnet/core/install/windows) (.NET 5 or higher)
+* [Visual Studio 2019 16.10 preview 1 or higher](https://visualstudio.microsoft.com/vs/preview/) (for Live Visual Tree, Live Property Explorer and XAML Hot Reload), with following workloads installed:
+  * Universal Windows Platform development
+  * .NET desktop development
+* [.NET SDK](https://docs.microsoft.com/dotnet/core/install/windows) (.NET 5 or higher)
 
 ## Set up your environment
 
 1. Install the [Uno Platform dotnet templates](get-started-dotnet-new.md). From a command-line prompt, run the following command:
+
     ```shell
     dotnet new -i Uno.ProjectTemplates.Dotnet
     ```
@@ -20,9 +21,11 @@ Uno Platform apps can be created in both UWP-compatible (`Windows.UI.Xaml`, also
 
 1. Create a folder for your app.
 2. From a command-line prompt at that folder location, run the following command:
+
     ```shell
     dotnet new unoapp-winui -o MyUnoApp
     ```
+
 3. Open the solution file you created.
 4. UI Tooling features (Live Visual Tree, Live Property Explorer, and Hot Reload) for WinUI 3 need to be enabled in Visual Studio as a Preview Feature. Navigate to `Tools -> Options -> Environment -> Preview Features` and toggle "Enable UI Debugging Tooling for WinUI 3 Projects".
     ![Preview Feature screenshot](Assets/preview-feature-winui-3-tooling.png)
@@ -30,6 +33,6 @@ Uno Platform apps can be created in both UWP-compatible (`Windows.UI.Xaml`, also
 
 ## Further reading
 
- * [WinUI 3, UWP, and Uno Platform](uwp-vs-winui3.md)
- * [Migrating existing Uno Platform app to WinUI 3](updating-to-winui3.md)
- * [Get started with Project Reunion (Microsoft)](https://docs.microsoft.com/windows/apps/project-reunion/get-started-with-project-reunion)
+* [WinUI 3, UWP, and Uno Platform](uwp-vs-winui3.md)
+* [Migrating existing Uno Platform app to WinUI 3](updating-to-winui3.md)
+* [Get started with Project Reunion (Microsoft)](https://docs.microsoft.com/windows/apps/project-reunion/get-started-with-project-reunion)

@@ -9,8 +9,10 @@ Uno Material is an add-on package which lets you apply [Material Design styling]
 For complete instructions on using Uno Material in your projects, including a set of Sketch files for designers, [consult the readme](https://github.com/unoplatform/Uno.Themes/blob/master/README.md).
 
 ## Getting Started
+
 1. Add NuGet package `Uno.Material` to each of project heads
 1. Add the following code inside `App.xaml`:
+
     ```xml
     <Application.Resources>
         <ResourceDictionary>
@@ -20,10 +22,10 @@ For complete instructions on using Uno Material in your projects, including a se
 
                 <!-- Load Material Color Palette with optional ColorPaletteOverrideSource -->
                 <MaterialColors xmlns="using:Uno.Material"
-								ColorPaletteOverrideSource="ms-appx:///ColorPaletteOverride.xaml" />
+        ColorPaletteOverrideSource="ms-appx:///ColorPaletteOverride.xaml" />
 
                 <!-- Load the Material control resources -->
-				<MaterialResources xmlns="using:Uno.Material" />
+    <MaterialResources xmlns="using:Uno.Material" />
 
                 <!-- Application's custom styles -->
                 <!-- other ResourceDictionaries -->
@@ -38,9 +40,11 @@ For complete instructions on using Uno Material in your projects, check out this
 > Certain controls require [additional setup steps](uno-material-controls-extra-setup.md).
 
 ## Migrating From Previous Resource Initialization Method
+
 Prior to the `1.0` release, the initialization of Material resources was required to be done through code-behind within the `App.xaml.cs` file. Resource initialization has now been moved to XAML-only. Follow the steps below to migrate from the old method of initialization to the new one:
 
-1. Remove the following code from `App.xaml.cs` 
+1. Remove the following code from `App.xaml.cs`
+
     ```diff
     protected override void OnLaunched(LaunchActivatedEventArgs e)
     {
@@ -50,19 +54,21 @@ Prior to the `1.0` release, the initialization of Material resources was require
     }
 
     ```
+
 1. Add `MaterialColors` and `MaterialResources` to `App.xaml`:
+
     ```diff
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!-- Load WinUI resources -->
-				<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
+    <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
 
     +           <!-- Load Material Color Palette with optional ColorPaletteOverrideSource -->
     +           <MaterialColors xmlns="using:Uno.Material" ColorPaletteOverrideSource="ms-appx:///ColorPaletteOverride.xaml" />
 
     +            <!-- Load the Material control resources -->
-	+			<MaterialResources xmlns="using:Uno.Material" />
+ +   <MaterialResources xmlns="using:Uno.Material" />
 
                 <!-- Application's custom styles -->
                 <!-- other ResourceDictionaries -->
@@ -74,6 +80,7 @@ Prior to the `1.0` release, the initialization of Material resources was require
 ## Features
 
 ### Styles for basic controls
+
 Control|Resource Key
 -|-
 `AppBarButton`|MaterialAppBarButton
@@ -99,6 +106,7 @@ Control|Resource Key
 `winui:ProgressRing`|MaterialProgressRingStyle<br>MaterialSecondaryProgressRingStyle
 
 ### Styles for custom material controls
+
 Control|Resource Key
 -|-
 `BottomNavigationBar`|MaterialBottomNavigationBarStyle
@@ -113,10 +121,13 @@ Control|Resource Key
 `StandardBottomSheet`|MaterialStandardBottomSheetStyle
 
 ### Customizable Color Theme
+
 The colors used in the material styles are part of the color palette system, which can be customized to suit the theme of your application. Since this is decoupled from the styles, the application theme can be changed, without having to make a copy of every style and edit each of them.
 
 ### Leading Icon for Button Control
-Many of the styles* above for the `Button` control support specifying an icon that is displayed adjacent to standard content: 
+
+Many of the styles* above for the `Button` control support specifying an icon that is displayed adjacent to standard content:
+
 ```xml
 xmlns:extensions="using:Uno.Material.Extensions"
 ...
@@ -126,10 +137,12 @@ xmlns:extensions="using:Uno.Material.Extensions"
    </extensions:ControlExtensions.Icon>
 </Button>
 ```
+
 *Certain specialized `Button` types (ex: FAB, Pane) have styles which do not leverage this attached property because standard text content is not included
 
 ## Additional Resources
-- Official Material Design site: https://material.io/design
-- Uno.Material library repository: https://github.com/unoplatform/Uno.Themes
+
+- Official Material Design site: <https://material.io/design>
+- Uno.Material library repository: <https://github.com/unoplatform/Uno.Themes>
 - [Additional control-specific setup](uno-material-controls-extra-setup.md)
-- Tools for picking colors: https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+- Tools for picking colors: <https://material.io/design/color/the-color-system.html#tools-for-picking-colors>

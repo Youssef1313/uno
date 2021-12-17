@@ -1,6 +1,6 @@
 # ComboBox in Uno.UI
 
-The `ComboBox` is designed to select a value in a set of items. For more info about its usage, 
+The `ComboBox` is designed to select a value in a set of items. For more info about its usage,
 [please refer the microsoft documentation](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/combo-box)
 
 ## Customize the placement of the Drop-Down **UNO ONLY feature**
@@ -23,12 +23,12 @@ Uno.UI.FeatureConfiguration.ComboBox.DefaultDropDownPreferredPlacement = DropDow
 
 ```xml
 <Page
-	[...]
-	xmlns:not_win="using:Uno.UI.Xaml.Controls"
+ [...]
+ xmlns:not_win="using:Uno.UI.Xaml.Controls"
     mc:Ignorable="d not_win">
 
-	<ComboBox
-		ItemsSource="12345"
-		not_win:ComboBox.DropDownPreferredPlacement="Below" />
+ <ComboBox
+  ItemsSource="12345"
+  not_win:ComboBox.DropDownPreferredPlacement="Below" />
 
 ```

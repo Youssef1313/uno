@@ -3,6 +3,7 @@
 The Uno Platform provides a set of command line templates to create cross platform applications.
 
 To install the templates, type the following:
+
 ```
 dotnet new -i Uno.ProjectTemplates.Dotnet
 ```
@@ -19,6 +20,7 @@ If you need to determine the parameters available for a template use `dotnet new
 This template can be used to create a blank multi-platform application for iOS, Android, WebAssembly, macOS, Skia/GTK (Windows, Linux, macOS) and Skia/Wpf (Windows 7 and 10).
 
 A basic example:
+
 ```
 dotnet new unoapp -o MyApp
 ```
@@ -36,20 +38,22 @@ This template can be used to create a blank multi-platform application for iOS, 
 [**Find detailed instructions here.**](get-started-winui3.md)
 
 A basic example:
+
 ```
 dotnet new unoapp-winui -o MyApp
 ```
 
 More articles on WinUI 3:
 
- * [WinUI 3, UWP, and Uno Platform.](uwp-vs-winui3.md)
- * [Updating from UWP to WinUI 3.](updating-to-winui3.md)
+* [WinUI 3, UWP, and Uno Platform.](uwp-vs-winui3.md)
+* [Updating from UWP to WinUI 3.](updating-to-winui3.md)
 
 ## Uno Platform Blank library
 
 This template can be used to create a blank library. With this type of library, Skia and WebAssembly do not need to built separately, but cannot be differentiated.
 
 A basic example:
+
 ```
 dotnet new unolib -o MyUnoLib
 ```
@@ -59,6 +63,7 @@ dotnet new unolib -o MyUnoLib
 This template can be used to create a blank cross-runtime library, when platform specific code needs to be created for Skia and WebAssembly.
 
 A basic example:
+
 ```
 dotnet new unolib-crossruntime -o MyCrossRuntimeLibrary
 ```
@@ -68,6 +73,7 @@ dotnet new unolib-crossruntime -o MyCrossRuntimeLibrary
 This template is specializing in the creation of a [Prism Library](https://github.com/PrismLibrary/Prism) enabled blank application.
 
 A basic example:
+
 ```
 dotnet new unoapp-prism -o MyApp
 ```
@@ -79,12 +85,15 @@ dotnet new unoapp -o MyApp -android=false -macos=false
 ```
 
 ## Uno Platform Uno.UITest library
+
 This templates creates a project for creating and running UI Tests based on [Uno.UITest](https://github.com/unoplatform/Uno.UITest).
 
 Considering you've created an application as follows:
+
 - `dotnet new unoapp -o MyApp`
 
 To create a UI Tests library:
+
 - Create a folder name `MyApp\MyApp.UITests`
 - In that folder, run `dotnet new unoapp-uitest`
 
@@ -98,16 +107,18 @@ This template is built to enhance an existing Xamarin.Forms application with the
 
 To use it:
 
-1. Create a Xamarin.Forms project 
+1. Create a Xamarin.Forms project
     1. Check **Place project and solution in the same directory**
     1. Check **Windows (UWP)**
 1. Using a **VS Developer Command Prompt**, navigate to the folder containing the solution
+
     ```
     dotnet new wasmxfhead
     ```
-1. Open or Reload the solution in Visual Studio 
-1. Set the Wasm project as the startup project 
-1. Open the **Nuget Package manager** for the Wasm project and update the `Uno.Xamarin.Forms.Platform` project to the latest **stable** package 
+
+1. Open or Reload the solution in Visual Studio
+1. Set the Wasm project as the startup project
+1. Open the **Nuget Package manager** for the Wasm project and update the `Uno.Xamarin.Forms.Platform` project to the latest **stable** package
 1. Run the app using **Ctrl+F5** (without the Visual Studio debugger), and you�re good to go!
 
 ## Uno Platform Blank Application (.NET 6 - Preview)
@@ -117,6 +128,7 @@ This template can be used to create a blank multi-platform application for iOS, 
 This template uses a single project head for iOS, Android, macOS and mac Catalyst and requires Visual Studio 2022.
 
 A basic example:
+
 ```
 dotnet new unoapp-net6 -o MyApp
 ```
@@ -136,14 +148,15 @@ This template uses a single project head for iOS, Android, macOS and mac Catalys
 [**Find detailed instructions here.**](get-started-winui3.md)
 
 A basic example:
+
 ```
 dotnet new unoapp-winui-net6 -o MyApp
 ```
 
 More articles on WinUI 3:
 
- * [WinUI 3, UWP, and Uno Platform.](uwp-vs-winui3.md)
- * [Updating from UWP to WinUI 3.](updating-to-winui3.md)
+* [WinUI 3, UWP, and Uno Platform.](uwp-vs-winui3.md)
+* [Updating from UWP to WinUI 3.](updating-to-winui3.md)
 
 ### Uninstalling the templates
 
@@ -153,4 +166,4 @@ Using a command line or terminal, run the following command:
 
 ### Getting Help
 
-If you need help with Uno Platform please visit our [Discord](https://www.platform.uno/discord) - #uno-platform channel or [StackOverflow](https://stackoverflow.com/questions/tagged/uno-platform) where our engineering team and community will be able to help you. 
+If you need help with Uno Platform please visit our [Discord](https://www.platform.uno/discord) - #uno-platform channel or [StackOverflow](https://stackoverflow.com/questions/tagged/uno-platform) where our engineering team and community will be able to help you.

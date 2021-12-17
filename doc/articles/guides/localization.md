@@ -22,8 +22,8 @@ This guide will walk you through the necessary steps to localize an Uno Platform
 * [**Mono**](https://www.mono-project.com/download/stable/)
 
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 
     > Use `dotnet --version` from the terminal to get the version installed.
 
@@ -33,8 +33,8 @@ This guide will walk you through the necessary steps to localize an Uno Platform
 * [**Xcode**](https://apps.apple.com/us/app/xcode/id497799835?mt=12) 10.0 or higher
 * An [**Apple ID**](https://support.apple.com/en-us/HT204316)
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 * [**GTK+3**](https://formulae.brew.sh/formula/gtk+3) for running the Skia/GTK projects
 
 # [JetBrains Rider](#tab/tabid-rider)
@@ -50,10 +50,12 @@ This guide will walk you through the necessary steps to localize an Uno Platform
 > For a step-by-step guide to installing the prerequisites for your preferred IDE and environment, consult the [Get Started guide](../get-started.md).
 
 ## Step-by-steps
+
 1. Create a new Uno Platform application, following the instructions [here](../get-started.md).
 1. Modify the content of `MainPage`:
 
     - In `MainPage.xaml`, replace the content of the page:
+
         ```xml
         <Page x:Class="UnoLocalization.MainPage"
               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -66,12 +68,16 @@ This guide will walk you through the necessary steps to localize an Uno Platform
             </StackPanel>
         </Page>
         ```
+
         > note:
+        >
         > - The [`x:Name`](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/x-name-attribute) is used to make the element accessible from the code-behind with that same name.
         > - The [`x:Uid`](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/x-uid-directive) is used for localization.
         To localize a property, you need to add a string resource in each resource file using its `x:Uid` followed by a dot (`.`) and then the property name. eg: `MainPage_IntroText.Text`
         More on this in the resource steps that follow.
+
     - In `MainPage.xaml.cs`, add an `Page.Loaded` handler to change the text for `CodeBehindText`:
+
         ```cs
         public MainPage()
         {
@@ -81,6 +87,7 @@ This guide will walk you through the necessary steps to localize an Uno Platform
                 .GetString("MainPage_CodeBehindString");
         }
         ```
+
 1. Create a new resource file for localization in French in the `UnoLocalization.Shared` project:
     1. Add a new folder `fr` under the `Strings` folder by:
     Right-click on `String` > Add > New Folder
@@ -101,6 +108,7 @@ This guide will walk you through the necessary steps to localize an Uno Platform
 
     You can also set the starting culture to see the result, without having to modify the system language:
     - `App.xaml.cs`:
+
         ```cs
         public App()
         {
@@ -124,7 +132,7 @@ This guide will walk you through the necessary steps to localize an Uno Platform
 See the completed sample on GitHub: [LocalizationSamples/Localization](https://github.com/unoplatform/Uno.Samples/tree/master/UI/LocalizationSamples/Localization)
 
 ## Additional Resources
-https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/globalizing-portal
+<https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/globalizing-portal>
 
 <br>
 

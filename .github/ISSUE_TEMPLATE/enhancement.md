@@ -6,11 +6,11 @@ labels: kind/enhancement, triage/untriaged, difficulty/tbd
 
 <!-- Please only use this template for submitting enhancement requests -->
 
-## What would you like to be added:
+## What would you like to be added
 
-## Why is this needed:
+## Why is this needed
 
-## For which Platform:
+## For which Platform
 
 - [ ] iOS
 - [ ] Android
@@ -26,4 +26,3 @@ labels: kind/enhancement, triage/untriaged, difficulty/tbd
 - [ ] Solution Templates
 
 ## Anything else we need to know?
-

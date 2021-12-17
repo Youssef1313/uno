@@ -1,12 +1,12 @@
 # Uno Platform app solution structure
 
-This guide briefly explains the structure of an app created with the default [Uno Platform app template](https://marketplace.visualstudio.com/items?itemName=nventivecorp.uno-platform-addin). It's particularly aimed at developers who have not worked with multi-platform codebases before. 
+This guide briefly explains the structure of an app created with the default [Uno Platform app template](https://marketplace.visualstudio.com/items?itemName=nventivecorp.uno-platform-addin). It's particularly aimed at developers who have not worked with multi-platform codebases before.
 
 ## The project files in an Uno Platform app
 
 Let's say we've created a new solution with the [Uno Platform app template](https://marketplace.visualstudio.com/items?itemName=nventivecorp.uno-platform-addin), call it `HelloWorld`. It will already contain the following projects:
 
-1. A `HelloWorld.[Platform].csproj` file for each platform that Uno Platform supports: UWP (Windows), Android, iOS, and WebAssembly (Web). This project is known as the **head** for that platform. It contains typical information like settings, metadata, dependencies, and also a list of files included in the project. The platform *head* builds and packages the binary executable for that platform. 
+1. A `HelloWorld.[Platform].csproj` file for each platform that Uno Platform supports: UWP (Windows), Android, iOS, and WebAssembly (Web). This project is known as the **head** for that platform. It contains typical information like settings, metadata, dependencies, and also a list of files included in the project. The platform *head* builds and packages the binary executable for that platform.
 
 > The Android head is named `Droid` to avoid namespace clashes with the original Android namespace.
 
@@ -20,7 +20,7 @@ Normally, your UI and business logic will go in the shared project. Bootstrappin
 
 ## Understanding shared projects
 
-Clearly understanding how shared projects work is important to using Uno Platform effectively. A shared project in Visual Studio is really nothing more than a list of files. Let's repeat that for emphasis: **a shared project is just a list of files**. Referencing a shared project in an ordinary `.csproj` project causes those files to be included in the project. They're treated in exactly the same way as the files inside the project. 
+Clearly understanding how shared projects work is important to using Uno Platform effectively. A shared project in Visual Studio is really nothing more than a list of files. Let's repeat that for emphasis: **a shared project is just a list of files**. Referencing a shared project in an ordinary `.csproj` project causes those files to be included in the project. They're treated in exactly the same way as the files inside the project.
 
 It's important to be aware that the code in a shared-project file is compiled separately for each platform head. This gives a great deal of flexibility, but it also means that shared code may work for one platform, but not another.
 

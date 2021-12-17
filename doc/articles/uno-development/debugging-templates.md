@@ -1,6 +1,7 @@
 # Debugging Uno Platform Solution templates
 
 The uno platform project contains multiple types of templates:
+
 - `dotnet new` templates
 - Visual Studio (2019) Extensions templates (vsix)
 
@@ -11,6 +12,7 @@ Some of the templates are reusing the same sources. For example the full solutio
 VSIX templates are using the Visual Studio extensibility model, and run with a specific project type.
 
 To make modifications to those templates and test the result:
+
 - In Visual Studio, open the solution using the [Uno.UI-Wasm-hotreload-vsix-only.slnf filters](building-uno-ui.md)
 - Right click on the `UnoSolutionTemplate.VSIX.2022` or `UnoSolutionTemplate.VSIX.2019` project then debug
 - A new isolated testing instance of visual studio will open, allowing you to create projects using modified templates
@@ -20,6 +22,7 @@ To make modifications to those templates and test the result:
 `dotnet new` new templates use the dotnet/templating engine, and are located in the `src/SolutionTemplate/Uno.ProjectTemplates.Dotnet` folder.
 
 To make modifications to those templates and test the result:
+
 - In Visual Studio, open the solution using the [Skia or WebAssembly filters](building-uno-ui.md)
 - Right click on the `Uno.ProjectTemplates.Dotnet` project, select `Pack`
 - This will create a `Uno.ProjectTemplates.Dotnet.255.255.255.255.nupkg` file

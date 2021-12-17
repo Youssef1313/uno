@@ -22,8 +22,8 @@ This article covers how to add a splash screen to your application.
 * [**Mono**](https://www.mono-project.com/download/stable/)
 
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 
     > Use `dotnet --version` from the terminal to get the version installed.
 
@@ -33,8 +33,8 @@ This article covers how to add a splash screen to your application.
 * [**Xcode**](https://apps.apple.com/us/app/xcode/id497799835?mt=12) 10.0 or higher
 * An [**Apple ID**](https://support.apple.com/en-us/HT204316)
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 * [**GTK+3**](https://formulae.brew.sh/formula/gtk+3) for running the Skia/GTK projects
 
 # [JetBrains Rider](#tab/tabid-rider)
@@ -71,7 +71,6 @@ This article covers how to add a splash screen to your application.
 
 1. Add these images under the `Assets\` folder of the `.shared` project, and set their build action as `Content`.
 
-
 ## Step 2 - UWP
 
 1. In the `.UWP` project, delete the old splash screen file `SplashScreen.scale-200.png` under the `Asset\` folder.
@@ -82,19 +81,23 @@ This article covers how to add a splash screen to your application.
 1. Open the `Package.appxmanifest` and navigate to `Visual Assets > SplashScreen`.
 
 1. Make sure the value for `Preview Images > Splash Screen` is set to:
+
     ```
     Assets\SplashScreen.png
     ```
+
     ![uwp-splash-screen](Assets/uwp-splash-screen.JPG)
 
 ## Step 3 - Android
 
 1. In the `.Droid` project, open `Resources/values/Styles.xml`, and add an `<item>` under the `AppTheme` style.
+
     ```xml
     <item name="android:windowBackground">@drawable/splash</item>
     ```
 
 1. Navigate to `Resources/drawable`, and create a XML file named `splash.xml`:
+
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
         <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
@@ -110,8 +113,10 @@ This article covers how to add a splash screen to your application.
         </item>
     </layer-list>
     ```
- 1. Make sure `splash.xml` is added as an AndroidResource in the Droid project file.
+
+1. Make sure `splash.xml` is added as an AndroidResource in the Droid project file.
     This is not always done automatically, especially if `splash.xml` is created and added outside the IDE.
+
     ```xml
     <ItemGroup>
       <AndroidResource Include="Resources\drawable\splash.xml" />
@@ -120,10 +125,12 @@ This article covers how to add a splash screen to your application.
 
     > [!TIP]
     > After modifying `splash.xml`, you may run into errors like these while trying to debug:
+    >
     > ```
     > Resources\drawable-mdpi\SplashScreen.png : error APT2126: file not found.
     > Resources\drawable-hdpi\SplashScreen.png : error APT2126: file not found.
     > ```
+    >
     > Simply rebuild the `.Droid` project to get rid of these error.
 
 ## Step 4 - iOS
@@ -137,7 +144,7 @@ This article covers how to add a splash screen to your application.
     - Right-click the `.iOS` project > Add > New Item ...
     - Visual C# > Apple > Empty Storyboard
 
-1. In the `Toolbox` window, drag and drop a `View Controller` and then an `ImageView` inside the `View Controller`. 
+1. In the `Toolbox` window, drag and drop a `View Controller` and then an `ImageView` inside the `View Controller`.
 
     ![viewcontroller-imageview](Assets/viewcontroller-imageview.png)
 
@@ -145,7 +152,7 @@ This article covers how to add a splash screen to your application.
 
     ![ios-constraintes](Assets/ios-constraints.png)
 
-1. Set the `Content Mode` to `Aspect Fit` 
+1. Set the `Content Mode` to `Aspect Fit`
 
     ![ios-content-fit](Assets/ios-content-fit.png)
 
@@ -168,7 +175,7 @@ This article covers how to add a splash screen to your application.
 
 ## Step 5 - WebAssembly
 
-1. In the `.WASM` project, navigate to `WasmScripts/AppManifest.js` 
+1. In the `.WASM` project, navigate to `WasmScripts/AppManifest.js`
 
 1. Add your splash screen image
 
@@ -206,6 +213,6 @@ See the completed sample on GitHub: [SplashScreenSample](https://github.com/unop
 
 > [!TIP]
 > If you ran into difficulties with any part of this guide, you can:
-> 
+>
 > * Ask for help on our [Discord channel](https://www.platform.uno/discord) - #uno-platform
 > * Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/uno-platform) with the 'uno-platform' tag

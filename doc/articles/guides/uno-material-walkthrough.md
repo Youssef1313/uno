@@ -22,8 +22,8 @@ This guide will walk you through the necessary steps to setup and to use the [`U
 * [**Mono**](https://www.mono-project.com/download/stable/)
 
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 
     > Use `dotnet --version` from the terminal to get the version installed.
 
@@ -33,8 +33,8 @@ This guide will walk you through the necessary steps to setup and to use the [`U
 * [**Xcode**](https://apps.apple.com/us/app/xcode/id497799835?mt=12) 10.0 or higher
 * An [**Apple ID**](https://support.apple.com/en-us/HT204316)
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 * [**GTK+3**](https://formulae.brew.sh/formula/gtk+3) for running the Skia/GTK projects
 
 # [JetBrains Rider](#tab/tabid-rider)
@@ -50,7 +50,9 @@ This guide will walk you through the necessary steps to setup and to use the [`U
 > For a step-by-step guide to installing the prerequisites for your preferred IDE and environment, consult the [Get Started guide](../get-started.md).
 
 ## Step-by-steps
+
 ### Section 1: Setup Uno.Material
+
 1. Create a new Uno Platform application, following the instructions [here](../get-started.md).
 1. Add NuGet package `Uno.Material` to each of project heads by:
     > [!NOTE]
@@ -58,6 +60,7 @@ This guide will walk you through the necessary steps to setup and to use the [`U
 
     > [!NOTE]
     > The project heads refer to the projects targeted to a specific platforms:
+    >
     > - UnoMaterialSample.Droid
     > - UnoMaterialSample.iOS
     > - UnoMaterialSample.macOS
@@ -75,6 +78,7 @@ This guide will walk you through the necessary steps to setup and to use the [`U
         The app may not compile, crash at runtime, or behave strangely as a result of this.
         solution: You need to update the version of `Uno.UI` packages for all project heads that you are using to the higher version.
         > note: By `Uno.UI` packages, it includes:
+        >
         > - Uno.UI
         > - Uno.UI.RemoteControl
         > - Uno.UI.WebAssembly
@@ -83,14 +87,17 @@ This guide will walk you through the necessary steps to setup and to use the [`U
         > - Uno.UI.Skia.Wpf
 
     - When building the `.Droid` project, the project failed to build with:
+
         ```
         error : Could not find 1 Android X assemblies, make sure to install the following NuGet packages:
             - Xamarin.AndroidX.Lifecycle.LiveData
         You can also copy-and-paste the following snippet into your .csproj file:
             <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.1.0" />
         ```
+
         solution: Simply add the specific version of `Xamarin.AndroidX.Lifecycle.LiveData` to the `.Droid` project
 1. Add the following code inside `App.xaml`:
+
     ```xml
     <Application.Resources>
         <ResourceDictionary>
@@ -102,7 +109,7 @@ This guide will walk you through the necessary steps to setup and to use the [`U
                 <MaterialColors xmlns="using:Uno.Material" />
 
                 <!-- Load the Material control resources -->
-				<MaterialResources xmlns="using:Uno.Material" />
+    <MaterialResources xmlns="using:Uno.Material" />
 
                 <!-- Application's custom styles -->
                 <!-- other ResourceDictionaries -->
@@ -112,7 +119,9 @@ This guide will walk you through the necessary steps to setup and to use the [`U
     ```
 
 ### Section 2: Using Uno.Material library
+
 1. Let's add a few controls with the Material style to `MainPage.xaml`:
+
     ```xml
     <Page x:Class="UnoMaterialSample.MainPage"
           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -135,7 +144,9 @@ This guide will walk you through the necessary steps to setup and to use the [`U
         </Grid>
     <Page>
     ```
+
 1. Now we'll add a few new controls that are defined in the Material package - `Card`, `ChipGroup`, `Chip`, and `Divider`:
+
     ```xml
     <Page ...
           xmlns:material="using:Uno.Material.Controls">
@@ -175,16 +186,19 @@ This guide will walk you through the necessary steps to setup and to use the [`U
 
 > [!TIP]
 > You can find the style names using these methods:
-> - "Feature" section of Uno.Themes README: https://github.com/unoplatform/Uno.Themes#features
-> - Going through the source code of control styles: https://github.com/unoplatform/Uno.Themes/tree/master/src/library/Uno.Material/Styles/Controls
+>
+> - "Feature" section of Uno.Themes README: <https://github.com/unoplatform/Uno.Themes#features>
+> - Going through the source code of control styles: <https://github.com/unoplatform/Uno.Themes/tree/master/src/library/Uno.Material/Styles/Controls>
 > - Check out the [Uno.Gallery web app](https://gallery.platform.uno/) (Click on the `<>` button to view xaml source)
 
 ### Section 3: Overriding Color Palette
+
 1. Create the nested folders `Styles\` and then `Styles\Application\` under the `.Shared` project
 1. Add a new Resource Dictionary `ColorPaletteOverride.xaml` under `Styles\Application\`
-1. Replace the content of that res-dict with the source from: https://github.com/unoplatform/Uno.Themes/blob/master/src/library/Uno.Material/Styles/Application/ColorPalette.xaml
+1. Replace the content of that res-dict with the source from: <https://github.com/unoplatform/Uno.Themes/blob/master/src/library/Uno.Material/Styles/Application/ColorPalette.xaml>
 1. Make a few changes to the color:
     > Here we are replacing the last 2 characters with 00, essentially dropping the blue-channel
+
     ```xml
     <!-- Light Theme -->
     <ResourceDictionary x:Key="Light">
@@ -230,8 +244,10 @@ This guide will walk you through the necessary steps to setup and to use the [`U
 
     <!-- ... -->
     ```
-    > You may also use this for picking colors: https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+
+    > You may also use this for picking colors: <https://material.io/design/color/the-color-system.html#tools-for-picking-colors>
 1. In `App.xaml`, update the line that initializes the `MaterialColors` to include the new palette override:
+
     ```xml
     <Application.Resources>
         <ResourceDictionary>
@@ -239,26 +255,29 @@ This guide will walk you through the necessary steps to setup and to use the [`U
                 <!-- ... -->
 
                 <!-- Load Material Color Palette with OverrideSource -->
-				<MaterialColors xmlns="using:Uno.Material"
-								OverrideSource="ms-appx:///ColorPaletteOverride.xaml" />
+    <MaterialColors xmlns="using:Uno.Material"
+        OverrideSource="ms-appx:///ColorPaletteOverride.xaml" />
 
                 <!-- Load the Material control resources -->
-				<MaterialResources xmlns="using:Uno.Material" />
+    <MaterialResources xmlns="using:Uno.Material" />
                 
                 <!-- ... -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
     ```
+
 1. Run the app, you should now see the controls using your new color scheme.
 
 ### Section 4: Fonts
+
 By default, Uno.Material will attempt to apply a FontFamily with a name of `Roboto` to its controls. This FontFamily resource is given the key `MaterialFontFamily`. If there is no FontFamily with name `Roboto` loaded into your application, the default system font will be used. You can override this default behavior by providing an `OverrideSource` to the `<MaterialFonts />` initialization within your `App.xaml`.
 
 1. Install your custom font following the steps [here](../features/custom-fonts.md)
 1. Create the nested folders `Styles\` and then `Styles\Application\` under the `.Shared` project
 1. Add a new Resource Dictionary `MaterialFontsOverride.xaml` under `Styles\Application\`
 1. Add your custom font with the resource key `MaterialFontFamily`:
+
     ```xml
     <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -268,7 +287,9 @@ By default, Uno.Material will attempt to apply a FontFamily with a name of `Robo
         
     </ResourceDictionary>
     ```
+
 1. In `App.xaml`, add the line that initializes the `MaterialFonts` to include the new font override:
+
     ```xml
     <Application.Resources>
     <ResourceDictionary>
@@ -287,10 +308,11 @@ By default, Uno.Material will attempt to apply a FontFamily with a name of `Robo
     </ResourceDictionary>
     </Application.Resources>
     ```
+
 1. Run the app, you should now see the controls using your new FontFamily.
 
-
 ## Note
+
 - Certain controls may require additional setup to setup and/or overriding color pallette. For details, see: [Uno.Material controls extra setup](../features/uno-material-controls-extra-setup.md)
 
 ## Get the complete code
@@ -298,9 +320,10 @@ By default, Uno.Material will attempt to apply a FontFamily with a name of `Robo
 See the completed sample on GitHub: [UnoMaterialSample](https://github.com/unoplatform/Uno.Samples/tree/master/UI/UnoMaterialSample)
 
 ## Additional Resources
+
 - [Uno.Material](../features/uno-material.md) overview
-- Uno.Material library repository: https://github.com/unoplatform/Uno.Themes
-- Tools for picking colors: https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+- Uno.Material library repository: <https://github.com/unoplatform/Uno.Themes>
+- Tools for picking colors: <https://material.io/design/color/the-color-system.html#tools-for-picking-colors>
 
 <br>
 

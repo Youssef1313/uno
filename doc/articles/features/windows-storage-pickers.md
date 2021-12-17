@@ -5,9 +5,10 @@
 File pickers allow the user to pick a folder or a file on the local file system so that the application can work with it. The following table shows which file picker experiences are available across Uno Platform targets. For detailed information see the next sections.
 
 Legend
-  - ✔️  Supported
-  - 💬 Partially supported (see below for more details)
-  - ❌ Not supported
+
+- ✔️  Supported
+- 💬 Partially supported (see below for more details)
+- ❌ Not supported
   
 | Picker         | UWP   | WebAssembly | Android | iOS   | macOS | WPF | GTK |
 |----------------|-------|-------------|---------|-------|-------|-----|-----|
@@ -18,7 +19,7 @@ Legend
 *(1) - Multiple implementations supported - see WebAssembly section below*
 *(2) - See iOS section below*
 
-On some platforms, you can further customize the file picking experience by utilizing additional properties: 
+On some platforms, you can further customize the file picking experience by utilizing additional properties:
 
 | Feature                 | UWP  | WebAssembly | Android | iOS | macOS | WPF | GTK |
 |-------------------------|------|-------------|---------|-----|-------|-----|-----|
@@ -154,7 +155,7 @@ The most powerful picker implementation on WebAssembly uses the <a href="https:/
 
 `FolderPicker` is only supported for this type of pickers.
 
-File System Access API pickers allow direct access to the picked files and folders. This means that any modifications the user does to the files are persisted on the target file system. 
+File System Access API pickers allow direct access to the picked files and folders. This means that any modifications the user does to the files are persisted on the target file system.
 
 However, writing to the target file system is limited, so when a write-stream is opened for a file, Uno Platform creates a copy of the file in temporary storage and your changes are applied to this temporary file instead. When your file stream is then flushed, closed, or disposed of, the changes are written to the source file and the temporary file is discarded.
 

@@ -4,7 +4,7 @@
 
 The `CloseRequested` event is supported on macOS. No additional capability needs to be declared in the application manifest as opposed to UWP which requires the [`confirmAppClose` capability](https://docs.microsoft.com/en-us/uwp/api/windows.ui.core.preview.systemnavigationmanagerpreview.closerequested?view=winrt-19041#remarks).
 
-To execute asynchronous logic, get a deferral at the beginning of the event handler and complete it after the logic is finished. 
+To execute asynchronous logic, get a deferral at the beginning of the event handler and complete it after the logic is finished.
 
 Example of a close confirmation dialog:
 

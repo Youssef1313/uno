@@ -22,8 +22,8 @@ This guide will walk you through the necessary steps for changing app language a
 * [**Mono**](https://www.mono-project.com/download/stable/)
 
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 
     > Use `dotnet --version` from the terminal to get the version installed.
 
@@ -33,8 +33,8 @@ This guide will walk you through the necessary steps for changing app language a
 * [**Xcode**](https://apps.apple.com/us/app/xcode/id497799835?mt=12) 10.0 or higher
 * An [**Apple ID**](https://support.apple.com/en-us/HT204316)
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 * [**GTK+3**](https://formulae.brew.sh/formula/gtk+3) for running the Skia/GTK projects
 
 # [JetBrains Rider](#tab/tabid-rider)
@@ -50,6 +50,7 @@ This guide will walk you through the necessary steps for changing app language a
 > For a step-by-step guide to installing the prerequisites for your preferred IDE and environment, consult the [Get Started guide](../get-started.md).
 
 ## Step-by-steps
+
 > [!NOTE]
 > This guide is an extension of ["How to use localization"](localization.md), and will build on top the sample from that guide.
 > Make sure you have completed the previous guide or downloaded the [full localization sample](https://github.com/unoplatform/Uno.Samples/tree/master/UI/LocalizationSamples/Localization), before continuing.
@@ -59,6 +60,7 @@ This guide will walk you through the necessary steps for changing app language a
     And, name them `Page1` and `LanguageSettings`
 1. Add some content to the two new pages:
     - `Page1.xaml`:
+
         ```xml
         <Page x:Class="UnoLocalization.Page1"
               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -72,11 +74,15 @@ This guide will walk you through the necessary steps for changing app language a
             </StackPanel>
         </Page>
         ```
+
     - `Page1.xaml.cs`:
+
         ```cs
         private void GoBack(object sender, RoutedEventArgs e) => Frame.GoBack();
         ```
+
     - `LanguageSettings.xaml`:
+
         ```xml
         <Page x:Class="UnoLocalization.LanguageSettings"
               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -96,7 +102,9 @@ This guide will walk you through the necessary steps for changing app language a
             </StackPanel>
         </Page>
         ```
+
     - `LanguageSettings.xaml.cs`:
+
         ```cs
         private void SetAppLanguage(object sender, RoutedEventArgs e)
         {
@@ -118,6 +126,7 @@ This guide will walk you through the necessary steps for changing app language a
 
 1. Add two new buttons to `MainPage` for navigation:
     - `MainPage.xaml`:
+
         ```xml
         <StackPanel toolkit:VisibleBoundsPadding.PaddingMask="Top">
             <TextBlock x:Uid="MainPage_IntroText" Text="Hello, world!" Margin="20" FontSize="30" />
@@ -127,11 +136,14 @@ This guide will walk you through the necessary steps for changing app language a
             <Button x:Uid="MainPage_GotoLanguageSettings" Content="Language Settings" Click="GotoLanguageSettings" />
         </StackPanel>
         ```
+
     - `MainPage.xaml.cs`:
+
         ```cs
         private void GotoNextPage(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(Page1));
         private void GotoLanguageSettings(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(LanguageSettings));
         ```
+
 1. Add the localization strings for the new elements:
     Open both `Strings\en\Resources.resw` and `Strings\fr\Resources.xaml`, and add these:
     Name|Value in en\Resources.resw|Value in fr\Resources.resw
@@ -148,7 +160,7 @@ This guide will walk you through the necessary steps for changing app language a
 See the completed sample on GitHub: [RuntimeCultureSwitching](https://github.com/unoplatform/Uno.Samples/tree/master/UI/LocalizationSamples/RuntimeCultureSwitching)
 
 ## Additional Resources
-https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/globalizing-portal
+<https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/globalizing-portal>
 
 <br>
 

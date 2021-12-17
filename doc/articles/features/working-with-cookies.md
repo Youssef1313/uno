@@ -23,9 +23,9 @@ Then set the cookie using the `SetCookie` method.
 var cookie = new Cookie("MyCookie", "somevalue");
 var request = new SetCookieRequest(cookie)
 {
-	Path = "/",
-	Expires = DateTimeOffset.UtcNow.AddDays(2),
-	Secure = true,
+ Path = "/",
+ Expires = DateTimeOffset.UtcNow.AddDays(2),
+ Secure = true,
 };
 
 CookieManager.GetDefault().SetCookie(request);
@@ -46,8 +46,8 @@ To retrieve the active cookies, use the `GetCookies` method:
 var cookies = CookieManager.GetDefault().GetCookies();
 foreach (var cookie in cookies)
 {
-	Debug.WriteLine(cookie.Name);
-	Debug.WriteLine(cookie.Value);
+ Debug.WriteLine(cookie.Name);
+ Debug.WriteLine(cookie.Value);
 }
 
 #endif

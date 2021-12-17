@@ -34,6 +34,7 @@ Also, you will learn how to run your applications on all platforms supported by 
 4. In your `Shared` project, open up `MainPage.xaml`
 
 5. Add a `StackPanel` around your `TextBlock`
+
     ```xml
     <Grid>
         <StackPanel>
@@ -43,6 +44,7 @@ Also, you will learn how to run your applications on all platforms supported by 
     ```
 
 6. Add a `Slider`
+
     ```xml
     <Grid>
         <StackPanel>
@@ -53,6 +55,7 @@ Also, you will learn how to run your applications on all platforms supported by 
     ```
 
 7. Bind the `Text` value of your `TextBlock` to the value of the `Slider`
+
     ```xml
     <Grid>
         <StackPanel>

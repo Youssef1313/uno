@@ -149,7 +149,7 @@ Here is a list of helper methods used to facilitate the integration with the HTM
 
 * Finally, it is possible to invoke an arbitrary JavaScript code by using the static method `WebAssembleRuntime.InvokeJS()`. The script is directly executed in the context of the browser, giving the ability to perform anything that JavaScript can do. See next section for more details.
 
-## Invoke JavaScript code From C#
+## Invoke JavaScript code From C #
 
 Whenever there's a need to invoke a JavaScript code in the browser, the `WebAssembly.WebAssemblyRuntime` static class should be used. There is also helpers you can call as _extension methods_ on the elements.
 
@@ -166,7 +166,7 @@ await WebAssemblyRuntime.InvokeAsync(
 
 // Invoke javascript asynchronously and await returned string
 var str = await WebAssemblyRuntime.InvokeAsync(
-	"(async () => "It works asynchronously!")();");
+ "(async () => "It works asynchronously!")();");
 
 // Escape javascript data to prevent javascript script injection
 var escapedUserId = WebAssemblyRuntime.EscapeJS(userId);
@@ -226,7 +226,7 @@ There's 2 ways to _callback_ to managed C# code from JavaScript:
    ```
 
    More details [on this page](https://platform.uno/docs/articles/wasm-custom-events.html).
-   
+
    > Note: current there's no easy way to asynchronously call managed (dotnet) code from JavaScript in the current version of Uno.
 
 ## 🔬 Going further

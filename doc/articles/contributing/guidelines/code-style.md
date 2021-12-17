@@ -14,7 +14,7 @@ This section describes some recurring patterns and practices you'll see in Uno c
 
 ### Partial classes
 
-[Partial class definitions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods) are used extensively in Uno. The two main use cases for partial classes are [platform-specific code](../../platform-specific-csharp.md) and [generated code](../../uno-development/uno-internals-overview.md#generated-notimplemented-stubs). 
+[Partial class definitions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods) are used extensively in Uno. The two main use cases for partial classes are [platform-specific code](../../platform-specific-csharp.md) and [generated code](../../uno-development/uno-internals-overview.md#generated-notimplemented-stubs).
 
 However, in some cases where it makes sense, partial class files are also used for logical separation of code. If you're implementing a type that owns a lot of dependency properties, consider putting these in a separate partial, to avoid cluttering up the file where the actual business logic is with DP boilerplate. Another use case for a partial is a nested class with a large definition.
 
@@ -45,7 +45,7 @@ else
 {
     // use braces even for single line conditions
 }
-```            
+```
 
 ## Integration Tests
 

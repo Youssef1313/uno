@@ -1,6 +1,6 @@
 # How Uno Platform works
 
-How does Uno Platform make the same application code run on all platforms? 
+How does Uno Platform make the same application code run on all platforms?
 
 #### On Windows
 
@@ -51,7 +51,7 @@ The codebase of an Uno Platform application is a mix of XAML markup, C# code, im
 
 ### Binaries
 
-The C# code is the easy part - [.NET runs pretty much everywhere](https://docs.microsoft.com/en-us/dotnet/core/introduction). On iOS, Android, and macOS, Uno.UI is using [Xamarin Native](https://dotnet.microsoft.com/learn/xamarin/what-is-xamarin) (note: not Xamarin.Forms). On the web, it's using .NET running in [WebAssembly](https://webassembly.org/), and on Linux it's running under .NET Core. 
+The C# code is the easy part - [.NET runs pretty much everywhere](https://docs.microsoft.com/en-us/dotnet/core/introduction). On iOS, Android, and macOS, Uno.UI is using [Xamarin Native](https://dotnet.microsoft.com/learn/xamarin/what-is-xamarin) (note: not Xamarin.Forms). On the web, it's using .NET running in [WebAssembly](https://webassembly.org/), and on Linux it's running under .NET Core.
 
 The compiled binaries also include the output of the XAML parser, as described in the next section.
 

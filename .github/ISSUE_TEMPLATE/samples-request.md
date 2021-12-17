@@ -6,11 +6,11 @@ labels: kind/contributor-experience, kind/documentation, triage/untriaged, diffi
 
 <!-- Please only use this template for submitting enhancement requests -->
 
-## What would you like to be added:
+## What would you like to be added
 
-## Why is this needed:
+## Why is this needed
 
-## For which Platform:
+## For which Platform
 
 - [ ] iOS
 - [ ] Android
@@ -22,7 +22,6 @@ labels: kind/contributor-experience, kind/documentation, triage/untriaged, diffi
   - [ ] GTK (Linux)
   - [ ] Tizen
 - [ ] Windows
-
 
 ## Anything else we need to know?
 

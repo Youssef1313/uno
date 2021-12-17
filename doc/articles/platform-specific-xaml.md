@@ -1,15 +1,16 @@
 # Platform-specific XAML markup in Uno
 
-Uno allows you to reuse views and business logic across platforms. Sometimes though you may want to write different code per platform, either because you need to access platform-specific native APIs and 3rd-party libraries, or because you want your app to look and behave differently depending on the platform. 
+Uno allows you to reuse views and business logic across platforms. Sometimes though you may want to write different code per platform, either because you need to access platform-specific native APIs and 3rd-party libraries, or because you want your app to look and behave differently depending on the platform.
 
 This guide covers multiple approaches to managing per-platform markup in XAML. See [this guide for managing per-platform C#](platform-specific-csharp.md).
 
 ## Project structure
 
 There are two ways to restrict code or XAML markup to be used only on a specific platform:
- * Use conditionals within a shared file
- * Place the code in a file which is only included in the desired platform head.
- 
+
+* Use conditionals within a shared file
+* Place the code in a file which is only included in the desired platform head.
+
  The structure of an Uno app created with the default [Visual Studio template](https://marketplace.visualstudio.com/items?itemName=nventivecorp.uno-platform-addin) is [explained in more detail here](uno-app-solution-structure.md). The key point to understand is that files in a shared project referenced from a platform head **are treated in exactly the same way** as files included directly under the head, and are compiled together into a single assembly.
 
 ## XAML conditional prefixes
@@ -28,26 +29,26 @@ Using the following XAML:
 
 ```xml
 <Page x:Class="HelloWorld.MainPage"
-	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:android="http://uno.ui/android"
-	  xmlns:ios="http://uno.ui/ios"
-	  xmlns:wasm="http://uno.ui/wasm"
-	  xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:not_android="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  mc:Ignorable="d android ios wasm">
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:android="http://uno.ui/android"
+   xmlns:ios="http://uno.ui/ios"
+   xmlns:wasm="http://uno.ui/wasm"
+   xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:not_android="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   mc:Ignorable="d android ios wasm">
 
-	<StackPanel Margin="20,70,0,0">
-		<TextBlock Text="This text will be large on Windows, and pink on WASM"
-				   win:FontSize="24"
-				   wasm:Foreground="DeepPink"
-				   TextWrapping="Wrap"/>
-		<TextBlock android:Text="This version will be used on Android"
-				   not_android:Text="This version will be used on every other platform" />
-		<ios:TextBlock Text="This TextBlock will only be created on iOS" />
-	</StackPanel>
+ <StackPanel Margin="20,70,0,0">
+  <TextBlock Text="This text will be large on Windows, and pink on WASM"
+       win:FontSize="24"
+       wasm:Foreground="DeepPink"
+       TextWrapping="Wrap"/>
+  <TextBlock android:Text="This version will be used on Android"
+       not_android:Text="This version will be used on every other platform" />
+  <ios:TextBlock Text="This TextBlock will only be created on iOS" />
+ </StackPanel>
 </Page>
 ```
 
@@ -56,7 +57,7 @@ Results in:
 ![Visual output](Assets/platform-specific-xaml.png)
 
 In this example note how the properties `FontSize` and `Foreground` are selectively used based on platform. The `TextBlock` property `Text` also has two different values based on whether or not the app is running in Android. Finally, an entire `TextBlock` is added if the app is running in iOS. This shows:
- 
+
  1. How certain properties can be used based on the platform
  2. How the values of certain properties can be changed based on the platform
  3. How entire controls can be added or removed for certain platforms
@@ -69,26 +70,26 @@ Consider the following XAML which is using the Windows Community Toolkit's [Blur
 
 ```xml
 <Page x:Class="HelloWorld.MainPage"
-	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-	  xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  mc:Ignorable="d android ios wasm">
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+   xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+   xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+   xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   mc:Ignorable="d android ios wasm">
 
-	<Grid>
-		<win:Grid Background="Gray">
-			<interactivity:Interaction.Behaviors>
-				<behaviors:Blur Value="7" Duration="0" Delay="0" AutomaticallyStart="True" />
-			</interactivity:Interaction.Behaviors>
-		</win:Grid>
-		<Grid>
-			<!-- Other page content -->
-		</Grid>
-	</Grid>
+ <Grid>
+  <win:Grid Background="Gray">
+   <interactivity:Interaction.Behaviors>
+    <behaviors:Blur Value="7" Duration="0" Delay="0" AutomaticallyStart="True" />
+   </interactivity:Interaction.Behaviors>
+  </win:Grid>
+  <Grid>
+   <!-- Other page content -->
+  </Grid>
+ </Grid>
 </Page>
 ```
 
@@ -114,7 +115,7 @@ The pre-defined prefixes are listed below:
 
 More visually, platform support for the pre-defined prefixes is shown in the below table:
 
-| Prefix        |  Win  | Droid |  iOS  |  Web  | macOS | Skia  | 
+| Prefix        |  Win  | Droid |  iOS  |  Web  | macOS | Skia  |
 |---------------|-------|-------|-------|-------|-------|-------|
 | `win`         | ✔ | ✖ | ✖ | ✖ | ✖ | ✖ |
 | `android`     | ✖ | ✔ | ✖ | ✖ | ✖ | ✖ |
@@ -131,14 +132,15 @@ More visually, platform support for the pre-defined prefixes is shown in the bel
 | `not_skia`    | ✔ | ✔ | ✔ | ✔ | ✔ | ✖ |
 
 Where:
- * 'Win' represents Windows, and
- * 'Droid' represents Android
+
+* 'Win' represents Windows, and
+* 'Droid' represents Android
 
 ### XAML prefixes in cross-targeted libraries
 
 For Uno 3.0 and above, XAML prefixes behave differently in class libraries than when used directly in application code. Specifically, it isn't possible to distinguish Skia and Wasm in a library, since both platforms use the .NET Standard 2.0 target. The `wasm` and `skia` prefixes will always evaluate to false inside of a library.
 
-The prefix `netstdref` is available and will include the objects or properties in both Skia and Wasm build. A prefix `not_nestdref` can also be used to exclude them. Since Skia and Wasm are similar, it is often not necessary to make the distinction. 
+The prefix `netstdref` is available and will include the objects or properties in both Skia and Wasm build. A prefix `not_nestdref` can also be used to exclude them. Since Skia and Wasm are similar, it is often not necessary to make the distinction.
 
 In cases where it is needed (fonts are one example) then the XAML files must be placed directly in the platform specific project or a shared project.
 
@@ -153,17 +155,17 @@ You can use standard WinUI conditional XAML prefixes with Uno Platform, [as docu
 
 Currently the following conditional methods are supported:
 
- * IsApiContractPresent(ContractName, VersionNumber)
- * IsApiContractNotPresent(ContractName, VersionNumber)
- * IsTypePresent(ControlType)
- * IsTypeNotPresent(ControlType)
+* IsApiContractPresent(ContractName, VersionNumber)
+* IsApiContractNotPresent(ContractName, VersionNumber)
+* IsTypePresent(ControlType)
+* IsTypeNotPresent(ControlType)
 
 ### IsApiContractPresent
 
 The following `ContractName` values are currently supported:
 
- * **"Windows.Foundation.UniversalApiContract"**: resolves to `true` if `VersionNumber` is 10 or below, and `false` otherwise.
- * **"Uno.WinUI"**: resolves to `true` if the [`Uno.WinUI` NuGet package](updating-to-winui3.md) (ie the WinUI 3 API mapping) is in use, `false` if the `Uno.UI` NuGet package is in use.
+* **"Windows.Foundation.UniversalApiContract"**: resolves to `true` if `VersionNumber` is 10 or below, and `false` otherwise.
+* **"Uno.WinUI"**: resolves to `true` if the [`Uno.WinUI` NuGet package](updating-to-winui3.md) (ie the WinUI 3 API mapping) is in use, `false` if the `Uno.UI` NuGet package is in use.
 
 All other contract names will resolve to false.
 
@@ -181,20 +183,20 @@ The following example uses `IsTypePresent` to use WebView to display content on 
 
 ```xml
 <Page x:Class="HelloWorld.MainPage"
-	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:local="using:HelloWorld"
-	  xmlns:webviewpresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsTypePresent(Windows.UI.Xaml.Controls.WebView)"
-	  xmlns:webviewnotpresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsTypeNotPresent(Windows.UI.Xaml.Controls.WebView)"
-	  xmlns:local_webviewnotpresent="using:HelloWorld?IsTypeNotPresent(Windows.UI.Xaml.Controls.WebView)"
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  mc:Ignorable="d">
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:local="using:HelloWorld"
+   xmlns:webviewpresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsTypePresent(Windows.UI.Xaml.Controls.WebView)"
+   xmlns:webviewnotpresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsTypeNotPresent(Windows.UI.Xaml.Controls.WebView)"
+   xmlns:local_webviewnotpresent="using:HelloWorld?IsTypeNotPresent(Windows.UI.Xaml.Controls.WebView)"
+   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   mc:Ignorable="d">
 
-	<Grid>
-		<webviewpresent:WebView Source="{Binding DisplayContent}" />
-		<local_webviewnotpresent:WebViewSubstitute ContentSource="{Binding DisplayContent}" />
-		<webviewnotpresent:TextBlock VerticalAlignment="Bottom" Text="Showing substitute for WebView">
-	</Grid>
+ <Grid>
+  <webviewpresent:WebView Source="{Binding DisplayContent}" />
+  <local_webviewnotpresent:WebViewSubstitute ContentSource="{Binding DisplayContent}" />
+  <webviewnotpresent:TextBlock VerticalAlignment="Bottom" Text="Showing substitute for WebView">
+ </Grid>
 </Page>
 ```

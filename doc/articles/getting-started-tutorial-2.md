@@ -20,7 +20,7 @@ The tutorial walks you through creating a cross platform application with Uno Pl
 
 ## Getting Started
 
-1. Open Visual Studio and click on `Create new project`. 
+1. Open Visual Studio and click on `Create new project`.
 
     ![](Assets/tutorial01/newproject1.PNG)
 
@@ -396,7 +396,6 @@ You should see something similar to the screenshot below. You can [download the 
 
 ![tutorial-screenshot](Assets/quick-start/tutorial-screenshot.png)
 
-
 In this tutorial, through creating a simple Bug Tracking app you have learned how to:
 
 - Add the Uno Project Templates to Visual Studio
@@ -406,6 +405,6 @@ In this tutorial, through creating a simple Bug Tracking app you have learned ho
 <div class="NOTE alert alert-info">
 <h5>Next:</h5>
 
-[Got questions? Want to learn more? Looking for production-ready examples? Check out the Next Steps page.](get-started-next-steps.md) 
+[Got questions? Want to learn more? Looking for production-ready examples? Check out the Next Steps page.](get-started-next-steps.md)
 
 </div>

@@ -8,9 +8,9 @@ This guide offers an overview of the various types of tests used within Uno, and
 
 The 'TLDR' rule of thumb for adding tests is:
 
- * if you're testing platform-independent functionality, like the dependency property system, [use Uno.UI.Tests](../../uno-development/creating-mocked-tests.md);
- * if you're testing platform-dependent functionality that can be verified programmatically in-process, like checking that a control is measured and arranged properly, [use Uno.UI.RuntimeTests](../../uno-development/creating-runtime-tests.md);
- * if your test needs to simulate user interaction or check that the final screen output is correct, [use SamplesApp.UITests](../../uno-development/creating-ui-tests.md).
+* if you're testing platform-independent functionality, like the dependency property system, [use Uno.UI.Tests](../../uno-development/creating-mocked-tests.md);
+* if you're testing platform-dependent functionality that can be verified programmatically in-process, like checking that a control is measured and arranged properly, [use Uno.UI.RuntimeTests](../../uno-development/creating-runtime-tests.md);
+* if your test needs to simulate user interaction or check that the final screen output is correct, [use SamplesApp.UITests](../../uno-development/creating-ui-tests.md).
 
 ## Types of tests
 
@@ -18,30 +18,30 @@ These are the main types of tests in Uno:
 
  Test type                   | Location
  --------------------------- | ---------------------------------------------------------------------------------
- UI tests                    | https://github.com/unoplatform/uno/tree/master/src/SamplesApp/SamplesApp.UITests
- .NET Framework unit tests   | https://github.com/unoplatform/uno/tree/master/src/Uno.UI.Tests
- Platform runtime unit tests | https://github.com/unoplatform/uno/tree/master/src/Uno.UI.RuntimeTests
- XAML code generation tests  | https://github.com/unoplatform/uno/tree/master/src/SourceGenerators/XamlGenerationTests
- UI snapshot tests           | (https://github.com/unoplatform/uno/tree/master/src/SamplesApp/UITests.Shared
+ UI tests                    | <https://github.com/unoplatform/uno/tree/master/src/SamplesApp/SamplesApp.UITests>
+ .NET Framework unit tests   | <https://github.com/unoplatform/uno/tree/master/src/Uno.UI.Tests>
+ Platform runtime unit tests | <https://github.com/unoplatform/uno/tree/master/src/Uno.UI.RuntimeTests>
+ XAML code generation tests  | <https://github.com/unoplatform/uno/tree/master/src/SourceGenerators/XamlGenerationTests>
+ UI snapshot tests           | (<https://github.com/unoplatform/uno/tree/master/src/SamplesApp/UITests.Shared>
 
  All these tests are run on each CI build, and all tests must pass before a PR can be merged.
 
- ### UI tests
+### UI tests
 
  Uno's UI tests use the [Uno.UITest](https://github.com/unoplatform/Uno.UITest) testing harness, which mimics the [`Xamarin.UITest` API](https://docs.microsoft.com/en-us/appcenter/test-cloud/uitest/) and extends it to WebAssembly. These tests run out-of-process and interact with a running app (the [SamplesApp](https://github.com/unoplatform/uno/tree/master/src/SamplesApp/UITests.Shared)) to confirm that it behaves correctly on each supported platform.
 
 UI tests can mimic the actions of a user:
 
- - tapping buttons and other UI elements
- - entering keyboard input
- - scrolling, swiping, and other gestures
+- tapping buttons and other UI elements
+- entering keyboard input
+- scrolling, swiping, and other gestures
 
  They can verify assertions about the state of the app:
 
-  - text labels
-  - any DependencyProperty value
-  - onscreen bounds of a view element
-  - comparing screenshots at different stages of the app, and asserting equality or inequality
+- text labels
+- any DependencyProperty value
+- onscreen bounds of a view element
+- comparing screenshots at different stages of the app, and asserting equality or inequality
 
 A complete set of instructions for authoring UI tests is available [here](../../uno-development/working-with-the-samples-apps.md).
 
@@ -69,11 +69,11 @@ If you want to actually test that generated XAML produces correct behavior, whic
 
 ### UI snapshot tests
 
-These are 'semi-automated' tests. For each sample in the [SamplesApp](https://github.com/unoplatform/uno/tree/master/src/SamplesApp/UITests.Shared), a minimal UI test is [generated](https://github.com/unoplatform/uno/blob/master/src/SamplesApp/SamplesApp.UITests.Generator/SnapShotTestGenerator.cs) which simply runs the sample (which automatically takes a screenshot of the loaded sample). 
+These are 'semi-automated' tests. For each sample in the [SamplesApp](https://github.com/unoplatform/uno/tree/master/src/SamplesApp/UITests.Shared), a minimal UI test is [generated](https://github.com/unoplatform/uno/blob/master/src/SamplesApp/SamplesApp.UITests.Generator/SnapShotTestGenerator.cs) which simply runs the sample (which automatically takes a screenshot of the loaded sample).
 
-The screenshots from each sample, as well as all screenshots generated by the main UI tests (using the `TakeScreenshot()` method), are [compared](https://github.com/unoplatform/uno/tree/master/src/Uno.UI.TestComparer) with the same sample from the most recent merged CI build. 
+The screenshots from each sample, as well as all screenshots generated by the main UI tests (using the `TakeScreenshot()` method), are [compared](https://github.com/unoplatform/uno/tree/master/src/Uno.UI.TestComparer) with the same sample from the most recent merged CI build.
 
-'Failed' comparisons will not fail the build (for one thing, it's possible the differences are expected or even desired). Instead, a report is generated, with a summary added to the PR as a comment listing all samples that changed. The onus is on the PR author to manually review these changes to ensure that no regressions have been introduced. 
+'Failed' comparisons will not fail the build (for one thing, it's possible the differences are expected or even desired). Instead, a report is generated, with a summary added to the PR as a comment listing all samples that changed. The onus is on the PR author to manually review these changes to ensure that no regressions have been introduced.
 
 Screenshots can be viewed by going to the CI build (from the main PR summary, press the 'Details' link for the build), opening the 'Tests' tab, and opening 'Attachments' for individual tests. For failed comparisons, the first attachment will be a per-pixel XOR with the screenshot from the previous build, which will give some insight into why the comparison failed.
 
@@ -86,8 +86,8 @@ Skip screenshot for static sample:
 ```csharp
 namespace Uno.UI.Samples.Content.UITests.ButtonTestsControl
 {
-	[SampleControlInfo(ignoreInSnapshotTests: true)]
-	public sealed partial class CheckBox_Button_With_CanExecute_Changing : UserControl
+ [SampleControlInfo(ignoreInSnapshotTests: true)]
+ public sealed partial class CheckBox_Button_With_CanExecute_Changing : UserControl
   {
     ...
   }
@@ -96,24 +96,23 @@ namespace Uno.UI.Samples.Content.UITests.ButtonTestsControl
   Skip screenshot comparison for UI tests:
 
   ```csharp
-		[Test]
-		[AutoRetry]
-		public void TimePicker_Flyout()
-		{
-			Run("UITests.Shared.Windows_UI_Xaml_Controls.TimePicker.TimePicker_Flyout_Automated", skipInitialScreenshot: true);
+  [Test]
+  [AutoRetry]
+  public void TimePicker_Flyout()
+  {
+   Run("UITests.Shared.Windows_UI_Xaml_Controls.TimePicker.TimePicker_Flyout_Automated", skipInitialScreenshot: true);
 
-			...
+   ...
 
-			TakeScreenshot("TimePicker - Flyout", ignoreInSnapshotCompare: true);
+   TakeScreenshot("TimePicker - Flyout", ignoreInSnapshotCompare: true);
 
   ```
-
 
 ## Which type of test should I create?
 
 The UI tests are in some sense the most powerful means of testing behavior, since they can simulate real user input and verify the state of the running app. However they're also typically more time-consuming to author, and take several orders of magnitude longer to run , which affects both your own personal development loop and also very importantly the running time of the CI build. Sometimes a UI test is a sledgehammer where you only need... some... smaller hammer.
 
-As a rule of thumb, if the behavior you're testing can be verified by a unit test (either in `Uno.UI.Tests` or `Uno.UI.RuntimeTests`), you should write a unit test. 
+As a rule of thumb, if the behavior you're testing can be verified by a unit test (either in `Uno.UI.Tests` or `Uno.UI.RuntimeTests`), you should write a unit test.
 
 If you're fixing a bug that can be verified by a static sample, create a SamplesApp sample that can be monitored by the snapshot comparer.
 

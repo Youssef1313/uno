@@ -8,6 +8,7 @@ The format is the same as Windows, as follows:
 ```xml
 <Setter Property="FontFamily" Value="/Assets/Fonts/Roboto-Regular.ttf#Roboto" />
 ```
+
    or
 
 ```xml
@@ -35,6 +36,7 @@ The format is the same as Windows, as follows:
 ```xml
 <Setter Property="FontFamily" Value="/Assets/Fonts/yourfont01.ttf#Roboto" />
 ```
+
     or
 
 ```xml
@@ -86,6 +88,7 @@ Will match:
   ...
 }
 ```
+
 ## Custom Fonts on macOS
 
 Fonts must be placed in the `Resources/Fonts` folder of the head project, be marked as
@@ -123,33 +126,33 @@ If that's your case, here are some examples of code:
 <FontFamily x:Key="FontFamilyBold">ms-appx:///Assets/Fonts/PierSans-Bold.otf#Pier Sans Bold</FontFamily>
 
 <Style x:Key="LightTextBlockStyle"
-	   TargetType="TextBlock">
-	<Setter Property="FontFamily"
-			Value="{StaticResource FontFamilyLight}" />
-	<Setter Property="FontWeight"
-			Value="Light" />
-	<Setter Property="FontSize"
-			Value="16" />
+    TargetType="TextBlock">
+ <Setter Property="FontFamily"
+   Value="{StaticResource FontFamilyLight}" />
+ <Setter Property="FontWeight"
+   Value="Light" />
+ <Setter Property="FontSize"
+   Value="16" />
 </Style>
 
 <Style x:Key="BoldTextBlockStyle"
-	   TargetType="TextBlock">
-	<Setter Property="FontFamily"
-			Value="{StaticResource FontFamilyBold}" />
-	<Setter Property="FontWeight"
-			Value="Bold" />
-	<Setter Property="FontSize"
-			Value="24" />
+    TargetType="TextBlock">
+ <Setter Property="FontFamily"
+   Value="{StaticResource FontFamilyBold}" />
+ <Setter Property="FontWeight"
+   Value="Bold" />
+ <Setter Property="FontSize"
+   Value="24" />
 </Style>
 
 <TextBlock Text="TextBlock with Light FontFamily and FontWeight."
-		   FontFamily="{StaticResource FontFamilyLight}"
-		   FontWeight="Light" />
+     FontFamily="{StaticResource FontFamilyLight}"
+     FontWeight="Light" />
 
 <TextBlock Style="{StaticResource BoldTextBlockStyle}">
-	<Run Text="TextBlock with Runs" />
-	<Run Text="and  Light FontFamily and FontWeight for the second Run."
-		 FontWeight="Light"
-		 FontFamily="{StaticResource FontFamilyLight}" />
+ <Run Text="TextBlock with Runs" />
+ <Run Text="and  Light FontFamily and FontWeight for the second Run."
+   FontWeight="Light"
+   FontFamily="{StaticResource FontFamilyLight}" />
 </TextBlock>
 ```

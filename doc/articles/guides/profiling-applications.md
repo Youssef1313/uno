@@ -4,11 +4,12 @@
 
 As of Preview 7, .NET 6 provides the ability to do CPU profiling through [`dotnet-trace`](https://docs.microsoft.com/dotnet/core/diagnostics/dotnet-trace) for android applications.
 
-
 ## Profiling Xamarin.Android and Xamarin.iOS applications
 
 ### Pre-requisites
+
 Run the following commands
+
 - `dotnet tool update -g dotnet-dsrouter --add-source=https://aka.ms/dotnet-tools/index.json`
 - `dotnet tool update -g dotnet-trace --add-source=https://aka.ms/dotnet-tools/index.json`
 
@@ -33,11 +34,15 @@ Profiling has to first be enabled in the application. Some additional properties
 ```
 
 Then in the `Android` application folder, add the following two files:
+
 - `environment.device.txt`
+
     ```
     DOTNET_DiagnosticPorts=127.0.0.1:9000,suspend
     ```
+
 - `environment.emulator.txt`
+
     ```
     DOTNET_DiagnosticPorts=10.0.2.2:9001,suspend
     ```
@@ -47,19 +52,25 @@ Note that the `suspend` directive means that if `dotnet-trace` is not running, t
 ### Profiling the application
 
 - Start the diagnostics router, in any folder:
+
     ```
     dotnet-dsrouter client-server -tcps 127.0.0.1:9001 -ipcc /tmp/uno-app --verbose debug
     ```
+
 - Start `dotnet-trace`, in the app folder or where you want your traces to be stored:
+
     ```
     dotnet-trace collect --diagnostic-port /tmp/uno-app --format speedscope -o uno-app-trace
     ```
+
 - Start an `x86-64` emulator or `arm64` (`armv8`) device
     > Running on a 32 bits device is not supported and will generate unusable traces in SpeedScope
 - Build the application with profiling enabled
+
     ```
     dotnet build -f net6.0-android -t:run -c Release -p:IsEmulator=true /p:RunAOTCompilation=true /p:AndroidEnableProfiler=true
     ```
+
 - The app will start and the `dotnet-trace` will display a MB number counting up
 - Use the app and once done, stop `dotnet-trace` using the specified method (Likely `Enter` or `Ctr+C`)
 - Open a browser at `https://speedscope.app` and drop the `uno-app-trace.speedscope.json` file on it
@@ -76,7 +87,6 @@ This section provides insights into what to look for when analyzing flame charts
 
 Profiling Skia based Uno Platform targets can be done on Windows in Visual Studio 2019 and 2022 using [time and memory profilers](https://docs.microsoft.com/visualstudio/profiling/profiling-feature-tour?view=vs-2019).
 
-
 ## Profiling WebAssembly applications
 
 Profiling WebAssembly applications can be done through the use of AOT compilation, and [browsers' performance tab](https://developer.chrome.com/docs/devtools/evaluate-performance/).
@@ -84,12 +94,15 @@ Profiling WebAssembly applications can be done through the use of AOT compilatio
 ### Setup the WebAssembly application for profiling
 
 - Enable emcc profiling:
+
     ```xml
     <PropertyGroup>
         <WasmShellEnableEmccProfiling>true</WasmShellEnableEmccProfiling>
     </PropertyGroup>
     ```
+
 - Enable AOT compilation:
+
     ```xml
     <PropertyGroup>
         <WasmShellEnableEmccProfiling>InterpreterAndAOT</WasmShellEnableEmccProfiling>
@@ -101,5 +114,5 @@ Profiling WebAssembly applications can be done through the use of AOT compilatio
 - Use your application or restart your application while recording the trace
 
 ### Troubleshooting
-- Deep traces found in large async code patterns or complex UI trees may hit [this chromium issue](https://bugs.chromium.org/p/chromium/issues/detail?id=1206709). This generally makes traces very long to load; you'll need to be patient.
 
+- Deep traces found in large async code patterns or complex UI trees may hit [this chromium issue](https://bugs.chromium.org/p/chromium/issues/detail?id=1206709). This generally makes traces very long to load; you'll need to be patient.

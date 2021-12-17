@@ -1,6 +1,6 @@
 # How Uno works
 
-This article explores how Uno works in detail, with a focus on information that's useful for contributors to Uno. 
+This article explores how Uno works in detail, with a focus on information that's useful for contributors to Uno.
 
 ## What Uno does
 
@@ -30,20 +30,20 @@ APIs for non-UI features, for example [`Windows.System.Power`](../features/windo
 UWP has a very large API surface area, and not all features in it have been implemented by Uno. We want pre-existing UWP apps and libraries that reference these features to still be able to at least compile on Uno. To support this, an [automated tool](https://github.com/unoplatform/uno/tree/master/src/Uno.UWPSyncGenerator) inspects the UWP framework, compares it to authored code in Uno, and generates stubs for all types and type members that exist in UWP but are not implemented on Uno. For example:
 
 ```csharp
-		#if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __MACOS__
-		[global::Uno.NotImplemented]
-		public  bool ExitDisplayModeOnAccessKeyInvoked
-		{
-			get
-			{
-				return (bool)this.GetValue(ExitDisplayModeOnAccessKeyInvokedProperty);
-			}
-			set
-			{
-				this.SetValue(ExitDisplayModeOnAccessKeyInvokedProperty, value);
-			}
-		}
-		#endif
+  #if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __MACOS__
+  [global::Uno.NotImplemented]
+  public  bool ExitDisplayModeOnAccessKeyInvoked
+  {
+   get
+   {
+    return (bool)this.GetValue(ExitDisplayModeOnAccessKeyInvokedProperty);
+   }
+   set
+   {
+    this.SetValue(ExitDisplayModeOnAccessKeyInvokedProperty, value);
+   }
+  }
+  #endif
 ```
 
 Note the platform conditionals, since a member may be implemented for some platforms but not others. The `[NotImplemented]` attribute flags this property as not implemented and a code analyzer surfaces a warning if it is referenced in app code.

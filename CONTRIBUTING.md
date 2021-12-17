@@ -67,7 +67,7 @@ If you are an outside contributor, please fork the Uno Platform repository you w
 
 **Submitting a pull request**
 
-If you don't know what a pull request is read this article: https://help.github.com/articles/using-pull-requests. Make sure the repository can build and all tests pass, as well as follow the current coding guidelines.
+If you don't know what a pull request is read this article: <https://help.github.com/articles/using-pull-requests>. Make sure the repository can build and all tests pass, as well as follow the current coding guidelines.
 
 Pull requests should all be made to the **master** branch.
 
@@ -85,7 +85,7 @@ Addresses #bugnumber (in this specific format)
 
 **Tests**
 
--  Tests need to be provided for every bug/feature that is completed.
--  Tests only need to be present for issues that need to be verified by QA (e.g., not tasks)
--  If there is a scenario that is far too hard to test, there does not need to be a test for it.
-  - "Too hard" is determined by the team as a whole.
+- Tests need to be provided for every bug/feature that is completed.
+- Tests only need to be present for issues that need to be verified by QA (e.g., not tasks)
+- If there is a scenario that is far too hard to test, there does not need to be a test for it.
+- "Too hard" is determined by the team as a whole.

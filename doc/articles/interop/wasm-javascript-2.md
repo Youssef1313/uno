@@ -1,10 +1,17 @@
 # Embedding Existing JavaScript Components Into Uno-WASM - Part 2
+
 Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://prismjs.com/). This library is simple and is self-contained - there's no external dependencies.
+
 # Integration of PrismJS in a project
+
 ## 0. Before starting
+
 📝 To reproduce the code in this article, you must [prepare development environment using Uno's _Getting Started_ article](https://platform.uno/docs/articles/get-started.html).
+
 ## 1. Create the projects
+
 🎯 This section is very similar to the [Creating an app - Tutorial](https://platform.uno/docs/articles/getting-started-tutorial-1.html) in the official documentation.
+
 1. Start **Visual Studio 2019**
 2. Click `Create a new project`
 
@@ -30,11 +37,13 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
    ![Run Result](assets/image-20200325114609689.png)
 
    > Note: when compiling using Uno platform the first time, it could take some time to download the latest .NET for WebAssembly SDK into a temporary folder.
+   >
 ## 2. Create a control in managed code
 
 🎯  In this section, a control named `PrismJsView` is created in code and used in the XAML page (`MainPage.xaml`) to present it.
 
 1. From the `.Shared` project, create a new class file named `PrismJsView.cs`. and copy the following code:
+
    ```csharp
    using System;
    using System.Collections.Generic;
@@ -101,8 +110,10 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
        }
    }
    ```
+
    This will define a control having 2 properties, one code `Code` and another one for `Language`.
 2. Change the `MainPage.xaml` file to the following content:
+
    ```xml
    <Page
        x:Class="PrismJsDemo.MainPage"
@@ -126,6 +137,7 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
        </Grid>
    </Page>
    ```
+
 3. Press CTRL-F5.  You should see this:
 
    ![Browser image](assets/image-20200414144707425.png)
@@ -139,11 +151,12 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
    The `xamltype="PrismJsDemo.Shared.PrismJsView"`) control is there!
 
 👌 The project is now ready to integrate PrismJS.
+
 ## 3. Add JavaScript & CSS files
 
 🎯  In this section, PrismJS files are downloaded from their website and placed as assets in the app.
 
-1. Go to this link: https://prismjs.com/download.html
+1. Go to this link: <https://prismjs.com/download.html>
 2. Choose desired Themes & Languages (`Default` theme + all languages is used for the demo)
 3. Press the `DOWNLOAD JS` button and put the `prism.js` file in the `WasmScripts` folder of the `.Wasm` project.
 
@@ -153,6 +166,7 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
    > Putting the `.css` file in this folder will instruct the Uno Wasm Bootstrapper to automatically inject a `<link>` HTML instruction in the resulting `index.html` file to load it with the browser.
 5. Right-click on the `.Wasm` project node in the Solution Explorer, and pick `Edit Project File` (it can also work by just selecting the project, if the `Preview Selected Item` option is activated).
 6. Insert this in the appropriate `<ItemGroup>`:
+
    ```xml
    <ItemGroup>
      <EmbeddedResource Include="WasmCSS\Fonts.css" />
@@ -161,13 +175,18 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
      <EmbeddedResource Include="WasmScripts\prism.js" /> <!-- This one too -->
    </ItemGroup>
    ```
+
    > For the Uno Wasm Bootstrapper to take those files automatically and load them with the application, they have to be put as embedded resources. A future version of Uno may remove this requirement.
 7. Compile & run
 8. Once loaded, press F12 and go into the `Sources` tab. Both `prism.js` & `prism.css` files should be loaded this time.
    ![Prism Loaded in browser](assets/image-20200414143931953.png)
+
 ## 4. Invoke JavaScript from Managed Code
+
 🎯  In this section, PrismJS is used from the app.
+
 1. First, there is a requirement for _PrismJS_ to set the  `white-space` style at a specific value, as [documented here](https://github.com/PrismJS/prism/issues/1237#issuecomment-369846817). An easy way to do this is to set in directly in the constructor like this:
+
    ``` csharp
    public PrismJsView()
    {
@@ -176,7 +195,9 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
        this.SetCssStyle("white-space", "pre-wrap");
    }
    ```
+
 2. Now, we need to create an `UpdateDisplay()` method, used to generate HTML each time there's a new version to update. Here's the code for the method to add in the `PrismJsView` class:
+
    ``` csharp
    private void UpdateDisplay(string oldLanguage = null, string newLanguage = null)
    {
@@ -195,7 +216,7 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
                    html = prism.highlight(code, prism.languages[language], language);
                }}
    
-   			// Display result
+      // Display result
                element.innerHTML = html;
                // Set CSS classes, when required
                if(oldLanguageCss) {{
@@ -208,7 +229,9 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
        this.ExecuteJavascript(javascript);
    }
    ```
+
 3. Change `CodeChanged()` and `LanguageChanged()` to call the new `UpdateDisplay()` method:
+
    ``` csharp
    private static void CodeChanged(DependencyObject dependencyobject, DependencyPropertyChangedEventArgs args)
    {
@@ -219,7 +242,9 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
        (dependencyobject as PrismJsView)?.UpdateDisplay(args.OldValue as string, args.NewValue as string);
    }
    ```
+
 4. We also need to update the result when the control is loaded in the DOM. So we need to change the constructor again like this:
+
    ``` csharp
    public PrismJsView()
    {
@@ -230,13 +255,17 @@ Let's create an app to integrate a Syntax Highlighter named [`PrismJS`](https://
        Loaded += (snd, evt) => UpdateDisplay(newLanguage: Language);
    }
    ```
+
 5. Compile & run. It should work like this:
 
    ![Final browser result](assets/image-20200415135422628.png)
+
 ## 🔬 Going further
+
 This sample is a very simple integration as there is no _callback_ from HTML to managed code and _PrismJS_ is a self-contained framework (it does not download any other JavaScript dependencies).
 Some additional improvements can be done to make the code more production ready:
+
 * **Make the control multi-platform**. A simple way would be to use a WebView on other platforms, giving the exact same text-rendering framework everywhere. The code of this sample won't compile on other targets.
-* **Create script files instead of generating dynamic JavaScript**. That would have the advantage of improving performance and make it easier to debug the code. A few projects are also using TypeScript to generate JavaScript. This approach is done by Uno itself for the `Uno.UI.Wasm` project: https://github.com/unoplatform/uno/tree/master/src/Uno.UI.Wasm.
+* **Create script files instead of generating dynamic JavaScript**. That would have the advantage of improving performance and make it easier to debug the code. A few projects are also using TypeScript to generate JavaScript. This approach is done by Uno itself for the `Uno.UI.Wasm` project: <https://github.com/unoplatform/uno/tree/master/src/Uno.UI.Wasm>.
 * **Support more PrismJS features**. There are many [_plugins_ for PrismJS](https://prismjs.com/#plugins) that can be used. Most of them are very easy to implement.
 * [Continue with Part 3](wasm-javascript-3.md) - an integration of a more complex library with callbacks to application.

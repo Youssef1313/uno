@@ -6,7 +6,7 @@ labels: kind/consumer-experience, kind/documentation, triage/untriaged, difficul
 
 <!-- Please only use this template for submitting documentation requests -->
 
-## What would you like clarification on:
+## What would you like clarification on
 
 ## Concern?
 
@@ -19,7 +19,7 @@ labels: kind/consumer-experience, kind/documentation, triage/untriaged, difficul
 - [ ] Support
 - [ ] Other (please specify):
 
-## For which Platform:
+## For which Platform
 
 - [ ] iOS
 - [ ] Android
@@ -34,4 +34,3 @@ labels: kind/consumer-experience, kind/documentation, triage/untriaged, difficul
 ## Anything else we need to know?
 
 <!-- We would love to know of any friction, apart from knowledge, that prevented you from sending in a pull-request -->
-

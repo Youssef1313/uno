@@ -37,7 +37,7 @@ Currently, the following types of content can be shared:
 |-------------------|---------|-----|-------|------| ----- |
 | Text              | ✅      | ✅ | ✅    | ✅  | ✅    |
 | Uri               | ✅      | ✅ | ✅    | ✅  |✅     |
-| File              | ❌      | ❌ | ❌    | ❌  |❌     |   
+| File              | ❌      | ❌ | ❌    | ❌  |❌     |
 
 To set up the `DataTransferManager` use the following snippet:
 

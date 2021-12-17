@@ -24,8 +24,8 @@ This tutorial will walk through adding and implementing the DataGrid control but
 * [**Mono**](https://www.mono-project.com/download/stable/)
 
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 
     > Use `dotnet --version` from the terminal to get the version installed.
 
@@ -35,8 +35,8 @@ This tutorial will walk through adding and implementing the DataGrid control but
 * [**Xcode**](https://apps.apple.com/us/app/xcode/id497799835?mt=12) 10.0 or higher
 * An [**Apple ID**](https://support.apple.com/en-us/HT204316)
 * **.NET Core SDK**
-    * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
-    * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
+  * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) (**version 3.1.8 (SDK 3.1.402)** or later)
+  * [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/5.0) (**version 5.0 (SDK 5.0.100)** or later)
 * [**GTK+3**](https://formulae.brew.sh/formula/gtk+3) for running the Skia/GTK projects
 
 # [JetBrains Rider](#tab/tabid-rider)
@@ -57,6 +57,7 @@ Uno has ported the Windows Community Toolkit for use in Uno applications to allo
 Android, iOS, macOS, and WebAssembly.
 
 The following packages are available:
+
 - [Uno.Microsoft.Toolkit](https://www.nuget.org/packages/Uno.Microsoft.Toolkit )
 - [Uno.Microsoft.Toolkit.Parsers](https://www.nuget.org/packages/Uno.Microsoft.Toolkit.Parsers)
 - [Uno.Microsoft.Toolkit.Services](https://www.nuget.org/packages/Uno.Microsoft.Toolkit.Services)
@@ -70,10 +71,9 @@ The following packages are available:
 - [Uno.Microsoft.Toolkit.Uwp.UI.Controls.Graph](https://www.nuget.org/packages/Uno.Microsoft.Toolkit.UWP.UI.Controls.Graph)
 - [Uno.Microsoft.Toolkit.Uwp.Connectivity](https://www.nuget.org/packages/Uno.Microsoft.Toolkit.Uwp.Connectivity)
 
-These package ids are for Uno (ie non-Windows) projects. For UWP and WinUI 3 projects, you should use the equivalent package ids published by Microsoft (`Microsoft.Toolkit`, `Microsoft.Toolkit.Parsers` etc). 
+These package ids are for Uno (ie non-Windows) projects. For UWP and WinUI 3 projects, you should use the equivalent package ids published by Microsoft (`Microsoft.Toolkit`, `Microsoft.Toolkit.Parsers` etc).
 
 ## Task 1 - Add Windows Community Toolkit to Uno Projects
-  
   
 1. Install Nuget package for targeted control  
  ![datagrid-nuget](Assets/datagrid-nuget.JPG)  
@@ -81,10 +81,9 @@ These package ids are for Uno (ie non-Windows) projects. For UWP and WinUI 3 pro
 **Note:** Be aware of which versions of Uno.UI are compatible with the Nuget package of each control.  
       If using version `3.0.0` or higher of `Uno.UI`, use version `6.1.0` or higher of `DataGrid` Nuget package.
 
-**Note:** For UWP and WinUI 3 projects, you should use the packages published by Microsoft that are **not** prefixed with `Uno.*`. 
-      
+**Note:** For UWP and WinUI 3 projects, you should use the packages published by Microsoft that are **not** prefixed with `Uno.*`.
 
-2. Add a reference to the UWP UI Controls 
+2. Add a reference to the UWP UI Controls
 
    In XAML:  
     ```xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"```  
@@ -94,7 +93,7 @@ These package ids are for Uno (ie non-Windows) projects. For UWP and WinUI 3 pro
 
 3. Implement the control.
 
-## Task 2 - Add the DataGrid Control 
+## Task 2 - Add the DataGrid Control
 
 This control will create an easily organized grid that will allow you to create flexible columns and rows.
 
@@ -187,6 +186,6 @@ A working sample complete with data is available on GitHub: [Uno Windows Communi
 
 > [!TIP]
 > If you ran into difficulties with any part of this guide, you can:
-> 
+>
 > * Ask for help on our [Discord channel](https://www.platform.uno/discord) - #uno-platform
 > * Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/uno-platform) with the 'uno-platform' tag

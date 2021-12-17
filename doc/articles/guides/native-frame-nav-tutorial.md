@@ -1,9 +1,11 @@
 # How to use native Frame navigation
 
 ## Example
+
 The complete sample code can be found here: [NativeFrameNav](https://github.com/unoplatform/Uno.Samples/tree/master/UI/NativeFrameNav)
 
 ## Step-by-step instructions
+
 1. Create a new Uno Platform application, following the instructions [here](../get-started.md).
 2. Add two more pages (`BlankPage1` and `BlankPage2`) to the `Your_Project_Name.Shared` project
 
@@ -12,6 +14,7 @@ The complete sample code can be found here: [NativeFrameNav](https://github.com/
 3. Modify the content of each page to:
    - `MainPage.xaml`, `BlankPage1.xaml`, `BlankPage2.xaml`:
         > note: Add `xmlns:toolkit="using:Uno.UI.Toolkit"` to the `<Page>` element.
+
         ```xml
         <Grid toolkit:VisibleBoundsPadding.PaddingMask="Top">
             <Grid.RowDefinitions>
@@ -25,24 +28,30 @@ The complete sample code can be found here: [NativeFrameNav](https://github.com/
             </StackPanel>
         </Grid>
         ```
+
         > Put a different text for each page: "MainPage", "Content 1", "Content 2"
 4. Add a button for forward navigation in the first two pages:
     - `MainPage.xaml`, `BlankPage1,xaml`:
+
         ```xml
         <StackPanel Grid.Row="1">
             <TextBlock Text="Main Content" />
             <Button Content="Next Page" Click="GotoNextPage" />
         </StackPanel>
         ```
+
     - `MainPage.xaml.cs`, `BlankPage1.xaml.cs`:
+
         ```cs
         private void GotoNextPage(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(BlankPage1)); // in MainPage
         private void GotoNextPage(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(BlankPage2)); // in BlankPage1
         ```
+
 5. (Optionally) Add an `AppBarButton` to the `CommandBar` for back navigation in the last two pages for Skia heads:
     - `BlankPage1.xaml`, `BlankPage2.xaml`:
         > [!NOTE]
         > Here a platform conditional is used to show the `AppBarButton` on the Skia platforms only. For more information on this feature, check out: [platform specific XAML](../platform-specific-xaml.md)
+
         ```xml
         <Page ...
               xmlns:skia="http://uno.ui/skia"
@@ -50,16 +59,18 @@ The complete sample code can be found here: [NativeFrameNav](https://github.com/
               ...>
         <!-- ...  -->
         <CommandBar Grid.Row="0" Content="BlankPage1">
-			<CommandBar.PrimaryCommands>
-				<skia:AppBarButton Content="Back" Click="NavigateBack" />
-			</CommandBar.PrimaryCommands>
-		</CommandBar>
+   <CommandBar.PrimaryCommands>
+    <skia:AppBarButton Content="Back" Click="NavigateBack" />
+   </CommandBar.PrimaryCommands>
+  </CommandBar>
     - `BlankPage1.xaml.cs`, `BlankPage2.xaml.cs`:
+
         ```cs
         private void NavigateBack(object sender, RoutedEventArgs e) => Frame.GoBack(); // in both pages
         ```
 
 6. Enable native frame navigation in `App.xaml.cs`:
+
     ```cs
     public App()
     {
@@ -73,7 +84,9 @@ The complete sample code can be found here: [NativeFrameNav](https://github.com/
         this.Suspending += OnSuspending;
     }
     ```
+
 7. Add some extra setups for navigation:
+
     ```cs
     protected override void OnLaunched(LaunchActivatedEventArgs e)
     {
@@ -117,5 +130,6 @@ The complete sample code can be found here: [NativeFrameNav](https://github.com/
     }
 
 ## Additional Resources
+
 - [Uno-specific documentation](../controls/CommandBar.md) on `CommandBar` and `AppBarButton`
 - [Native Frame navigation](../features/native-frame-nav.md)

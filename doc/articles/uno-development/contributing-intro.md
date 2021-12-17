@@ -20,7 +20,7 @@ If you're doing development for Uno's macOS support, you'll need to build and ru
 
 You can contribute to Uno directly from your browser using GitPod. [Find out how.](../features/working-with-gitpod.md)
 
-Whether you're fixing a bug or working on a new feature, [inspecting the visual tree of a running app](debugging-inspect-visual-tree.md) is often a key step. 
+Whether you're fixing a bug or working on a new feature, [inspecting the visual tree of a running app](debugging-inspect-visual-tree.md) is often a key step.
 
 ## Writing code in Uno
 

@@ -26,10 +26,10 @@
   // Android: add this class near the MainActivity, in the head project
   [Activity(NoHistory = true, LaunchMode = LaunchMode.SingleTop, Exported = true)]
   [IntentFilter(
-  	new[] {Android.Content.Intent.ActionView},
-  	Categories = new[] {Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable},
+   new[] {Android.Content.Intent.ActionView},
+   Categories = new[] {Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable},
       // To be changed for a scheme specific to the application
-  	DataScheme = "myapplication")]
+   DataScheme = "myapplication")]
   public class WebAuthenticationBrokerActivity : WebAuthenticationBrokerActivityBase
   {
       // Note: the name of this class is not important
@@ -53,11 +53,11 @@ For special needs, it is possible to create a custom implementation of the Web A
 
 public class MyBrokerImplementation : Uno.AuthenticationBroker.IWebAuthenticationBrokerProvider
 {
-	Uri GetCurrentApplicationCallbackUri() => [TODO]
+ Uri GetCurrentApplicationCallbackUri() => [TODO]
 
-	Task<WebAuthenticationResult> AuthenticateAsync(WebAuthenticationOptions options, Uri requestUri, Uri callbackUri, CancellationToken ct)
+ Task<WebAuthenticationResult> AuthenticateAsync(WebAuthenticationOptions options, Uri requestUri, Uri callbackUri, CancellationToken ct)
     {
-		[TODO]
+  [TODO]
     }
 }
 ```
@@ -92,8 +92,8 @@ This implementation can also published as a NuGet package and it will be discove
                    CancellationToken ct)
        {
            var builder = new CustomTabsIntent.Builder();
-   		var intent = builder.Build();
-   		intent.LaunchUrl(
+     var intent = builder.Build();
+     intent.LaunchUrl(
                ContextHelper.Current,
                Android.Net.Uri.Parse(requestUri.OriginalString));
        }
@@ -104,16 +104,16 @@ This implementation can also published as a NuGet package and it will be discove
 
    ```csharp
    public Application(IntPtr javaReference, JniHandleOwnership transfer)
-   	: base(() => new App(), javaReference, transfer)
+    : base(() => new App(), javaReference, transfer)
    {
-   	ConfigureUniversalImageLoader();
+    ConfigureUniversalImageLoader();
            
        // ---- Add the following lines ----
        // Register a custom implementation of WebAuthenticationBroker
        // by using the AndroidX Chrome Custom Tabs on Android.
        Uno.Foundation.Extensibility.ApiExtensibility.Register(
-   		typeof(IWebAuthenticationBrokerProvider),
-   		_ => new ChromeCustomTabsProvider());
+     typeof(IWebAuthenticationBrokerProvider),
+     _ => new ChromeCustomTabsProvider());
        // ---------------------------------
    }
    ```
@@ -154,10 +154,10 @@ On WebAssembly, it is possible to use an in-application `<iframe>` instead of op
    private async void LoginHidden_Click(object sender, RoutedEventArgs e)
    {
        // Set configuration to use the control as the iframe control
-   	WinRTFeatureConfiguration.WebAuthenticationBroker.IFrameHtmlId = loginWebView.GetHtmlId();
+    WinRTFeatureConfiguration.WebAuthenticationBroker.IFrameHtmlId = loginWebView.GetHtmlId();
        try
        {
-   		var userResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, _startUri);
+     var userResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, _startUri);
            [...]
        }
        finally

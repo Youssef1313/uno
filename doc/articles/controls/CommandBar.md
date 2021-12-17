@@ -136,6 +136,7 @@ When `Content` is a `FrameworkElement`, it's displayed within the available area
 | Android  | 48px             |
 
 Please note that:
+
 * `HorizontalContentAlignment` and `VerticalContentAlignment` are ignored.
 * On **iOS**, the Content is automatically centered horizontally unless `HorizontalAlignment.Stretch` is used.
 
@@ -153,7 +154,6 @@ Gets or sets a brush that describes the foreground color.
 * Only supports `SolidColorBrush`.
 * Setting this property will not affect any of the `CommandBar's` `AppBarButton` tint Color. If you need to change the `AppBarButton` tint, this is possible by setting the `ShowAsMonochrome` property to true as well as setting the Foreground`SolidColorBrush`on the`BitmapIcon`.
 * On`Android`, you can also enable a feature that will allow that the`SolidColorBrush`set on your `CommandBar` `Foreground` to update your`AppBarButton`s Tint. To enable this, set on your `App.xml.cs` the `FeatureConfiguration.AppBarButton.EnableBitmapIconTint` to **true**.
-
 
 ### PrimaryCommands
 
@@ -178,7 +178,7 @@ Gets the collection of secondary command elements for the `CommandBar`.
 
 #### Remarks
 
-* Only supported on **Android**. 
+* Only supported on **Android**.
 
 ### Height
 
@@ -203,14 +203,14 @@ Extensions are attached properties that extend the **UWP** APIs to provide platf
 
 They can be found in the `Uno.UI.Toolkit` namespace.
 
-Extensions to extend the functionality of `CommandBar` can be found in the `CommandBarExtensions` class. 
+Extensions to extend the functionality of `CommandBar` can be found in the `CommandBarExtensions` class.
 
-| Attached Property    | Windows | iOS | Android | Comments | 
-|----------------------|:-------:|:---:|:-------:|----------| 
-| BackButtonForeground | -       | x   | x       |          | 
-| BackButtonIcon       | -       | x   | x       |          | 
+| Attached Property    | Windows | iOS | Android | Comments |
+|----------------------|:-------:|:---:|:-------:|----------|
+| BackButtonForeground | -       | x   | x       |          |
+| BackButtonIcon       | -       | x   | x       |          |
 | BackButtonTitle      | -       | x   | x       |          |
-| NavigationCommand    | -       | x   | x       |          | 
+| NavigationCommand    | -       | x   | x       |          |
 | Subtitle             | -       | -   | x       |          |
 
 ### BackButtonForeground
@@ -371,8 +371,8 @@ Gets or sets the content of a `ContentControl`.
 
 * When given a `string`, its text will be displayed instead of the icon.
 * When given a `FrameworkElement`:
-	* it will be displayed instead of the icon
-	* the native pressed state and tooltip (Android only) won't work
+  * it will be displayed instead of the icon
+  * the native pressed state and tooltip (Android only) won't work
 * Make sure to set `Icon` to null, as it takes priority over `Content`.
 
 ### Icon
@@ -628,6 +628,7 @@ Gets or sets a value indicating whether the user can interact with the control.
   _For attached properties, you need a special syntax in the Name column of a .resw file._ Ref: [Microsoft documentation](https://docs.microsoft.com/en-us/windows/uwp/app-resources/localize-strings-ui-manifest#refer-to-a-string-resource-identifier-from-xaml).
   
   More specifically :
+
   ```xml
 
   <CommandBar x:Uid="MyCommandBar"
@@ -635,6 +636,7 @@ Gets or sets a value indicating whether the user can interact with the control.
           ...
   </CommandBar>
   ```
+
   And in the `.resw` file, the name would be: `MyCommandBar.[using:Uno.UI.Toolkit]CommandBarExtensions.BackButtonTitle`
   
 - > How can I put a ComboBox in my CommandBar?
@@ -700,18 +702,22 @@ Gets or sets a value indicating whether the user can interact with the control.
   However, you can change the color of all textual `AppBarButton`s globally using **Android** styles:
   
   **Colors.xml**
+
   ```xml
   <color name="red">#FFFF0000</color>
   ```
   
   **Styles.xml**
+
   ```xml
   <item name="android:actionMenuTextColor">@color/red</item>
   <item name="actionMenuTextColor">@color/red</item>
   ```
+
   If you need the button to display a different color to reflect being in a disabled state, you can add a selector in its own file, under res/color, like so:
   
   **PrimaryTextColorSelector.xml**
+
   ```xml
   <?xml version="1.0" encoding="utf-8"?>
   <selector xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -721,6 +727,7 @@ Gets or sets a value indicating whether the user can interact with the control.
   ```
   
   **Styles.xml**
+
   ```xml
   <item name="android:actionMenuTextColor">@color/PrimaryTextColorSelector</item>
   <item name="actionMenuTextColor">@color/PrimaryTextColorSelector</item>
@@ -752,6 +759,7 @@ Gets or sets a value indicating whether the user can interact with the control.
   You can change the color of the ripple effect globally using Android styles:
   
   **Colors.xml**
+
   ```xml
   <!-- https://android.googlesource.com/platform/frameworks/support/+/415f740/v7/appcompat/res/values/colors_material.xml -->
   <color name="ripple_material_light">#20444444</color>
@@ -759,6 +767,7 @@ Gets or sets a value indicating whether the user can interact with the control.
   ```
   
   **Styles.xml**
+
    ```xml
   <item name="colorControlHighlight">@color/ripple_material_dark</item>
    ```

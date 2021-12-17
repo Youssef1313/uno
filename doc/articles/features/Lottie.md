@@ -6,11 +6,12 @@ This is an experimental implementation, **still incomplete**.
 ## Using the `LottieVisualSource`:
 
 Add the following namespaces:
+
 ```xml
 <Page
     ...
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
-	xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
+ xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
     ...>
 ```
 
@@ -27,12 +28,14 @@ Add the following namespaces:
 Documentation: <https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.animatedvisualplayer>
 
 On UWP, you'll need to reference the following packages in your head project:
-  * `Microsoft.Toolki.Uwp.UI.Lottie` (for the `LottieVisualSource`)
-  * `Microsoft.UI.Xaml` (for the `AnimatedVisualPlayer`)
+
+* `Microsoft.Toolki.Uwp.UI.Lottie` (for the `LottieVisualSource`)
+* `Microsoft.UI.Xaml` (for the `AnimatedVisualPlayer`)
 
 On WASM, Android, iOS and macOS, you'll need the following packages:
-  * `Uno.UI.Lottie` (for the `LottieVisualSource`)
-  * `Uno.UI` (for the `AnimatedVisualPlayer`)
+
+* `Uno.UI.Lottie` (for the `LottieVisualSource`)
+* `Uno.UI` (for the `AnimatedVisualPlayer`)
 
 ## Lottie JSON file location
 
@@ -101,11 +104,11 @@ Here's how to use this feature:
   [Bindable]
   public sealed class CheckBoxAnimation : ThemableLottieVisualSource
   {
-  	public Color MyColor
-  	{
-  		get => GetColorThemeProperty(nameof(MyColor));
-  		set => SetColorThemeProperty(nameof(MyColor), value);
-  	}
+   public Color MyColor
+   {
+    get => GetColorThemeProperty(nameof(MyColor));
+    set => SetColorThemeProperty(nameof(MyColor), value);
+   }
   }
   ```
 

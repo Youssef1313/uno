@@ -10,18 +10,18 @@ An example:
 
 ```xml
       ...
-	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  xmlns:android="http://uno.ui/android"
-	  mc:Ignorable="d android">
+   Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   xmlns:android="http://uno.ui/android"
+   mc:Ignorable="d android">
 
-	<StackPanel Margin="0,30,0,0">
-		<TextBlock Text="Rating" />
-		<android:Grid Background="Beige"
-					  Width="200">
-			<RatingBar />
-		</android:Grid>
-	</StackPanel>
+ <StackPanel Margin="0,30,0,0">
+  <TextBlock Text="Rating" />
+  <android:Grid Background="Beige"
+       Width="200">
+   <RatingBar />
+  </android:Grid>
+ </StackPanel>
 ```
 
 ## Adding native views in code
@@ -40,15 +40,15 @@ using Windows.UI.Xaml.Media
 
 Note that `VisualTreeHelper.AdaptNative()` will throw an exception if it receives a `FrameworkElement`. If you're in a context where you don't know if the view you want to display is actually a purely native view or a managed `FrameworkElement` type, you can use `VisualTreeHelper.TryAdaptNative()` instead.
 
-Assigning a native view directly as the `Content` property of `ContentPresenter` or `ContentControl` is also supported (since `Content` is of type `object`). 
+Assigning a native view directly as the `Content` property of `ContentPresenter` or `ContentControl` is also supported (since `Content` is of type `object`).
 
 ## Troubleshooting
 
 Uno makes certain assumptions about native views when it displays them, which may not always hold (eg that `SizeThatFits()` is implemented on iOS). Here are some things to try if your view isn't displaying:
 
- - check the documentation and ensure you're configuring the native control correctly.
- - try setting a fixed `Width` and `Height` on the outer XAML container.
- - try setting the dimensions of the native view via code-behind. 
+- check the documentation and ensure you're configuring the native control correctly.
+- try setting a fixed `Width` and `Height` on the outer XAML container.
+- try setting the dimensions of the native view via code-behind.
 
 ## Adding JavaScript views in WebAssembly
 

@@ -2,10 +2,9 @@
  <img align=center width="25%" src="https://raw.githubusercontent.com/unoplatform/styleguide/master/logo/uno-platform-logo-with-text.png" />
 </h1>
 
-
 ## Pixel-Perfect. Multi-Platform. C# & Windows XAML. Today.
 
-[![Open Uno in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/unoplatform/uno) 
+[![Open Uno in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/unoplatform/uno)
 [![Azure DevOps](https://img.shields.io/azure-devops/build/uno-platform/1dd81cbd-cb35-41de-a570-b0df3571a196/5/master?label=master)](https://uno-platform.visualstudio.com/Uno%20Platform/_build?definitionId=5)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=unoplatform/uno)](https://dependabot.com)
 [![Twitter Followers](https://img.shields.io/twitter/follow/unoplatform?label=follow%20%40unoplatform&style=flat)](https://twitter.com/unoplatform)
@@ -15,9 +14,10 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/unoplatform/uno/blob/master/CONTRIBUTING.md)
 
 # What is the Uno Platform?
-The Uno Platform is a UI Platform for building single-codebase applications for Windows, Web/WebAssembly, iOS, macOS, Android and Linux. 
 
-It allows C# and WinUI XAML code to run on all target platforms, while allowing you control of every pixel. It comes with support for Fluent, Material and Cupertino design systems out of the box. Uno Platform implements a growing number of the WinRT and WinUI APIs, such as **Windows.UI.Xaml**, to enable WinUI applications to run on on all platforms with native performance. 
+The Uno Platform is a UI Platform for building single-codebase applications for Windows, Web/WebAssembly, iOS, macOS, Android and Linux.
+
+It allows C# and WinUI XAML code to run on all target platforms, while allowing you control of every pixel. It comes with support for Fluent, Material and Cupertino design systems out of the box. Uno Platform implements a growing number of the WinRT and WinUI APIs, such as **Windows.UI.Xaml**, to enable WinUI applications to run on on all platforms with native performance.
 
 Use the WinUI tooling from Windows in [Visual Studio](https://www.visualstudio.com/), such as [XAML Hot Reload](https://docs.microsoft.com/en-us/visualstudio/xaml-tools/xaml-hot-reload?view=vs-2019) and [C# Edit and Continue](https://docs.microsoft.com/en-us/visualstudio/debugger/how-to-use-edit-and-continue-csharp), build your application as much as possible on Windows, then validate that your application runs on iOS, Android, macOS and WebAssembly.
 
@@ -28,53 +28,55 @@ Visit [our documentation](doc/articles/intro.md) for more details.
 See the complete [Getting Started](https://platform.uno/docs/articles/get-started.html) guides for starting with Visual Studio, Visual Studio Code, JetBrains Rider or Visual Studio Mac.
 
 For a larger example and features demo:
+
 * Visit the [Uno Gallery](https://github.com/unoplatform/uno.gallery) repository.
 * Try the [WebAssembly Uno Playground](https://playground.platform.uno) live in your browser.
 
 # Uno Platform Features
+
 * Supported platforms:
-    * Windows 10 and Windows 11 (via the standard UWP and WinUI Toolkit)
-    * Windows 7 (via Skia)
-    * iOS, macOS and Android (via [Xamarin](https://www.visualstudio.com/xamarin/) and [.NET] (https://dotnet.microsoft.com/))
-    * WebAssembly through the [.NET Runtime WebAssembly SDK](https://github.com/dotnet/runtime/tree/main/src/mono/wasm)
-    * Linux through Skia (Gtk and FrameBuffer)
+  * Windows 10 and Windows 11 (via the standard UWP and WinUI Toolkit)
+  * Windows 7 (via Skia)
+  * iOS, macOS and Android (via [Xamarin](https://www.visualstudio.com/xamarin/) and [.NET] (<https://dotnet.microsoft.com/>))
+  * WebAssembly through the [.NET Runtime WebAssembly SDK](https://github.com/dotnet/runtime/tree/main/src/mono/wasm)
+  * Linux through Skia (Gtk and FrameBuffer)
 * Dev loop:
-    * Develop on Windows first using Visual Studio
-    * [XAML Hot Reload](https://blogs.msdn.microsoft.com/visualstudio/2016/04/06/ui-development-made-easier-with-xaml-edit-continue/) for live XAML edition on each keystroke
-    * [C# Hot Reload](https://docs.microsoft.com/en-us/visualstudio/debugger/how-to-use-edit-and-continue-csharp) on Windows (VS2022), Linux and mac (VS Code)
-    * Validate on other platforms as late as possible
-    * Develop in VS Code, Codespaces or GitPod
-    * XAML Hot Reload for WebAssembly, Linux, iOS and Android
-    * [Uno.UITest](https://github.com/unoplatform/Uno.UITest), a library to create Cross-Platform UI Tests for WebAssembly, iOS and Android.
+  * Develop on Windows first using Visual Studio
+  * [XAML Hot Reload](https://blogs.msdn.microsoft.com/visualstudio/2016/04/06/ui-development-made-easier-with-xaml-edit-continue/) for live XAML edition on each keystroke
+  * [C# Hot Reload](https://docs.microsoft.com/en-us/visualstudio/debugger/how-to-use-edit-and-continue-csharp) on Windows (VS2022), Linux and mac (VS Code)
+  * Validate on other platforms as late as possible
+  * Develop in VS Code, Codespaces or GitPod
+  * XAML Hot Reload for WebAssembly, Linux, iOS and Android
+  * [Uno.UITest](https://github.com/unoplatform/Uno.UITest), a library to create Cross-Platform UI Tests for WebAssembly, iOS and Android.
 * Cross Platform Controls:
-    * [Control Templating](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/control-templates)
-    * [Data Templating](https://code.msdn.microsoft.com/Data-Binding-in-UWP-b5c98114)
-    * [Styling](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles)
-    * [Rich Animations](https://docs.microsoft.com/en-us/windows/uwp/design/motion/xaml-animation)
+  * [Control Templating](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/control-templates)
+  * [Data Templating](https://code.msdn.microsoft.com/Data-Binding-in-UWP-b5c98114)
+  * [Styling](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles)
+  * [Rich Animations](https://docs.microsoft.com/en-us/windows/uwp/design/motion/xaml-animation)
 * UWP/WinUI Code Support:
-    * [Windows Community Toolkit](https://github.com/unoplatform/uno.WindowsCommunityToolkit)
-    * [MVVM Light Toolkit](https://github.com/unoplatform/uno.mvvmlight)
-    * [Microsoft XAML Behaviors](https://github.com/unoplatform/uno.XamlBehaviors)
-    * [Prism](https://github.com/prismlibrary/prism)
-    * [SkiaSharp](https://github.com/mono/SkiaSharp)
-    * [SkiaSharp.Extended](https://github.com/mono/SkiaSharp.Extended)
-    * [MVVMCross](https://www.mvvmcross.com/) (soon)
-    * [ReactiveUI Official](https://github.com/reactiveui/ReactiveUI/pull/2067)
-    * [WindowsStateTriggers](https://github.com/unoplatform/uno.WindowsStateTriggers)
-    * [Xamarin.Forms for UWP](https://github.com/unoplatform/uno.Xamarin.Forms), [NuGet](https://www.nuget.org/packages/ReactiveUI.Uno)
-    * [Rx.NET](https://github.com/reactiveui/Reactive.Wasm)
-    * [ColorCode-Universal](https://github.com/unoplatform/uno.ColorCode-Universal)
-    * [LibVLCSharp](https://github.com/videolan/libvlcsharp)
-    * Any UWP project
+  * [Windows Community Toolkit](https://github.com/unoplatform/uno.WindowsCommunityToolkit)
+  * [MVVM Light Toolkit](https://github.com/unoplatform/uno.mvvmlight)
+  * [Microsoft XAML Behaviors](https://github.com/unoplatform/uno.XamlBehaviors)
+  * [Prism](https://github.com/prismlibrary/prism)
+  * [SkiaSharp](https://github.com/mono/SkiaSharp)
+  * [SkiaSharp.Extended](https://github.com/mono/SkiaSharp.Extended)
+  * [MVVMCross](https://www.mvvmcross.com/) (soon)
+  * [ReactiveUI Official](https://github.com/reactiveui/ReactiveUI/pull/2067)
+  * [WindowsStateTriggers](https://github.com/unoplatform/uno.WindowsStateTriggers)
+  * [Xamarin.Forms for UWP](https://github.com/unoplatform/uno.Xamarin.Forms), [NuGet](https://www.nuget.org/packages/ReactiveUI.Uno)
+  * [Rx.NET](https://github.com/reactiveui/Reactive.Wasm)
+  * [ColorCode-Universal](https://github.com/unoplatform/uno.ColorCode-Universal)
+  * [LibVLCSharp](https://github.com/videolan/libvlcsharp)
+  * Any UWP project
 * Responsive Design:
-    * [Visual State Manager](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.VisualStateManager)
-    * [State Triggers](https://blogs.msdn.microsoft.com/mvpawardprogram/2017/02/07/state-triggers-uwp-apps/)
-    * [Adaptive Triggers](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.AdaptiveTrigger)
+  * [Visual State Manager](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.VisualStateManager)
+  * [State Triggers](https://blogs.msdn.microsoft.com/mvpawardprogram/2017/02/07/state-triggers-uwp-apps/)
+  * [Adaptive Triggers](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.AdaptiveTrigger)
 * Platform Specific:
-    * Native controls and properties via [conditional XAML](doc/articles/platform-specific-xaml.md)
-    * Any of the existing Xamarin iOS/Android libraries available
+  * Native controls and properties via [conditional XAML](doc/articles/platform-specific-xaml.md)
+  * Any of the existing Xamarin iOS/Android libraries available
 * Xamarin.Forms Renderers:
-    * [Uno Platform WebAssembly Renderers for Xamarin.Forms](https://github.com/unoplatform/Uno.Xamarin.Forms.Platform)
+  * [Uno Platform WebAssembly Renderers for Xamarin.Forms](https://github.com/unoplatform/Uno.Xamarin.Forms.Platform)
 
 # Live WebAssembly Apps
 

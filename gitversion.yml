@@ -2,8 +2,11 @@ assembly-versioning-scheme: MajorMinorPatch
 mode: Mainline
 
 # Don't use next-version with Mainline (changed since 5.3), otherwise the stable
+
 # branch will not count on commits, only on tags.
-# See https://github.com/GitTools/GitVersion/issues/2461#issuecomment-733658087
+
+# See <https://github.com/GitTools/GitVersion/issues/2461#issuecomment-733658087>
+
 # next-version: 4.0
 
 branches:
@@ -15,10 +18,10 @@ branches:
     is-source-branch-for: ['beta', 'stable']
 
   pull-request:
-    regex: ^(pull|pull\-requests|pr)[/-]
+    regex: ^[pull|pull\-requests|pr](/-)
     mode: ContinuousDeployment
     tag: 'PullRequest'
-    tag-number-pattern: '[/-](?<number>\d+)[-/]'
+    tag-number-pattern: '[/-][?<number>\d+](-/)'
     increment: Inherit
 
   beta:

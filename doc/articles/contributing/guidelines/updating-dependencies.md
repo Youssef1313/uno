@@ -1,6 +1,6 @@
 # Guidelines for updating dependencies
 
-We use Dependabot to notify the team of any updates to dependencies. Once a week the robot will scan our dependencies and raise a pull-request if a new version is found. If an existing open pull-request is found for a dependency it will be closed and replaced with a new pull-request. The behaviour of the robot is [controlled by this configuration file](https://github.com/unoplatform/Uno/blob/master/.dependabot/config.yml). 
+We use Dependabot to notify the team of any updates to dependencies. Once a week the robot will scan our dependencies and raise a pull-request if a new version is found. If an existing open pull-request is found for a dependency it will be closed and replaced with a new pull-request. The behaviour of the robot is [controlled by this configuration file](https://github.com/unoplatform/Uno/blob/master/.dependabot/config.yml).
 
 ## internal dependencies
 
@@ -8,7 +8,7 @@ These dependencies don't change the public API surface and are typically safe to
 
 - BenchmarkDotNet
 - [FluentAssertions](https://github.com/unoplatform/uno/pull/1196)
-- [NUnit3TestAdapter](https://github.com/unoplatform/uno/pull/1455) 
+- [NUnit3TestAdapter](https://github.com/unoplatform/uno/pull/1455)
 - [NUnit.Runners](https://github.com/unoplatform/uno/pull/1122)
 - [Microsoft.AppCenter](https://github.com/unoplatform/uno/pull/1175)
 - [Microsoft.SourceLink.GitHub](https://github.com/unoplatform/uno/pull/1204)
