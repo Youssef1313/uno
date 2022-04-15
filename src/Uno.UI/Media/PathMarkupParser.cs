@@ -27,6 +27,8 @@
 // SOFTWARE.
 //-----------------------------------------------------------------------
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -58,7 +60,7 @@ namespace Uno.Media
 			   };
 
 		// Uno specific: Use StreamGeomoetryContext instead of IGeometryContext.
-		private StreamGeometryContext _geometryContext;
+		private StreamGeometryContext? _geometryContext;
 		private Point _currentPoint;
 		private Point? _beginFigurePoint;
 		private Point? _previousControlPoint;
@@ -129,6 +131,8 @@ namespace Uno.Media
 		/// <param name="s">The path data.</param>
 		public void Parse(string s, ref FillRule fillRule) // Uno specific: FillRule parameter.
 		{
+			ThrowIfDisposed();
+
 			var span = s.AsSpan();
 			_currentPoint = new Point();
 
@@ -204,6 +208,8 @@ namespace Uno.Media
 
 		private void CreateFigure()
 		{
+			ThrowIfDisposed();
+
 			if (_isOpen)
 			{
 				// Uno specific: EndFigure → SetClosedState
@@ -221,6 +227,8 @@ namespace Uno.Media
 		// Uno specific: SetFillRule → GetFillRule
 		private FillRule GetFillRule(ref ReadOnlySpan<char> span)
 		{
+			ThrowIfDisposed();
+
 			if (!ReadArgument(ref span, out var fillRule) || fillRule.Length != 1)
 			{
 				throw new InvalidDataException("Invalid fill rule.");
@@ -246,6 +254,8 @@ namespace Uno.Media
 
 		private void CloseFigure()
 		{
+			ThrowIfDisposed();
+
 			if (_isOpen)
 			{
 				// Uno specific: EndFigure → SetClosedState
@@ -282,6 +292,8 @@ namespace Uno.Media
 
 		private void AddLine(ref ReadOnlySpan<char> span, bool relative)
 		{
+			ThrowIfDisposed();
+
 			_currentPoint = relative
 								? ReadRelativePoint(ref span, _currentPoint)
 								: ReadPoint(ref span);
@@ -538,8 +550,6 @@ namespace Uno.Media
 			return span.Slice(i);
 		}
 
-		// Uno docs: Implementation (currently) different than Avalonia due to:
-		// https://github.com/unoplatform/uno/issues/2855
 		private bool ReadBool(ref ReadOnlySpan<char> span)
 		{
 			span = SkipWhitespace(span);
