@@ -31,6 +31,72 @@ namespace Uno.UWPSyncGenerator
 		private const string BaseXamlNamespace = "Windows.UI.Xaml";
 #endif
 
+		private static readonly string[] skipBaseTypes = new[] {
+
+			// skipped because of legacy mismatched hierarchy
+			BaseXamlNamespace + ".FrameworkElement",
+			BaseXamlNamespace + ".UIElement",
+			BaseXamlNamespace + ".Controls.Image",
+			BaseXamlNamespace + ".Controls.CalendarViewDayItem",
+			BaseXamlNamespace + ".Controls.ComboBox",
+			BaseXamlNamespace + ".Controls.CheckBox",
+			BaseXamlNamespace + ".Controls.TextBlock",
+			BaseXamlNamespace + ".Controls.TextBox",
+			BaseXamlNamespace + ".Controls.ProgressRing",
+			BaseXamlNamespace + ".Controls.ListViewBase",
+			BaseXamlNamespace + ".Controls.ListView",
+			BaseXamlNamespace + ".Controls.ListViewHeaderItem",
+			BaseXamlNamespace + ".Controls.GridView",
+			BaseXamlNamespace + ".Controls.ComboBox",
+			BaseXamlNamespace + ".Controls.UserControl",
+			BaseXamlNamespace + ".Controls.RadioButton",
+			BaseXamlNamespace + ".Controls.Slider",
+			BaseXamlNamespace + ".Controls.PasswordBox",
+			BaseXamlNamespace + ".Controls.RichEditBox",
+			BaseXamlNamespace + ".Controls.ProgressBar",
+			BaseXamlNamespace + ".Controls.ListViewItem",
+			BaseXamlNamespace + ".Controls.ScrollContentPresenter",
+			BaseXamlNamespace + ".Controls.Pivot",
+			BaseXamlNamespace + ".Controls.CommandBar",
+			BaseXamlNamespace + ".Controls.AppBar",
+			BaseXamlNamespace + ".Controls.TimePickerFlyoutPresenter",
+			BaseXamlNamespace + ".Controls.DatePickerFlyoutPresenter",
+			BaseXamlNamespace + ".Controls.AppBarSeparator",
+			BaseXamlNamespace + ".Controls.DatePickerFlyout",
+			BaseXamlNamespace + ".Controls.TimePickerFlyout",
+			BaseXamlNamespace + ".Controls.AppBarToggleButton",
+			BaseXamlNamespace + ".Controls.FlipView",
+			BaseXamlNamespace + ".Controls.FlipViewItem",
+			BaseXamlNamespace + ".Controls.GridViewItem",
+			BaseXamlNamespace + ".Controls.ComboBoxItem",
+			BaseXamlNamespace + ".Controls.Flyout",
+			BaseXamlNamespace + ".Controls.FontIcon",
+			BaseXamlNamespace + ".Controls.MenuFlyout",
+			BaseXamlNamespace + ".Data.CollectionView",
+			BaseXamlNamespace + ".Controls.WebView",
+			BaseXamlNamespace + ".Controls.UIElementCollection",
+			BaseXamlNamespace + ".Shapes.Polygon",
+			BaseXamlNamespace + ".Shapes.Polyline",
+			BaseXamlNamespace + ".Shapes.Ellipse",
+			BaseXamlNamespace + ".Shapes.Line",
+			BaseXamlNamespace + ".Shapes.Path",
+			BaseXamlNamespace + ".Media.Animation.FadeInThemeAnimation",
+			BaseXamlNamespace + ".Media.Animation.FadeOutThemeAnimation",
+			BaseXamlNamespace + ".Media.ImageBrush",
+			BaseXamlNamespace + ".Media.LinearGradientBrush",
+			BaseXamlNamespace + ".Media.RadialGradientBrush",
+			BaseXamlNamespace + ".Data.RelativeSource",
+			BaseXamlNamespace + ".Controls.Primitives.CarouselPanel",
+			BaseXamlNamespace + ".Controls.MediaPlayerPresenter",
+			BaseXamlNamespace + ".Controls.NavigationViewItemBase",
+
+#if HAS_UNO_WINUI
+			// Mismatching public inheritance hierarchy because RadioMenuFlyoutItem has double inheritance in WinUI.
+			// Remove this and update RadioMenuFlyoutItem if WinUI 3 removed the double inheritance.
+			BaseXamlNamespace + ".Controls.RadioMenuFlyoutItem"
+#endif
+		};
+
 		private Compilation _iOSCompilation;
 		private Compilation _androidCompilation;
 		private Compilation _macCompilation;
@@ -84,27 +150,20 @@ namespace Uno.UWPSyncGenerator
 
 
 			var origins = from externalRedfs in _referenceCompilation.ExternalReferences
-						  where Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Windows.Foundation", StringComparison.Ordinal)
-						  || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.WinUI", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.UI", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.UI.Text", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.Foundation", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.UI.Composition", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.UI.Dispatching", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.UI.Input", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.UI.Windowing", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.ApplicationModel.Resources", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.Graphics", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Windows.Phone.PhoneContract", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Windows.Networking.Connectivity.WwanContract", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Windows.ApplicationModel.Calls.CallsPhoneContract", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Windows.UI.Xaml.Hosting.HostingContract", StringComparison.Ordinal)
-                          || Path.GetFileNameWithoutExtension(externalRedfs.Display).StartsWith("Microsoft.Web.WebView2.Core", StringComparison.Ordinal)
-                          let asm = _referenceCompilation.GetAssemblyOrModuleSymbol(externalRedfs) as IAssemblySymbol
+						  let fileNameWithoutExtension = Path.GetFileNameWithoutExtension(externalRedfs.Display)
+						  where fileNameWithoutExtension.StartsWith("Windows.Foundation", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Microsoft.WinUI", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Microsoft.UI", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Microsoft.ApplicationModel.Resources", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Microsoft.Graphics", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Windows.Phone.PhoneContract", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Windows.Networking.Connectivity.WwanContract", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Windows.ApplicationModel.Calls.CallsPhoneContract", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Windows.UI.Xaml.Hosting.HostingContract", StringComparison.Ordinal)
+						  || fileNameWithoutExtension.StartsWith("Microsoft.Web.WebView2.Core", StringComparison.Ordinal)
+						  let asm = _referenceCompilation.GetAssemblyOrModuleSymbol(externalRedfs) as IAssemblySymbol
 						  where asm != null
 						  select asm;
-
-			origins = origins.ToArray();
 
 			var unoUINamespaces = new[] {
 				"Windows.UI.Xaml",
@@ -233,42 +292,43 @@ namespace Uno.UWPSyncGenerator
 
 		protected string GetNamespaceBasePath(INamedTypeSymbol type)
 		{
-			if (type.ContainingAssembly.Name == "Windows.Foundation.FoundationContract")
+			var containingNamespaceName = type.ContainingAssembly.Name;
+			if (containingNamespaceName == "Windows.Foundation.FoundationContract")
 			{
 				return @"..\..\..\Uno.Foundation\Generated\2.0.0.0";
 			}
 #if !HAS_UNO_WINUI
-			else if (type.ContainingNamespace.ToString().StartsWith("Windows.UI.Composition", StringComparison.Ordinal)
+			else if (containingNamespaceName.StartsWith("Windows.UI.Composition", StringComparison.Ordinal)
 			)
 			{
 				return @"..\..\..\Uno.UI.Composition\Generated\3.0.0.0";
 			}
 #else
 			else if (
-				type.ContainingNamespace.ToString().StartsWith("Microsoft.UI.Composition", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.Graphics", StringComparison.Ordinal)
+				containingNamespaceName.StartsWith("Microsoft.UI.Composition", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.Graphics", StringComparison.Ordinal)
 			)
 			{
 				return @"..\..\..\Uno.UI.Composition\Generated\3.0.0.0";
 			}
-			else if (type.ContainingNamespace.ToString().StartsWith("Microsoft.UI.Dispatching", StringComparison.Ordinal)
+			else if (containingNamespaceName.StartsWith("Microsoft.UI.Dispatching", StringComparison.Ordinal)
 			)
 			{
 				return @"..\..\..\Uno.UI.Dispatching\Generated\3.0.0.0";
 			}
 #endif
 			else if (
-				type.ContainingNamespace.ToString().StartsWith("Windows.UI.Xaml", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.UI.Xaml", StringComparison.Ordinal)
+				containingNamespaceName.StartsWith("Windows.UI.Xaml", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.UI.Xaml", StringComparison.Ordinal)
 #if HAS_UNO_WINUI
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.System", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.UI.Composition", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.UI.Dispatching", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.UI.Text", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.UI.Input", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.Graphics", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.ApplicationModel.Resources", StringComparison.Ordinal)
-				|| type.ContainingNamespace.ToString().StartsWith("Microsoft.Web", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.System", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.UI.Composition", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.UI.Dispatching", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.UI.Text", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.UI.Input", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.Graphics", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.ApplicationModel.Resources", StringComparison.Ordinal)
+				|| containingNamespaceName.StartsWith("Microsoft.Web", StringComparison.Ordinal)
 #endif
 			)
 			{
@@ -808,89 +868,9 @@ namespace Uno.UWPSyncGenerator
 
 		private static bool HasValidBaseType(INamedTypeSymbol type)
 		{
-			string[] skippedTypes = new[] {
-				"object",
-				"System.Enum",
-				"System.ValueType",
-			};
-
-			string[] skipBaseTypes = new[] {
-
-				// skipped because of legacy mismatched hierarchy
-				BaseXamlNamespace + ".FrameworkElement",
-				BaseXamlNamespace + ".UIElement",
-				BaseXamlNamespace + ".Controls.Image",
-				BaseXamlNamespace + ".Controls.CalendarViewDayItem",
-				BaseXamlNamespace + ".Controls.ComboBox",
-				BaseXamlNamespace + ".Controls.CheckBox",
-				BaseXamlNamespace + ".Controls.TextBlock",
-				BaseXamlNamespace + ".Controls.TextBox",
-				BaseXamlNamespace + ".Controls.ProgressRing",
-				BaseXamlNamespace + ".Controls.ListViewBase",
-				BaseXamlNamespace + ".Controls.ListView",
-				BaseXamlNamespace + ".Controls.ListViewHeaderItem",
-				BaseXamlNamespace + ".Controls.GridView",
-				BaseXamlNamespace + ".Controls.ComboBox",
-				BaseXamlNamespace + ".Controls.UserControl",
-				BaseXamlNamespace + ".Controls.RadioButton",
-				BaseXamlNamespace + ".Controls.Slider",
-				BaseXamlNamespace + ".Controls.PasswordBox",
-				BaseXamlNamespace + ".Controls.RichEditBox",
-				BaseXamlNamespace + ".Controls.ProgressBar",
-				BaseXamlNamespace + ".Controls.ListViewItem",
-				BaseXamlNamespace + ".Controls.ScrollContentPresenter",
-				BaseXamlNamespace + ".Controls.Pivot",
-				BaseXamlNamespace + ".Controls.CommandBar",
-				BaseXamlNamespace + ".Controls.AppBar",
-				BaseXamlNamespace + ".Controls.TimePickerFlyoutPresenter",
-				BaseXamlNamespace + ".Controls.DatePickerFlyoutPresenter",
-				BaseXamlNamespace + ".Controls.AppBarSeparator",
-				BaseXamlNamespace + ".Controls.DatePickerFlyout",
-				BaseXamlNamespace + ".Controls.TimePickerFlyout",
-				BaseXamlNamespace + ".Controls.AppBarToggleButton",
-				BaseXamlNamespace + ".Controls.FlipView",
-				BaseXamlNamespace + ".Controls.FlipViewItem",
-				BaseXamlNamespace + ".Controls.GridViewItem",
-				BaseXamlNamespace + ".Controls.ComboBoxItem",
-				BaseXamlNamespace + ".Controls.Flyout",
-				BaseXamlNamespace + ".Controls.FontIcon",
-				BaseXamlNamespace + ".Controls.MenuFlyout",
-				BaseXamlNamespace + ".Data.CollectionView",
-				BaseXamlNamespace + ".Controls.WebView",
-				BaseXamlNamespace + ".Controls.UIElementCollection",
-				BaseXamlNamespace + ".Shapes.Polygon",
-				BaseXamlNamespace + ".Shapes.Polyline",
-				BaseXamlNamespace + ".Shapes.Ellipse",
-				BaseXamlNamespace + ".Shapes.Line",
-				BaseXamlNamespace + ".Shapes.Path",
-				BaseXamlNamespace + ".Media.Animation.FadeInThemeAnimation",
-				BaseXamlNamespace + ".Media.Animation.FadeOutThemeAnimation",
-				BaseXamlNamespace + ".Media.ImageBrush",
-				BaseXamlNamespace + ".Media.LinearGradientBrush",
-				BaseXamlNamespace + ".Media.RadialGradientBrush",
-				BaseXamlNamespace + ".Data.RelativeSource",
-				BaseXamlNamespace + ".Controls.Primitives.CarouselPanel",
-				BaseXamlNamespace + ".Controls.MediaPlayerPresenter",
-				BaseXamlNamespace + ".Controls.NavigationViewItemBase",
-
-#if HAS_UNO_WINUI
-				// Mismatching public inheritance hierarchy because RadioMenuFlyoutItem has double inheritance in WinUI.
-				// Remove this and update RadioMenuFlyoutItem if WinUI 3 removed the double inheritance.
-				BaseXamlNamespace + ".Controls.RadioMenuFlyoutItem"
-#endif
-			};
-
-			var isSkipped = skippedTypes.Contains(type.BaseType?.ToString());
-			var isBaseSkipped = skipBaseTypes.Contains(type.ToString());
-
 			// Console.WriteLine($"Checking {type.MetadataName}: isSkipped {isSkipped}, isBaseSkipped {isBaseSkipped} ");
-
-			if (type.BaseType != null && !isSkipped && !isBaseSkipped)
-			{
-				return true;
-			}
-
-			return false;
+			return type.BaseType is not { SpecialType: SpecialType.System_Object or SpecialType.System_ValueType or SpecialType.System_Enum } &&
+				!skipBaseTypes.Contains(type.ToString())
 		}
 
 		protected void BuildDelegate(INamedTypeSymbol type, IndentedStringBuilder b, PlatformSymbols<INamedTypeSymbol> types, List<ISymbol> writtenSymbols)
