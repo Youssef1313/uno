@@ -8,15 +8,17 @@ using Windows.ApplicationModel.Contacts;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 
-namespace Windows.UI.Xaml.Controls
+namespace Microsoft.UI.Xaml.Controls
 {
-	public partial class PersonPicture : Controls.Control
+	public partial class PersonPicture : Control
 	{
 		/// <summary>
 		/// XAML Element for the first TextBlock matching x:Name of InitialsTextBlock.
@@ -143,7 +145,7 @@ namespace Windows.UI.Xaml.Controls
 
 		protected override AutomationPeer OnCreateAutomationPeer()
 		{
-			return new PersonPictureAutomationPeer(this);
+			return new Microsoft.UI.Xaml.Automation.Peers.PersonPictureAutomationPeer(this);
 		}
 
 		protected override void OnApplyTemplate()
