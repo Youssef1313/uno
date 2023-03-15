@@ -1,4 +1,4 @@
-﻿// #define TRACE_ROUTED_EVENT_BUBBLING
+﻿#define TRACE_ROUTED_EVENT_BUBBLING
 
 using System;
 using System.Collections.Generic;
@@ -646,7 +646,7 @@ namespace Windows.UI.Xaml
 		internal bool RaiseEvent(RoutedEvent routedEvent, RoutedEventArgs args, BubblingContext ctx = default)
 		{
 #if TRACE_ROUTED_EVENT_BUBBLING
-			Debug.Write($"{this.GetDebugIdentifier()} - [{routedEvent.Name.TrimEnd("Event")}] (ctx: {ctx})\r\n");
+			//global::System.Diagnostics.Debug.Write($"{this.GetDebugIdentifier()} - [{routedEvent.Name.TrimEnd("Event")}] (ctx: {ctx})\r\n");
 #endif
 
 			if (routedEvent.Flag == RoutedEventFlag.None)

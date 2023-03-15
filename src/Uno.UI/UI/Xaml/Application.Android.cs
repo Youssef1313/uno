@@ -7,7 +7,9 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls.Primitives;
+using Uno.Foundation.Extensibility;
 
 #if HAS_UNO_WINUI
 using LaunchActivatedEventArgs = Microsoft.UI.Xaml.LaunchActivatedEventArgs;
@@ -24,6 +26,11 @@ namespace Windows.UI.Xaml
 			Window.Current.ToString();
 			Current = this;
 			PermissionsHelper.Initialize();
+		}
+
+		static partial void InitializePartialStatic()
+		{
+			ApiExtensibility.Register(typeof(ICoreWindowExtension), o => new CoreWindowExtension());
 		}
 
 		static partial void StartPartial(ApplicationInitializationCallback callback)

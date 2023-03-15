@@ -73,7 +73,7 @@ namespace Windows.UI.Core
 			set => _pointerPosition = value;
 		}
 
-#if !__WASM__ && !__MACOS__ && !__SKIA__
+#if !__WASM__ && !__MACOS__ && !__SKIA__ && !__ANDROID__
 		/// <summary>
 		/// Gets or sets the cursor used by the app.
 		/// </summary>

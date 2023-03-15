@@ -166,7 +166,7 @@ namespace Uno.UI.Xaml.Core
 				return;
 			}
 
-#if __ANDROID__ || __IOS__ // Not needed on WASM as we do have native support of the exit event
+#if __IOS__ // Not needed on WASM as we do have native support of the exit event
 			// On Android and iOS we use the RootVisual to raise the UWP only exit event (in managed only)
 
 			if (args.Pointer.PointerDeviceType is PointerDeviceType.Touch

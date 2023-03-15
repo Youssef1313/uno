@@ -71,56 +71,6 @@ namespace Windows.UI.Xaml.Input
 			_properties = GetProperties(nativePointerType, nativePointerAction, nativePointerButtons); // Last: we need the Pointer property to be set!
 		}
 
-		public PointerPoint GetCurrentPoint(UIElement relativeTo)
-		{
-			var timestamp = ToTimeStamp(_nativeEvent.EventTime);
-			var device = Windows.Devices.Input.PointerDevice.For((Windows.Devices.Input.PointerDeviceType)Pointer.PointerDeviceType);
-			var (rawPosition, position) = GetPositions(relativeTo);
-
-			return new PointerPoint(FrameId, timestamp, device, Pointer.PointerId, rawPosition, position, Pointer.IsInContact, _properties);
-		}
-
-		private (Point raw, Point relative) GetPositions(UIElement relativeTo)
-		{
-			var phyX = _nativeEvent.GetX(_pointerIndex);
-			var phyY = _nativeEvent.GetY(_pointerIndex);
-
-			Point raw, relative;
-			if (relativeTo == null) // Relative to the window
-			{
-				var windowToReceiver = new int[2];
-				_receiver.GetLocationInWindow(windowToReceiver);
-
-				relative = new Point(phyX + windowToReceiver[0], phyY + windowToReceiver[1]).PhysicalToLogicalPixels();
-			}
-			else if (relativeTo == _receiver) // Fast path
-			{
-				relative = new Point(phyX, phyY).PhysicalToLogicalPixels();
-			}
-			else
-			{
-				var posRelToReceiver = new Point(phyX, phyY).PhysicalToLogicalPixels();
-				var posRelToTarget = UIElement.GetTransform(from: _receiver, to: relativeTo).Transform(posRelToReceiver);
-
-				relative = posRelToTarget;
-			}
-
-			// Raw coordinates are relative to the screen (easier for the gesture recognizer to track fingers for manipulations)
-			// if (ANDROID > 10)
-			// {
-			//		var raw = new Point(_nativeEvent.getRawX(_pointerIndex), _nativeEvent.getRawY(_pointerIndex)).PhysicalToLogicalPixels();
-			// }
-			// else
-			{
-				var screenToReceiver = new int[2];
-				_receiver.GetLocationOnScreen(screenToReceiver);
-
-				raw = new Point(phyX + screenToReceiver[0], phyY + screenToReceiver[1]).PhysicalToLogicalPixels();
-			}
-
-			return (raw, relative);
-		}
-
 		private PointerPointProperties GetProperties(MotionEventToolType type, MotionEventActions action, MotionEventButtonState buttons)
 		{
 			var props = new PointerPointProperties
@@ -211,25 +161,6 @@ namespace Windows.UI.Xaml.Input
 		};
 
 		private static readonly ulong _unixEpochMs = (ulong)(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc) - new DateTime()).TotalMilliseconds;
-
-		private static ulong ToTimeStamp(long uptimeMillis)
-		{
-			if (FeatureConfiguration.PointerRoutedEventArgs.AllowRelativeTimeStamp)
-			{
-				return (ulong)(TimeSpan.TicksPerMillisecond * uptimeMillis);
-			}
-			else
-			{
-				// We cannot cache the "bootTime" as the "uptimeMillis" is frozen while in deep sleep
-				// (cf. https://developer.android.com/reference/android/os/SystemClock)
-
-				var sleepTime = Android.OS.SystemClock.ElapsedRealtime() - Android.OS.SystemClock.UptimeMillis();
-				var realUptime = (ulong)(uptimeMillis + sleepTime);
-				var timestamp = TimeSpan.TicksPerMillisecond * (_unixEpochMs + realUptime);
-
-				return timestamp;
-			}
-		}
 
 		private static bool IsInContact(MotionEvent nativeEvent, PointerDeviceType pointerType, MotionEventActions action, MotionEventButtonState buttons)
 		{

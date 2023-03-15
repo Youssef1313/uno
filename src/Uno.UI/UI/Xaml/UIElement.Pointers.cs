@@ -995,6 +995,7 @@ namespace Windows.UI.Xaml
 
 		internal bool OnPointerUp(PointerRoutedEventArgs args, BubblingContext ctx = default)
 		{
+			global::System.Diagnostics.Debug.Write($"{this.GetDebugIdentifier()} - (ctx: {ctx})\r\n");
 			var handledInManaged = false;
 			var isOverOrCaptured = ValidateAndUpdateCapture(args, out var isOver);
 			if (!isOverOrCaptured)
