@@ -384,6 +384,11 @@ namespace Windows.UI.Xaml.Media
 
 #if TRACE_HIT_TESTING
 			using var _ = SET_TRACE_SUBJECT(element);
+			if (element is TextBlock tb)
+			{
+				TRACE($"- TextBlock.Text: {tb.Text}");
+			}
+
 			TRACE($"- hit test visibility: {elementHitTestVisibility}");
 #endif
 
@@ -402,32 +407,16 @@ namespace Windows.UI.Xaml.Media
 
 			// LayoutSlotWithMarginsAndAlignments is the region where the element was arranged by its parent.
 			// This is expressed in parent coordinate space
-			TRACE($"- layoutSlot (rel to parent): {element.LayoutSlotWithMarginsAndAlignments.ToDebugString()}");
-			if (element.IsScrollPort)
-				TRACE($"- scroller: {element.ScrollOffsets.ToDebugString()}");
-			if (element is ScrollViewer sv)
-				TRACE($"- scroll viewer: zoom={sv.ZoomFactor:F2}");
-			if (element.RenderTransform is { } tr)
-				TRACE($"- renderTransform: {tr.ToMatrix(element.RenderTransformOrigin)}");
-
-			// First compute the transformation between the element and its parent coordinate space
-			var matrix = Matrix3x2.Identity;
-			element.ApplyRenderTransform(ref matrix);
-			element.ApplyLayoutTransform(ref matrix);
-			element.ApplyElementCustomTransform(ref matrix);
-			TRACE($"- transform to parent: [{matrix.M11:F2},{matrix.M12:F2} / {matrix.M21:F2},{matrix.M22:F2} / {matrix.M31:F2},{matrix.M32:F2}]");
-
-			// Build 'position' in the current element coordinate space
-			var posRelToElement = matrix.Inverse().Transform(posRelToParent);
-			TRACE($"- position relative to element: {posRelToElement.ToDebugString()} | relative to parent: {posRelToParent.ToDebugString()}");
-
-			// Second compute the transformations applied locally.
-			// This is somehow the difference between the "XAML coordinate space" and the effective coordinate space.
-			matrix = Matrix3x2.Identity;
-			element.ApplyRenderTransform(ref matrix, ignoreOrigin: true);
-			matrix.Translation = default; //
-			element.ApplyElementCustomTransform(ref matrix);
-			matrix = matrix.Inverse();
+			var layoutSlot = element.LayoutSlotWithMarginsAndAlignments;
+#if __ANDROID__ // Workaround https://github.com/unoplatform/uno/issues/2754
+			if (element.Parent is NativeListViewBase nativeListView)
+			{
+				var scrollViewer = nativeListView.FindFirstParent<ScrollViewer>();
+				var offset = UIElement.GetPosition(element, relativeTo: scrollViewer);
+				layoutSlot.X = offset.X;
+				layoutSlot.Y = offset.Y;
+			}
+#endif
 
 			// The maximum region where the current element and its children might draw themselves
 			// This is expressed in element coordinate space.
@@ -437,7 +426,51 @@ namespace Windows.UI.Xaml.Media
 			// The region where the current element draws itself.
 			// Be aware that children might be out of this rendering bounds if no clipping defined.
 			// This is expressed in element coordinate space.
-			var renderingBounds = matrix.Transform(new Rect(new Point(), element.LayoutSlotWithMarginsAndAlignments.Size));
+			var renderingBounds = new Rect(new Point(), layoutSlot.Size);
+
+			// First compute the 'position' in the current element coordinate space
+			var posRelToElement = posRelToParent;
+
+			posRelToElement.X -= layoutSlot.X;
+			posRelToElement.Y -= layoutSlot.Y;
+
+			var renderTransform = element.RenderTransform;
+			if (renderTransform != null)
+			{
+				var parentToElement = renderTransform.MatrixCore.Inverse();
+
+				TRACE($"- renderTransform: [{parentToElement.M11:F2},{parentToElement.M12:F2} / {parentToElement.M21:F2},{parentToElement.M22:F2} / {parentToElement.M31:F2},{parentToElement.M32:F2}]");
+
+				posRelToElement = parentToElement.Transform(posRelToElement);
+				renderingBounds = parentToElement.Transform(renderingBounds);
+			}
+
+#if !__MACOS__ && !__ANDROID__ // On macOS the SCP is using RenderTransforms for scrolling and zooming which has already been included.
+			if (element is ScrollViewer sv)
+			{
+				// Note: We check only the zoom factor as scroll offsets are handled at SCP level using the IsScrollPort
+				var zoom = sv.ZoomFactor;
+
+				TRACE($"- scroller: x={sv.HorizontalOffset} | y={sv.VerticalOffset} | zoom={zoom}");
+
+				posRelToElement.X /= zoom;
+				posRelToElement.Y /= zoom;
+
+				clippingBounds.Width *= zoom;
+				clippingBounds.Height *= zoom;
+			}
+
+			if (element.IsScrollPort) // Managed SCP or custom scroller
+			{
+				posRelToElement.X += element.ScrollOffsets.X;
+				posRelToElement.Y += element.ScrollOffsets.Y;
+
+				clippingBounds.X += element.ScrollOffsets.X;
+				clippingBounds.Y += element.ScrollOffsets.Y;
+			}
+#endif
+
+			// Apply the effective clipping on the rendering bounds
 			renderingBounds = renderingBounds.IntersectWith(clippingBounds) ?? Rect.Empty;
 			TRACE($"- rendering (rel to element): {renderingBounds.ToDebugString()}");
 
@@ -553,7 +586,7 @@ namespace Windows.UI.Xaml.Media
 					stale = new Branch(element, stale?.Leaf ?? element);
 				}
 
-				TRACE($"> NOT FOUND (HitTestability.Invisible or out of the **render** bounds) | stale branch: {stale?.ToString() ?? "-- none --"}");
+				TRACE($"> NOT FOUND (HitTestability: {elementHitTestVisibility}, renderingBounds: {renderingBounds}, posRelToElement: {posRelToElement}) | stale branch: {stale?.ToString() ?? "-- none --"}");
 				return (default, stale);
 			}
 		}
@@ -687,7 +720,12 @@ namespace Windows.UI.Xaml.Media
 				var previous = _traceSubject;
 				_traceSubject = element;
 
+<<<<<<< HEAD
 				_trace.AppendLine(_traceSubject.GetDebugIdentifier());
+=======
+				_trace.Append(new string('\t', _traceSubject.GetDebugDepth()));
+				_trace.Append($"[{element.GetDebugName()}]\r\n");
+>>>>>>> 135f315c4d (fix(android): Fix clicking on element out of parent bounds)
 
 				return Disposable.Create(() => _traceSubject = previous);
 			}
@@ -704,8 +742,12 @@ namespace Windows.UI.Xaml.Media
 #if TRACE_HIT_TESTING
 			if (_trace is { })
 			{
+<<<<<<< HEAD
 				_trace.Append(_traceSubject.GetDebugIndent(subLine: true));
 				_trace.Append(' ');
+=======
+				_trace.Append(new string('\t', _traceSubject?.GetDebugDepth() ?? 0));
+>>>>>>> 135f315c4d (fix(android): Fix clicking on element out of parent bounds)
 				_trace.Append(msg.ToStringInvariant());
 				_trace.Append("\r\n");
 			}

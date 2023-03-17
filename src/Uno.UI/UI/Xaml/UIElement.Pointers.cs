@@ -1,5 +1,5 @@
-﻿#if __WASM__ || __SKIA__
-// On iOS and Android, pointers are implicitly captured, so we will receive the "irrelevant" (i.e. !isOverOrCaptured)
+﻿#if __WASM__ || __SKIA__ || __ANDROID__
+// On iOS, pointers are implicitly captured, so we will receive the "irrelevant" (i.e. !isOverOrCaptured)
 // pointer moves and we can use them for manipulation. But on WASM and SKIA we have to explicitly request to get those events
 // (expect on FF where they are also implicitly captured ... but we still capture them anyway).
 #define NEEDS_IMPLICIT_CAPTURE
@@ -164,7 +164,7 @@ namespace Windows.UI.Xaml
 		/// the _gestures instance will be invalid and trying to interpret a native pointer event might crash the app.
 		/// This flag should be checked when receiving a pointer related event from the native view to prevent this case.
 		/// </summary>
-		private bool ArePointersEnabled { get; set; }
+		private protected bool ArePointersEnabled { get; private set; }
 #endif
 
 		// ctor
@@ -274,7 +274,7 @@ namespace Windows.UI.Xaml
 		/// </summary>
 		internal HitTestability GetHitTestVisibility()
 		{
-#if __WASM__ || __SKIA__ || __MACOS__
+#if __WASM__ || __SKIA__ || __MACOS__ || __ANDROID__
 			return HitTestVisibility;
 #else
 			// This is a coalesced HitTestVisible and should be unified with it
@@ -800,6 +800,20 @@ namespace Windows.UI.Xaml
 		partial void PrepareManagedPointerEventBubbling(RoutedEvent routedEvent, ref RoutedEventArgs args, ref BubblingMode bubblingMode)
 		{
 			var ptArgs = (PointerRoutedEventArgs)args;
+
+#if __ANDROID__
+			if (ptArgs.MotionEvent is { } motionEvent)
+			{
+				var parent = this.Parent;
+				while (parent is Android.Views.View viewParent &&
+					(parent is not UIElement || parent is IWithNativeOnTouchOverride))
+				{
+					viewParent.OnTouchEvent(motionEvent);
+					parent = parent.Parent;
+				}
+			}
+#endif
+
 			switch (routedEvent.Flag)
 			{
 				case RoutedEventFlag.PointerEntered:
@@ -843,7 +857,7 @@ namespace Windows.UI.Xaml
 					// On iOS all pointers are handled just like if they were touches by the platform and there isn't any notion of "over".
 					// So we can consider pointer over as soon as is touching the screen while being within element bounds.
 					var isOver = ptArgs.Pointer.IsInContact && ptArgs.IsPointCoordinatesOver(this);
-#else // __WASM__ || __ANDROID__
+#else // __WASM__
 					// On WASM the pointer 'exit' is raise by the platform for all pointer types,
 					// while on Android they are raised only for mouses and pens (i.e. not for touch).
 					// (For touch on Android we are "re-dispatching exit" in managed code only (i.e. we will pass here)
