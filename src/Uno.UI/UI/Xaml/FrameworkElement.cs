@@ -844,7 +844,7 @@ namespace Windows.UI.Xaml
 			LayoutUpdated?.Invoke(this, new RoutedEventArgs(this));
 		}
 
-		private protected virtual Thickness GetBorderThickness() => Thickness.Empty;
+		internal virtual Thickness GetBorderThickness() => Thickness.Empty;
 
 #if XAMARIN
 		private static FrameworkElement FindPhaseEnabledRoot(ContentControl content)

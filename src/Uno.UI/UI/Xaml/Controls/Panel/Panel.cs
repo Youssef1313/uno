@@ -170,7 +170,7 @@ namespace Windows.UI.Xaml.Controls
 		}
 		partial void OnBorderBrushChangedPartial(Brush oldValue, Brush newValue);
 
-		private protected override Thickness GetBorderThickness() => BorderThicknessInternal;
+		internal override Thickness GetBorderThickness() => BorderThicknessInternal;
 
 		internal override bool CanHaveChildren() => true;
 

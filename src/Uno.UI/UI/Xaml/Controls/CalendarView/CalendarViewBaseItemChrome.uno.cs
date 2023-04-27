@@ -16,6 +16,12 @@ namespace Windows.UI.Xaml.Controls
 		{
 			_lastSize = default;
 			InvalidateArrange();
+#if __WASM__
+			if (this.GetTemplateRoot() is UIElement templateRoot)
+			{
+				templateRoot.InvalidateArrange();
+			}
+#endif
 		}
 
 		private void Uno_MeasureChrome(Size availableSize)
@@ -64,7 +70,6 @@ namespace Windows.UI.Xaml.Controls
 			// DrawInnerBorder			=> The today / selected state
 
 			var background = Background;
-			var borderThickness = GetItemBorderThickness();
 			var borderBrush = GetItemBorderBrush(forFocus: false);
 			var cornerRadius = GetItemCornerRadius();
 
@@ -92,7 +97,16 @@ namespace Windows.UI.Xaml.Controls
 				borderBrush = selectedBrush;
 			}
 
-			_borderRenderer.UpdateLayer(this, background, BackgroundSizing.InnerBorderEdge, borderThickness, borderBrush, cornerRadius, default);
+			if (borderBrush is not null)
+			{
+				BorderThickness = GetItemBorderThickness();
+			}
+			else
+			{
+				BorderThickness = default;
+			}
+
+			_borderRenderer.UpdateLayer(this, background, BackgroundSizing.InnerBorderEdge, BorderThickness, borderBrush, cornerRadius, default);
 		}
 
 		private bool IsClear(Brush brush)

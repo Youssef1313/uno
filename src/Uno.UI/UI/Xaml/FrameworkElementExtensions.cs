@@ -352,6 +352,12 @@ namespace Windows.UI.Xaml
 				return true;
 			}
 
+			//if (__LinkerHints.Is_Windows_UI_Xaml_Controls_Control_Available && frameworkElement is Control control)
+			//{
+			//	borderThickness = control.BorderThickness;
+			//	return true;
+			//}
+
 			borderThickness = default;
 			return false;
 		}

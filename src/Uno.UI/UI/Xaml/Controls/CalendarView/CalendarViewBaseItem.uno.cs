@@ -10,6 +10,8 @@ namespace Windows.UI.Xaml.Controls
 		internal override bool IsViewHit()
 			=> true;
 
+		internal override Thickness GetBorderThickness() => BorderThickness;
+
 #if __WASM__
 		/// <inheritdoc />
 		protected override void OnBackgroundChanged(DependencyPropertyChangedEventArgs e)

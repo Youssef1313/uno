@@ -93,7 +93,7 @@ namespace Uno.UI
 		}
 
 		[Pure]
-		internal static (Point offset, bool overflow) GetAlignmentOffset(this IFrameworkElement e, Size clientSize, Size renderSize)
+		internal static (Point offset, bool overflow) GetAlignmentOffset(this FrameworkElement e, Size clientSize, Size renderSize)
 		{
 			// Start with Bottom-Right alignment, multiply by 0/0.5/1 for Top-Left/Center/Bottom-Right alignment
 			var offset = new Point(
@@ -138,6 +138,16 @@ namespace Uno.UI
 					offset.Y *= 1;
 					break;
 			}
+
+#if __WASM__
+			if (e.Parent is FrameworkElement parent)
+			{
+				// HTML moves the origin along with the border thickness.
+				// Adjust this element based on this its parent border thickness.
+				var adjust = parent.GetBorderThickness();
+				offset = offset.WithX(offset.X - adjust.Left).WithY(offset.Y - adjust.Top);
+			}
+#endif
 
 			return (offset, overflow);
 		}

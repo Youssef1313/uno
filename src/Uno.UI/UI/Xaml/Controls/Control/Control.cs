@@ -641,7 +641,11 @@ namespace Windows.UI.Xaml.Controls
 				typeof(Control),
 				new FrameworkPropertyMetadata(
 					Thickness.Empty,
+#if __WASM__
+					FrameworkPropertyMetadataOptions.AffectsArrange,
+#else
 					FrameworkPropertyMetadataOptions.None,
+#endif
 					(s, e) => ((Control)s)?.OnBorderThicknessChanged((Thickness)e.OldValue, (Thickness)e.NewValue)
 				)
 			);
