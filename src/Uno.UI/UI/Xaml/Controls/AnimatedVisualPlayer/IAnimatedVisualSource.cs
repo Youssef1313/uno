@@ -17,7 +17,5 @@ namespace Windows.UI.Xaml.Controls
 		void SetProgress(double progress);
 
 		Size Measure(Size availableSize);
-
-		Uri UriSource { get; set; }
 	}
 }
