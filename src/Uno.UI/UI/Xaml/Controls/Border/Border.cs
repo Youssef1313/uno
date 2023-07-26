@@ -233,7 +233,7 @@ namespace Windows.UI.Xaml.Controls
 
 
 		private WeakBrushChangedProxy _borderBrushChangedProxy;
-		private Action _borderBrushChanged;
+		private Action<Brush> _borderBrushChanged;
 
 #if __ANDROID__
 		//This field is never accessed. It just exists to create a reference, because the DP causes issues with ImageBrush of the backing bitmap being prematurely garbage-collected. (Bug with ConditionalWeakTable? https://bugzilla.xamarin.com/show_bug.cgi?id=21620)
@@ -261,7 +261,7 @@ namespace Windows.UI.Xaml.Controls
 		private void OnBorderBrushChanged(Brush oldValue, Brush newValue)
 		{
 			_borderBrushChangedProxy ??= new();
-			_borderBrushChanged ??= () => OnBorderBrushChangedPartial();
+			_borderBrushChanged ??= _ => OnBorderBrushChangedPartial();
 			_borderBrushChangedProxy.Subscribe(newValue, _borderBrushChanged);
 
 #if __WASM__

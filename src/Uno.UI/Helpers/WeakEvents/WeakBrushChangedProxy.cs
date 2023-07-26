@@ -5,13 +5,16 @@ using Windows.UI.Xaml.Media;
 
 namespace Uno.UI.Helpers;
 
-internal class WeakBrushChangedProxy : WeakEventProxy<Brush, Action>
+internal class WeakBrushChangedProxy : WeakEventProxy<Brush, Action<Brush?>>
 {
+	private IDisposable? _disposable;
+
 	private void OnBrushChanged()
 	{
 		if (TryGetHandler(out var handler))
 		{
-			handler();
+			_ = TryGetSource(out var brush);
+			handler(brush);
 		}
 		else
 		{
@@ -19,18 +22,21 @@ internal class WeakBrushChangedProxy : WeakEventProxy<Brush, Action>
 		}
 	}
 
-	public override void Subscribe(Brush? source, Action handler)
+	public override void Subscribe(Brush? source, Action<Brush?> handler)
 	{
+		_disposable?.Dispose();
+
 		if (TryGetSource(out var s))
 		{
 			s.InvalidateRender -= OnBrushChanged;
 		}
 
-		handler();
+		handler(source);
 
 		if (source is not null)
 		{
-			source.InvalidateRender += OnBrushChanged;
+			_disposable = source.RegisterInvalidateRenderEvent((s, _) => handler((Brush?)s));
+			//source.InvalidateRender += OnBrushChanged;
 			base.Subscribe(source, handler);
 		}
 	}
@@ -43,5 +49,10 @@ internal class WeakBrushChangedProxy : WeakEventProxy<Brush, Action>
 		}
 
 		base.Unsubscribe();
+	}
+
+	~WeakBrushChangedProxy()
+	{
+		Unsubscribe();
 	}
 }

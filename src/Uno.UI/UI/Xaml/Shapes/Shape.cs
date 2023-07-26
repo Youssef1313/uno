@@ -22,8 +22,8 @@ namespace Windows.UI.Xaml.Shapes
 
 		private WeakBrushChangedProxy _brushChangedProxy;
 		private WeakBrushChangedProxy _strokeBrushChangedProxy;
-		private Action _brushChanged;
-		private Action _strokeBrushChanged;
+		private Action<Brush> _brushChanged;
+		private Action<Brush> _strokeBrushChanged;
 
 		~Shape()
 		{
@@ -73,7 +73,7 @@ namespace Windows.UI.Xaml.Shapes
 		private void OnFillChanged(Brush newValue)
 		{
 			_brushChangedProxy ??= new();
-			_brushChanged ??= () => InvalidateForBrushChanged();
+			_brushChanged ??= _ => InvalidateForBrushChanged();
 			_brushChangedProxy.Subscribe(newValue, _brushChanged);
 		}
 #endif
@@ -136,7 +136,7 @@ namespace Windows.UI.Xaml.Shapes
 		private void OnStrokeChanged(Brush newValue)
 		{
 			_strokeBrushChangedProxy ??= new();
-			_strokeBrushChanged ??= () => InvalidateForBrushChanged();
+			_strokeBrushChanged ??= _ => InvalidateForBrushChanged();
 			_strokeBrushChangedProxy.Subscribe(newValue, _strokeBrushChanged);
 		}
 #endif

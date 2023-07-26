@@ -37,7 +37,7 @@ namespace Windows.UI.Xaml.Controls
 		private InlineCollection _inlines;
 		private string _inlinesText; // Text derived from the content of Inlines
 		private WeakBrushChangedProxy _foregroundChangedProxy;
-		private Action _foregroundChanged;
+		private Action<Brush> _foregroundChanged;
 
 		private Run _reusableRun;
 		private bool _skipInlinesChangedTextSetter;
@@ -423,7 +423,7 @@ namespace Windows.UI.Xaml.Controls
 		private void Subscribe(Brush newValue)
 		{
 			_foregroundChangedProxy ??= new();
-			_foregroundChanged ??= () => OnForegroundChanged();
+			_foregroundChanged ??= _ => OnForegroundChanged();
 			_foregroundChangedProxy.Subscribe(newValue, _foregroundChanged);
 		}
 

@@ -58,8 +58,8 @@ namespace Windows.UI.Xaml.Controls
 
 		private WeakBrushChangedProxy _selectionHighlightColorSubscription;
 		private WeakBrushChangedProxy _foregroundBrushSubscription;
-		private Action _selectionHighlightColorChanged;
-		private Action _foregroundBrushChanged;
+		private Action<Brush> _selectionHighlightColorChanged;
+		private Action<Brush> _foregroundBrushChanged;
 #pragma warning restore CS0067, CS0649
 
 		private ContentPresenter _header;
@@ -426,7 +426,7 @@ namespace Windows.UI.Xaml.Controls
 		protected override void OnForegroundColorChanged(Brush oldValue, Brush newValue)
 		{
 			_foregroundBrushSubscription ??= new();
-			_foregroundBrushChanged = () => OnForegroundColorChangedPartial(newValue);
+			_foregroundBrushChanged = b => OnForegroundColorChangedPartial(b);
 			_foregroundBrushSubscription.Subscribe(newValue, _foregroundBrushChanged);
 		}
 
@@ -477,7 +477,7 @@ namespace Windows.UI.Xaml.Controls
 		{
 			_selectionHighlightColorSubscription ??= new();
 			brush ??= DefaultBrushes.SelectionHighlightColor;
-			_selectionHighlightColorChanged = () => OnSelectionHighlightColorChangedPartial(brush);
+			_selectionHighlightColorChanged = b => OnSelectionHighlightColorChangedPartial((SolidColorBrush)b);
 			_selectionHighlightColorSubscription.Subscribe(brush, _selectionHighlightColorChanged);
 		}
 

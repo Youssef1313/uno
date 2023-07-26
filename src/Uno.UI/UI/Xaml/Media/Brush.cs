@@ -1,10 +1,12 @@
 ﻿#nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using Uno.Disposables;
 using Uno.UI.Xaml;
+using Windows.UI.Core;
 
 #if HAS_UNO_WINUI
 using Windows.UI;
@@ -15,6 +17,8 @@ namespace Windows.UI.Xaml.Media
 	[TypeConverter(typeof(BrushConverter))]
 	public partial class Brush : DependencyObject
 	{
+		private List<WeakEventHelper.GenericEventHandler>? _invalidateRenderHandlers;
+
 		internal event Action? InvalidateRender;
 
 		protected Brush()
@@ -39,7 +43,23 @@ namespace Windows.UI.Xaml.Media
 
 		public static implicit operator Brush(string colorCode) => SolidColorBrushHelper.Parse(colorCode);
 
-		private protected void OnInvalidateRender() => InvalidateRender?.Invoke();
+		private protected void OnInvalidateRender()
+		{
+			InvalidateRender?.Invoke();
+			if (_invalidateRenderHandlers is not null)
+			{
+				foreach (var action in _invalidateRenderHandlers)
+				{
+					action(this, EventArgs.Empty);
+				}
+			}
+		}
+
+		internal IDisposable RegisterInvalidateRenderEvent(EventHandler handler)
+			=> WeakEventHelper.RegisterEvent(
+				_invalidateRenderHandlers ??= new(),
+				handler,
+				(h, s, e) => (h as EventHandler)?.Invoke(s, (EventArgs)e));
 
 		internal virtual void OnPropertyChanged2(DependencyPropertyChangedEventArgs args)
 		{

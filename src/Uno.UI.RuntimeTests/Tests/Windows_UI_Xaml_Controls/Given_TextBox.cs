@@ -677,5 +677,18 @@ namespace Uno.UI.RuntimeTests.Tests.Windows_UI_Xaml_Controls
 
 			Assert.AreEqual(updatedText.Length, textBox.SelectionLength);
 		}
+
+		[TestMethod]
+		public void Test_TextBox_Leak()
+		{
+			for (int i = 0; i < 10000; i++)
+			{
+				_ = new TextBox();
+			}
+
+			GC.Collect(2);
+			GC.WaitForPendingFinalizers();
+			GC.Collect(2);
+		}
 	}
 }
