@@ -1,8 +1,4 @@
-﻿#if !__IOS__ && !__MACOS__ && !__SKIA__ && !__ANDROID__
-#define LEGACY_SHAPE_MEASURE
-#endif
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Uno.Disposables;
 using System.Text;
@@ -60,26 +56,18 @@ namespace Windows.UI.Xaml.Shapes
 			typeof(Shape),
 			new FrameworkPropertyMetadata(
 				defaultValue: SolidColorBrushHelper.Transparent,
-#if LEGACY_SHAPE_MEASURE
-				options: FrameworkPropertyMetadataOptions.ValueInheritsDataContext,
-#else
 				options: FrameworkPropertyMetadataOptions.ValueInheritsDataContext | FrameworkPropertyMetadataOptions.LogicalChild,
-#endif
 				propertyChangedCallback: (s, e) => ((Shape)s).OnFillChanged((Brush)e.NewValue)
 			)
 		);
 
-#if !LEGACY_SHAPE_MEASURE
 		private void OnFillChanged(Brush newValue)
 		{
 			_brushChangedProxy ??= new();
 			_brushChanged ??= () => InvalidateForBrushChanged();
 			_brushChangedProxy.Subscribe(newValue, _brushChanged);
 		}
-#endif
 		#endregion
-
-#if !LEGACY_SHAPE_MEASURE
 
 		private void InvalidateForBrushChanged()
 		{
@@ -110,7 +98,6 @@ namespace Windows.UI.Xaml.Shapes
 			}
 #endif
 		}
-#endif
 
 		#region Stroke Dependency Property
 		public Brush Stroke
@@ -125,21 +112,17 @@ namespace Windows.UI.Xaml.Shapes
 			typeof(Shape),
 			new FrameworkPropertyMetadata(
 				defaultValue: null,
-#if !LEGACY_SHAPE_MEASURE
 				options: FrameworkPropertyMetadataOptions.AffectsArrange,
-#endif
 				propertyChangedCallback: (s, e) => ((Shape)s).OnStrokeChanged((Brush)e.NewValue)
 			)
 		);
 
-#if !LEGACY_SHAPE_MEASURE
 		private void OnStrokeChanged(Brush newValue)
 		{
 			_strokeBrushChangedProxy ??= new();
 			_strokeBrushChanged ??= () => InvalidateForBrushChanged();
 			_strokeBrushChangedProxy.Subscribe(newValue, _strokeBrushChanged);
 		}
-#endif
 
 		#endregion
 
@@ -157,9 +140,6 @@ namespace Windows.UI.Xaml.Shapes
 			new FrameworkPropertyMetadata(
 				defaultValue: 1.0d,
 				options: FrameworkPropertyMetadataOptions.AffectsMeasure
-#if LEGACY_SHAPE_MEASURE
-				, propertyChangedCallback: (s, e) => ((Shape)s).OnStrokeThicknessUpdated((double)e.NewValue)
-#endif
 			)
 		);
 		#endregion
@@ -177,11 +157,7 @@ namespace Windows.UI.Xaml.Shapes
 			typeof(Shape),
 			new FrameworkPropertyMetadata(
 				defaultValue: Stretch.None, // Note: this is overriden in ctor for Rectangle and Ellipse
-#if LEGACY_SHAPE_MEASURE
-				propertyChangedCallback: (s, e) => ((Shape)s).OnStretchUpdated((Stretch)e.NewValue)
-#else
 				options: FrameworkPropertyMetadataOptions.AffectsMeasure
-#endif
 			)
 		);
 		#endregion
@@ -199,65 +175,11 @@ namespace Windows.UI.Xaml.Shapes
 			typeof(Shape),
 			new FrameworkPropertyMetadata(
 				defaultValue: null,
-#if LEGACY_SHAPE_MEASURE
-				propertyChangedCallback: (s, e) => ((Shape)s).OnStrokeDashArrayUpdated((DoubleCollection)e.NewValue)
-#else
 				options: FrameworkPropertyMetadataOptions.AffectsArrange
-#endif
 			)
 		);
 		#endregion
 
-#if LEGACY_SHAPE_MEASURE
-		private void OnFillChanged(Brush newValue)
-		{
-			_brushChangedProxy ??= new();
-			_brushChanged ??= () =>
-			{
-				OnFillUpdatedPartial();
-				RefreshShape();
-			};
-
-			_brushChangedProxy.Subscribe(newValue, _brushChanged);
-		}
-
-		partial void OnFillUpdatedPartial();
-
-		private void OnStrokeChanged(Brush newValue)
-		{
-			_strokeBrushChangedProxy ??= new();
-			_strokeBrushChanged ??= () =>
-			{
-				OnStrokeUpdatedPartial();
-				RefreshShape();
-			};
-			_strokeBrushChangedProxy.Subscribe(newValue, _strokeBrushChanged);
-		}
-		partial void OnStrokeUpdatedPartial();
-
-		private void OnStrokeThicknessUpdated(double newValue)
-		{
-			OnStrokeThicknessUpdatedPartial();
-			RefreshShape();
-		}
-		partial void OnStrokeThicknessUpdatedPartial();
-
-		private void OnStrokeDashArrayUpdated(DoubleCollection newValue)
-		{
-			OnStrokeDashArrayUpdatedPartial();
-			RefreshShape();
-		}
-		partial void OnStrokeDashArrayUpdatedPartial();
-
-		private void OnStretchUpdated(Stretch newValue)
-		{
-			OnStretchUpdatedPartial();
-			RefreshShape();
-		}
-		partial void OnStretchUpdatedPartial();
-
-		protected virtual void RefreshShape(bool forceRefresh = false) { }
-#endif
 
 		internal override bool IsViewHit()
 			=> Fill != null; // Do not invoke base.IsViewHit(): We don't have to have de FrameworkElement.Background to be hit testable!

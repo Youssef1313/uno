@@ -1,12 +1,4 @@
-﻿#if !__IOS__ && !__MACOS__ && !__NETSTD_REFERENCE__ && !__SKIA__ && !__ANDROID__
-#define LEGACY_SHAPE_MEASURE
-#endif
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Windows.UI.Xaml.Shapes
+﻿namespace Windows.UI.Xaml.Shapes
 {
 	public partial class Rectangle : Shape
 	{
@@ -18,11 +10,7 @@ namespace Windows.UI.Xaml.Shapes
 			typeof(Rectangle),
 			new FrameworkPropertyMetadata(
 				defaultValue: 0.0,
-#if LEGACY_SHAPE_MEASURE
-				propertyChangedCallback: (s, e) => ((Rectangle)s).OnRadiusYChangedPartial()
-#else
 				options: FrameworkPropertyMetadataOptions.AffectsArrange
-#endif
 			)
 		);
 
@@ -40,11 +28,7 @@ namespace Windows.UI.Xaml.Shapes
 			typeof(Rectangle),
 			new FrameworkPropertyMetadata(
 				defaultValue: 0.0,
-#if LEGACY_SHAPE_MEASURE
-				propertyChangedCallback: (s, e) => ((Rectangle)s).OnRadiusXChangedPartial()
-#else
 				options: FrameworkPropertyMetadataOptions.AffectsArrange
-#endif
 			)
 		);
 
@@ -55,9 +39,5 @@ namespace Windows.UI.Xaml.Shapes
 		}
 		#endregion
 
-#if LEGACY_SHAPE_MEASURE
-		partial void OnRadiusXChangedPartial();
-		partial void OnRadiusYChangedPartial();
-#endif
 	}
 }
