@@ -14,10 +14,6 @@ namespace Windows.UI.Xaml.Shapes
 		public Rectangle()
 		{
 			SvgChildren.Add(_rectangle);
-
-			InitCommonShapeProperties();
-			OnRadiusXChangedPartial();
-			OnRadiusYChangedPartial();
 		}
 
 		protected override SvgElement GetMainSvgElement()
@@ -44,16 +40,6 @@ namespace Windows.UI.Xaml.Shapes
 			_rectangle.Clip = new RectangleGeometry() { Rect = new Rect(0, 0, finalSize.Width, finalSize.Height) };
 
 			return finalSize;
-		}
-
-		partial void OnRadiusXChangedPartial()
-		{
-			_rectangle.SetAttribute("rx", RadiusX.ToStringInvariant());
-		}
-
-		partial void OnRadiusYChangedPartial()
-		{
-			_rectangle.SetAttribute("ry", RadiusY.ToStringInvariant());
 		}
 	}
 }

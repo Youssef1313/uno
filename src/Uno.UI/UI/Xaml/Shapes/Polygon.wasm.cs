@@ -12,26 +12,11 @@ namespace Windows.UI.Xaml.Shapes
 		partial void InitializePartial()
 		{
 			SvgChildren.Add(_polygon);
-
-			InitCommonShapeProperties();
 		}
 
 		protected override SvgElement GetMainSvgElement()
 		{
 			return _polygon;
-		}
-
-		partial void OnPointsChanged()
-		{
-			var points = Points;
-			if (points == null)
-			{
-				_polygon.RemoveAttribute("points");
-			}
-			else
-			{
-				_polygon.SetAttribute("points", points.ToCssString());
-			}
 		}
 	}
 }

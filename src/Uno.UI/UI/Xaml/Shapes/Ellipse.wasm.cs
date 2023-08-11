@@ -14,8 +14,6 @@ namespace Windows.UI.Xaml.Shapes
 		{
 			SvgChildren.Add(_ellipse);
 
-			InitCommonShapeProperties();
-
 			RegisterPropertyChangedCallback(StrokeProperty, OnStrokeChanged);
 		}
 

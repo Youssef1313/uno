@@ -16,26 +16,11 @@ namespace Windows.UI.Xaml.Shapes
 		partial void InitializePartial()
 		{
 			SvgChildren.Add(_polyline);
-
-			InitCommonShapeProperties();
 		}
 
 		protected override SvgElement GetMainSvgElement()
 		{
 			return _polyline;
-		}
-
-		partial void OnPointsChanged()
-		{
-			var points = Points;
-			if (points == null)
-			{
-				_polyline.RemoveAttribute("points");
-			}
-			else
-			{
-				_polyline.SetAttribute("points", points.ToCssString());
-			}
 		}
 	}
 }

@@ -10,8 +10,6 @@ namespace Windows.UI.Xaml.Shapes
 		public Path()
 		{
 			SvgChildren.Add(_root);
-
-			InitCommonShapeProperties();
 		}
 
 		protected override SvgElement GetMainSvgElement() => _root;
@@ -34,7 +32,5 @@ namespace Windows.UI.Xaml.Shapes
 				}
 			}
 		}
-
-		protected override void InvalidateShape() => Data?.Invalidate();
 	}
 }
