@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-#if __IOS__ || __MACOS__ || __ANDROID__
+#if __IOS__ || __MACOS__
 using System;
 using System.Linq;
 using Windows.Foundation;
@@ -22,9 +22,6 @@ using NativePath = CoreGraphics.CGPath;
 using ObjCRuntime;
 using NativeSingle = System.Runtime.InteropServices.NFloat;
 
-#elif __ANDROID__
-using NativePath = Android.Graphics.Path;
-using NativeSingle = System.Double;
 
 #endif
 
@@ -247,8 +244,6 @@ partial class Shape
 			|| userSize.hasWidth || userSize.max.hasWidth || userSize.hasHeight || userSize.max.hasHeight
 			|| pathSize.Width > finalSize.Width || pathSize.Height > finalSize.Height;
 #endif
-#elif __ANDROID__
-		Render(path, size, renderScale.x, renderScale.y, renderOrigin.x, renderOrigin.y);
 #endif
 
 		return size;

@@ -107,13 +107,10 @@ namespace Windows.UI.Xaml.Controls
 					.AtLeastZero()
 					.AtMost(maxSize);
 
-				// TODO: This commented code was done as part of aligning layouting on mobile platforms.
-				// We are reverting those changes as they require more changes, but keeping them
-				// commented for future reference.
-				//if (Panel is not ILayoutOptOut { ShouldUseMinSize: false })
-				//{
-				//	frameworkAvailableSize = frameworkAvailableSize.AtLeast(minSize);
-				//}
+				if (Panel is not ILayoutOptOut { ShouldUseMinSize: false })
+				{
+					frameworkAvailableSize = frameworkAvailableSize.AtLeast(minSize);
+				}
 
 				var desiredSize = MeasureOverride(frameworkAvailableSize);
 				LayoutInformation.SetAvailableSize(Panel, availableSize);
@@ -137,17 +134,10 @@ namespace Windows.UI.Xaml.Controls
 				_unclippedDesiredSize = desiredSize;
 
 				var clippedDesiredSize = desiredSize
-					// TODO: This commented code was done as part of aligning layouting on mobile platforms.
-					// We are reverting those changes as they require more changes, but keeping them
-					// commented for future reference.
-					//.AtMost(maxSize)
-					.AtMost(frameworkAvailableSize) // TODO: This line shouldn't be there (ie, frameworkAvailableSize should be maxSize).
+					.AtMost(maxSize)
 					.Add(marginSize)
 					// Making sure after adding margins that clipped DesiredSize is not bigger than the AvailableSize
-					// TODO: This commented code was done as part of aligning layouting on mobile platforms.
-					// We are reverting those changes as they require more changes, but keeping them
-					// commented for future reference.
-					//.AtMost(availableSize)
+					.AtMost(availableSize)
 					// Margin may be negative
 					.AtLeastZero();
 
@@ -200,6 +190,8 @@ namespace Windows.UI.Xaml.Controls
 					UIElement.IsLayoutingVisualTreeRoot = true;
 				}
 
+				LayoutInformation.SetLayoutSlot(this, finalRect);
+
 				if (this.Log().IsEnabled(Uno.Foundation.Logging.LogLevel.Debug))
 				{
 					this.Log().DebugFormat("[{0}/{1}] Arrange({2}/{3}/{4}/{5})", LoggingOwnerTypeName, Name, GetType(), Panel.Name, finalRect, Panel.Margin);
@@ -230,31 +222,37 @@ namespace Windows.UI.Xaml.Controls
 					.Size
 					.AtLeastZero(); // 0.0,0.0
 
-				if (allowClipToSlot && !needsClipToSlot)
+				if (IsLessThanAndNotCloseTo(clippedArrangeSize.Width, _unclippedDesiredSize.Width))
 				{
-					if (IsLessThanAndNotCloseTo(clippedArrangeSize.Width, _unclippedDesiredSize.Width))
+					_logDebug?.Debug($"{this}: (arrangeSize.Width) {clippedArrangeSize.Width} < {_unclippedDesiredSize.Width}: NEEDS CLIPPING.");
+					needsClipToSlot = allowClipToSlot && !needsClipToSlot;
+					arrangeSize.Width = _unclippedDesiredSize.Width;
+				}
+
+				if (IsLessThanAndNotCloseTo(clippedArrangeSize.Height, _unclippedDesiredSize.Height))
+				{
+					_logDebug?.Debug($"{this}: (arrangeSize.Height) {clippedArrangeSize.Height} < {_unclippedDesiredSize.Height}: NEEDS CLIPPING.");
+					needsClipToSlot = allowClipToSlot && !needsClipToSlot;
+					arrangeSize.Height = _unclippedDesiredSize.Height;
+				}
+
+				var fe = Panel as FrameworkElement;
+				if (fe is not null)
+				{
+					if (fe.HorizontalAlignment != HorizontalAlignment.Stretch)
 					{
-						_logDebug?.Debug($"{this}: (arrangeSize.Width) {clippedArrangeSize.Width} < {_unclippedDesiredSize.Width}: NEEDS CLIPPING.");
-						needsClipToSlot = true;
-						// TODO: This commented code was done as part of aligning layouting on mobile platforms.
-						// We are reverting those changes as they require more changes, but keeping them
-						// commented for future reference.
-						//arrangeSize.Width = _unclippedDesiredSize.Width;
+						arrangeSize.Width = _unclippedDesiredSize.Width;
 					}
 
-					if (IsLessThanAndNotCloseTo(clippedArrangeSize.Height, _unclippedDesiredSize.Height))
+					if (fe.VerticalAlignment != VerticalAlignment.Stretch)
 					{
-						_logDebug?.Debug($"{this}: (arrangeSize.Height) {clippedArrangeSize.Height} < {_unclippedDesiredSize.Height}: NEEDS CLIPPING.");
-						needsClipToSlot = true;
-						// TODO: This commented code was done as part of aligning layouting on mobile platforms.
-						// We are reverting those changes as they require more changes, but keeping them
-						// commented for future reference.
-						//arrangeSize.Height = _unclippedDesiredSize.Height;
+						arrangeSize.Height = _unclippedDesiredSize.Height;
 					}
 				}
 
+
 				var (_, maxSize) = this.Panel.GetMinMax();
-				//var marginSize = this.Panel.GetMarginSize();
+				var marginSize = this.Panel.GetMarginSize();
 
 				// We have to choose max between _unclippedDesiredSize and maxSize here, because
 				// otherwise setting of max property could cause arrange at less then _unclippedDesiredSize.
@@ -281,59 +279,72 @@ namespace Windows.UI.Xaml.Controls
 				var innerInkSize = ArrangeOverride(arrangeSize);
 				var clippedInkSize = innerInkSize.AtMost(maxSize);
 
-				// TODO: This commented code was done as part of aligning layouting on mobile platforms.
-				// We are reverting those changes as they require more changes, but keeping them
-				// commented for future reference.
-				//if (IsLessThanAndNotCloseTo(clippedInkSize.Width, innerInkSize.Width) || IsLessThanAndNotCloseTo(clippedInkSize.Height, innerInkSize.Height))
-				//{
-				//	needsClipToSlot = true;
-				//}
+				if (IsLessThanAndNotCloseTo(clippedInkSize.Width, innerInkSize.Width) || IsLessThanAndNotCloseTo(clippedInkSize.Height, innerInkSize.Height))
+				{
+					needsClipToSlot = true;
+				}
 
-				//var clientSize = finalRect.Size
-				//	.Subtract(marginSize)
-				//	.AtLeastZero();
+				var clientSize = finalRect.Size
+					.Subtract(marginSize)
+					.AtLeastZero();
 
-				//var (offset, overflow) = Panel.GetAlignmentOffset(clientSize, clippedInkSize);
-				//var margin = Panel.Margin;
+				var (offset, overflow) = Panel.GetAlignmentOffset(clientSize, clippedInkSize);
+				var margin = Panel.Margin;
 
-				//offset = new Point(
-				//	offset.X + finalRect.X + margin.Left,
-				//	offset.Y + finalRect.Y + margin.Top
-				//);
+				offset = new Point(
+					offset.X + finalRect.X + margin.Left,
+					offset.Y + finalRect.Y + margin.Top
+				);
 
-				//if (overflow)
-				//{
-				//	needsClipToSlot = true;
-				//}
+				if (overflow)
+				{
+					needsClipToSlot = true;
+				}
 
 
 				if (_elementAsUIElement != null)
 				{
-					//_elementAsUIElement.LayoutSlotWithMarginsAndAlignments = new Rect(offset, innerInkSize);
-					//var layoutFrame = new Rect(offset, clippedInkSize);
+					_elementAsUIElement.LayoutSlotWithMarginsAndAlignments = new Rect(offset, innerInkSize);
+					var layoutFrame = new Rect(offset, clippedInkSize);
 
 					// Calculate clipped frame.
-					//var clippedFrameWithParentOrigin = layoutFrame.IntersectWith(finalRect.DeflateBy(margin)) ?? Rect.Empty;
+					var clippedFrameWithParentOrigin = layoutFrame.IntersectWith(finalRect.DeflateBy(margin)) ?? Rect.Empty;
 
 					// Rebase the origin of the clipped frame to layout
-					//_elementAsUIElement.ClippedFrame = new Rect(
-					//	clippedFrameWithParentOrigin.X - layoutFrame.X,
-					//	clippedFrameWithParentOrigin.Y - layoutFrame.Y,
-					//	clippedFrameWithParentOrigin.Width,
-					//	clippedFrameWithParentOrigin.Height);
+					var clippedFrame = new Rect(
+						clippedFrameWithParentOrigin.X - layoutFrame.X,
+						clippedFrameWithParentOrigin.Y - layoutFrame.Y,
+						clippedFrameWithParentOrigin.Width,
+						clippedFrameWithParentOrigin.Height).AtMost(clientSize);
 
-					_elementAsUIElement.RenderSize = clippedInkSize; // TODO: This should be innerInkSize
+					_elementAsUIElement.ClippedFrame = clippedFrame;
+					_elementAsUIElement.RenderSize = innerInkSize;
 					_elementAsUIElement.NeedsClipToSlot = needsClipToSlot;
+
+					if (_elementAsUIElement is TextBlock { Text: "Library" })
+					{
+
+					}
+
+					var physicalFrame = layoutFrame.LogicalToPhysicalPixels();
+					_elementAsUIElement.Layout(
+						(int)physicalFrame.Left,
+						(int)physicalFrame.Top,
+						(int)physicalFrame.Right,
+						(int)physicalFrame.Bottom
+					);
+
 					_elementAsUIElement.ApplyClip();
 
-					if (Panel is FrameworkElement fe)
-					{
-						fe.OnLayoutUpdated();
-					}
+					fe?.OnLayoutUpdated();
 				}
 				else if (Panel is IFrameworkElement_EffectiveViewport evp)
 				{
 					evp.OnLayoutUpdated();
+				}
+				else
+				{
+
 				}
 			}
 			finally
@@ -525,279 +536,23 @@ namespace Windows.UI.Xaml.Controls
 				return;
 			}
 
-			LayoutInformation.SetLayoutSlot(view, frame);
-
-			// Note: This is not matching Windows.
-			// Applying alignments should depend on what ArrangeOverride returns (as in Skia and Wasm).
-			var (finalFrame, clippedFrame) = ApplyMarginAndAlignments(view, frame);
-			if (view is UIElement elt)
+			if (view is FrameworkElement fe)
 			{
-				elt.LayoutSlotWithMarginsAndAlignments = finalFrame;
-				elt.ClippedFrame = clippedFrame;
+				fe.Arrange(frame);
 			}
-
-
-			ArrangeChildOverride(view, finalFrame);
-		}
-
-#if __ANDROID__ || __IOS__ || __MACOS__
-		private void LogArrange(View view, Rect frame)
-		{
-			if (this.Log().IsEnabled(Uno.Foundation.Logging.LogLevel.Debug))
+			else
 			{
-				var viewName = (view as IFrameworkElement).SelectOrDefault(f => f.Name, "NativeView");
-				var margin = (view as IFrameworkElement).SelectOrDefault(f => f.Margin, Thickness.Empty);
-
-				this.Log().DebugFormat("[{0}/{1}] ArrangeChild({2}/{3}/{4}/{5})", LoggingOwnerTypeName, Name, view.GetType(), viewName, frame, margin);
+				var physicalFrame = frame.LogicalToPhysicalPixels();
+				view.Layout(
+					(int)physicalFrame.Left,
+					(int)physicalFrame.Top,
+					(int)physicalFrame.Right,
+					(int)physicalFrame.Bottom
+				);
 			}
-
 		}
-#endif
 
 		protected abstract string Name { get; }
-
-		private (Rect layoutFrame, Rect clippedFrame) ApplyMarginAndAlignments(View view, Rect frame)
-		{
-			// In this implementation, since we do not have the ability to intercept properly the measure and arrange
-			// because of the type of hierarchy (inheriting from native views), we must apply the margins and alignments
-			// from within the panel to its children. This makes the authoring of custom panels that do not inherit from
-			// Panel that do not use this helper a bit more complex, but for all other panels that use this
-			// layouter, the logic is implied.
-
-			// The result "layoutFrame" gives the positioning of the element, relative to the origin of the parent's frame.
-			// The result "clippedFrame" gives the resulting boundaries of the element.
-			// If clipping is required, that's were it should occurs.
-
-			if (view is IFrameworkElement frameworkElement)
-			{
-				// Apply the margin for framework elements, as if it were padding to the child.
-
-				var (x, y, width, height) = frame;
-
-				// capture the child's state to avoid getting DependencyProperties values multiple times.
-				var childVerticalAlignment = frameworkElement.VerticalAlignment;
-				var childHorizontalAlignment = frameworkElement.HorizontalAlignment;
-
-				AdjustAlignment(view, ref childHorizontalAlignment, ref childVerticalAlignment);
-
-				var childMaxHeight = frameworkElement.MaxHeight;
-				var childMaxWidth = frameworkElement.MaxWidth;
-				var (childMinHeight, childMinWidth) = (frameworkElement as ILayoutOptOut)?.ShouldUseMinSize == false
-					? (0, 0)
-					: (frameworkElement.MinHeight, frameworkElement.MinWidth);
-				var childWidth = frameworkElement.Width;
-				var childHeight = frameworkElement.Height;
-				var childMargin = frameworkElement.Margin;
-
-				var hasChildHeight = !IsNaN(childHeight);
-				var hasChildWidth = !IsNaN(childWidth);
-				var hasChildMaxWidth = !IsInfinity(childMaxWidth) && !IsNaN(childMaxWidth);
-				var hasChildMaxHeight = !IsInfinity(childMaxHeight) && !IsNaN(childMaxHeight);
-				var hasChildMinWidth = childMinWidth > 0.0;
-				var hasChildMinHeight = childMinHeight > 0.0;
-
-				if (
-					childVerticalAlignment != VerticalAlignment.Stretch
-					|| childHorizontalAlignment != HorizontalAlignment.Stretch
-					|| hasChildWidth
-					|| hasChildHeight
-					|| hasChildMaxWidth
-					|| hasChildMaxHeight
-					|| hasChildMinWidth
-					|| hasChildMinHeight
-					)
-				{
-					var desiredSize = LayoutInformation.GetDesiredSize(view);
-
-					// Apply vertical alignment
-					if (
-						childVerticalAlignment != VerticalAlignment.Stretch
-						|| hasChildHeight
-						|| hasChildMaxHeight
-						|| hasChildMinHeight
-					)
-					{
-						var actualHeight = GetActualSize(
-							frame.Height,
-							childVerticalAlignment == VerticalAlignment.Stretch,
-							childMaxHeight,
-							childMinHeight,
-							childHeight,
-							childMargin.Top + childMargin.Bottom,
-							hasChildHeight,
-							hasChildMaxHeight,
-							hasChildMinHeight,
-							desiredSize.Height);
-
-						if (actualHeight == frame.Height)
-						{
-							y = frame.Y; // nothing to align: we're using exactly the available height
-
-						}
-						else
-						{
-							switch (childVerticalAlignment)
-							{
-								case VerticalAlignment.Top:
-									y = frame.Y;
-									break;
-
-								case VerticalAlignment.Bottom:
-									y = frame.Y + frame.Height - actualHeight;
-									break;
-
-								case VerticalAlignment.Stretch:
-									// On UWP, when a control is taking more height than available from
-									// parent, it will be top-aligned when its alignment is Stretch
-									y = frame.Y + Math.Max((frame.Height - actualHeight) / 2d, 0d);
-									break;
-								case VerticalAlignment.Center:
-									y = frame.Y + (frame.Height - actualHeight) / 2d;
-									break;
-							}
-						}
-
-						height = actualHeight;
-					}
-
-					// Apply horizontal alignment
-					if (
-						childHorizontalAlignment != HorizontalAlignment.Stretch
-						|| hasChildWidth
-						|| hasChildMaxWidth
-						|| hasChildMinWidth
-					)
-					{
-						var actualWidth = GetActualSize(
-							frame.Width,
-							childHorizontalAlignment == HorizontalAlignment.Stretch,
-							childMaxWidth,
-							childMinWidth,
-							childWidth,
-							childMargin.Left + childMargin.Right,
-							hasChildWidth,
-							hasChildMaxWidth,
-							hasChildMinWidth,
-							desiredSize.Width);
-
-						if (actualWidth == frame.Width)
-						{
-							x = frame.X; // nothing to align: we're using exactly the available width
-						}
-						else
-						{
-							switch (childHorizontalAlignment)
-							{
-								case HorizontalAlignment.Left:
-									x = frame.X;
-									break;
-
-								case HorizontalAlignment.Right:
-									x = frame.X + frame.Width - actualWidth;
-									break;
-
-								case HorizontalAlignment.Stretch:
-									// On UWP, when a control is taking more width than available from
-									// parent, it will be left-aligned when its alignment is Stretch
-									x = frame.X + Math.Max((frame.Width - actualWidth) / 2d, 0d);
-									break;
-								case HorizontalAlignment.Center:
-									x = frame.X + (frame.Width - actualWidth) / 2d;
-									break;
-							}
-						}
-
-						width = actualWidth;
-					}
-				}
-
-				// Calculate Create layoutFrame and apply child's margins
-				var layoutFrame = new Rect(x, y, width, height).DeflateBy(childMargin);
-
-				// Give opportunity to element to alter arranged size
-				layoutFrame.Size = frameworkElement.AdjustArrange(layoutFrame.Size);
-
-				// Calculate clipped frame.
-				var clippedFrameWithParentOrigin =
-					layoutFrame
-						.IntersectWith(frame.DeflateBy(childMargin))
-					?? Rect.Empty;
-
-				// Rebase the origin of the clipped frame to layout
-				var clippedFrame = new Rect(
-					clippedFrameWithParentOrigin.X - layoutFrame.X,
-					clippedFrameWithParentOrigin.Y - layoutFrame.Y,
-					clippedFrameWithParentOrigin.Width,
-					clippedFrameWithParentOrigin.Height);
-
-				return (layoutFrame, clippedFrame);
-			}
-			else
-			{
-				var layoutFrame = new Rect(
-					x: IsNaN(frame.X) ? 0 : frame.X,
-					y: IsNaN(frame.Y) ? 0 : frame.Y,
-					width: Math.Max(0, IsNaN(frame.Width) ? 0 : frame.Width),
-					height: Math.Max(0, IsNaN(frame.Height) ? 0 : frame.Height)
-				);
-
-				// Clipped frame & layout frame are the same for native elements
-				return (layoutFrame, layoutFrame);
-			}
-		}
-
-		protected virtual void AdjustAlignment(View view, ref HorizontalAlignment childHorizontalAlignment,
-			ref VerticalAlignment childVerticalAlignment)
-		{
-			if (view is Image img && (img.Stretch == Stretch.None || img.Stretch == Stretch.Uniform))
-			{
-				// Image is a special control and is using the Vertical/Horizontal Alignment
-				// to calculate the final position of the image. On UWP, there's no difference
-				// between "Stretch" and "Center": they all behave like "Center", so we need
-				// to do the same here.
-				if (childVerticalAlignment == VerticalAlignment.Stretch)
-				{
-					childVerticalAlignment = VerticalAlignment.Center;
-				}
-
-				if (childHorizontalAlignment == HorizontalAlignment.Stretch)
-				{
-					childHorizontalAlignment = HorizontalAlignment.Center;
-				}
-			}
-		}
-
-		private double GetActualSize(
-			double frameSize,
-			bool isStretch,
-			double childMaxSize,
-			double childMinSize,
-			double childSize,
-			double childMarginSize,
-			bool hasChildSize,
-			bool hasChildMaxSize,
-			bool hasChildMinSize,
-			double desiredSize)
-		{
-			var min = hasChildMinSize ? childMinSize + childMarginSize : NegativeInfinity;
-			var max = hasChildMaxSize ? childMaxSize + childMarginSize : PositiveInfinity;
-			if (!hasChildSize)
-			{
-				childSize = isStretch
-					? frameSize
-					: desiredSize; // desired size always include margin, so no need to calculate it here
-			}
-			else
-			{
-				childSize += childMarginSize;
-			}
-
-			return Math.Max(
-				Math.Min(
-					Math.Min(childSize, frameSize),
-					max),
-				min);
-		}
 
 		/// <summary>
 		/// Measures the specified child.

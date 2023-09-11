@@ -13,6 +13,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml.Controls.Primitives;
 using Uno.UI.Services;
 using Uno.Diagnostics.Eventing;
+using Uno.UI.Xaml.Core;
 
 namespace Windows.UI.Xaml
 {
@@ -199,69 +200,6 @@ namespace Windows.UI.Xaml
 			SetMeasuredDimension(width, height);
 		}
 
-		protected override void OnLayoutCore(bool changed, int left, int top, int right, int bottom, bool localIsLayoutRequested)
-		{
-			try
-			{
-				base.OnLayoutCore(changed, left, top, right, bottom, localIsLayoutRequested);
-
-				Rect finalRect;
-				if (TransientArrangeFinalRect is Rect tafr)
-				{
-					// If the parent element is from managed code,
-					// we can recover the "Arrange" with double accuracy.
-					// We use that because the conversion to android's "int" is loosing too much precision.
-					finalRect = tafr;
-				}
-				else
-				{
-					// Here the "arrange" is coming from a native element,
-					// so we convert those measurements to logical ones.
-					finalRect = new Rect(left, top, right - left, bottom - top).PhysicalToLogicalPixels();
-
-					// We also need to set the LayoutSlot as it was not set by the parent.
-					// Note: This is only an approximation of the LayoutSlot as margin and alignment might already been applied at this point.
-					LayoutInformation.SetLayoutSlot(this, finalRect);
-					LayoutSlotWithMarginsAndAlignments = finalRect;
-				}
-
-				if (this.Log().IsEnabled(Uno.Foundation.Logging.LogLevel.Debug))
-				{
-					this.Log().DebugFormat(
-						"[{0}/{1}] OnLayoutCore({2}, {3}, {4}, {5}) (parent: {5},{6})",
-						GetType(),
-						Name,
-						left, top, right, bottom,
-						MeasuredWidth,
-						MeasuredHeight
-					);
-				}
-
-				if (
-					// If the layout has changed, but the final size has not, this is just a translation.
-					// So unless there was a layout requested, we can skip arranging the children.
-					(changed && _lastLayoutSize != finalRect.Size)
-
-					// Even if nothing changed, but a layout was requested, arrange the children.
-					// Use the copy grabbed from the native invocation to avoid an additional interop call
-					|| localIsLayoutRequested
-				)
-				{
-					_lastLayoutSize = finalRect.Size;
-
-					OnBeforeArrange();
-
-					_layouter.Arrange(finalRect);
-
-					OnAfterArrange();
-				}
-			}
-			catch (Exception e)
-			{
-				Application.Current.RaiseRecoverableUnhandledExceptionOrLog(e, this);
-			}
-		}
-
 		/// <summary>
 		/// Provides an implementation <see cref="ViewGroup.Layout(int, int, int, int)"/> in order
 		/// to avoid the back and forth between Java and C#.
@@ -376,7 +314,7 @@ namespace Windows.UI.Xaml
 		/// once OnMeasure/OnArrange will be implemented completely
 		/// </summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected virtual void OnBeforeArrange()
+		internal virtual void OnBeforeArrange()
 		{
 
 		}
@@ -386,7 +324,7 @@ namespace Windows.UI.Xaml
 		/// once OnMeasure/OnArrange will be implemented completely
 		/// </summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected virtual void OnAfterArrange()
+		internal virtual void OnAfterArrange()
 		{
 
 		}

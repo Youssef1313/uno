@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-#if __SKIA__ || __WASM__
+#if __SKIA__ || __WASM__ || __ANDROID__
 using System;
 using System.Linq;
 using Windows.Foundation;
@@ -19,6 +19,11 @@ using NativeSingle = System.Double;
 #elif __WASM__
 using NativePath = Windows.UI.Xaml.Shapes.Shape;
 using NativeSingle = System.Double;
+
+#elif __ANDROID__
+using NativePath = Android.Graphics.Path;
+using NativeSingle = System.Double;
+
 #endif
 
 namespace Windows.UI.Xaml.Shapes;
@@ -53,7 +58,7 @@ partial class Shape
 
 #if __SKIA__
 		Render(path, xScale, yScale, dX, dY);
-#elif __WASM__
+#elif __WASM__ || __ANDROID__
 		Render(path, stretchedSize, xScale, yScale, dX, dY);
 #endif
 

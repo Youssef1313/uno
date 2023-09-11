@@ -121,7 +121,7 @@ namespace Windows.UI.Xaml.Controls
 			SetNeedsLayout();
 		}
 
-		protected override void OnAfterArrange()
+		internal override void OnAfterArrange()
 		{
 			base.OnAfterArrange();
 
@@ -129,7 +129,7 @@ namespace Windows.UI.Xaml.Controls
 			_transitionHelper?.LayoutUpdatedTransition();
 		}
 
-		protected override void OnBeforeArrange()
+		internal override void OnBeforeArrange()
 		{
 			base.OnBeforeArrange();
 

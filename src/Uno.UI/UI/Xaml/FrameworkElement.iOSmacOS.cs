@@ -49,7 +49,7 @@ namespace Windows.UI.Xaml
 		/// once OnMeasure/OnArrange will be implemented completely
 		/// </summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected virtual void OnBeforeArrange()
+		internal virtual void OnBeforeArrange()
 		{
 
 		}
@@ -59,7 +59,7 @@ namespace Windows.UI.Xaml
 		/// once OnMeasure/OnArrange will be implemented completely
 		/// </summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected virtual void OnAfterArrange()
+		internal virtual void OnAfterArrange()
 		{
 
 		}

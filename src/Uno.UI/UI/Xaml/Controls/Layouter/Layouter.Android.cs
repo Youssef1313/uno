@@ -40,30 +40,6 @@ namespace Windows.UI.Xaml.Controls
 		}
 
 		protected abstract void MeasureChild(View view, int widthSpec, int heightSpec);
-
-		protected void ArrangeChildOverride(View view, Rect frame)
-		{
-			LogArrange(view, frame);
-
-			var elt = view as UIElement;
-			var physicalFrame = frame.LogicalToPhysicalPixels();
-
-			try
-			{
-				elt?.SetFramePriorArrange(frame, physicalFrame);
-
-				view.Layout(
-					(int)physicalFrame.Left,
-					(int)physicalFrame.Top,
-					(int)physicalFrame.Right,
-					(int)physicalFrame.Bottom
-				);
-			}
-			finally
-			{
-				elt?.ResetFramePostArrange();
-			}
-		}
 	}
 
 	internal static partial class LayouterExtensions

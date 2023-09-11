@@ -329,6 +329,15 @@ namespace Windows.UI.Xaml
 		{
 #if UNO_REFERENCE_API
 			view.Arrange(finalRect);
+#elif __ANDROID__
+			if (view is FrameworkElement fe)
+			{
+				fe.Arrange(finalRect);
+			}
+			else
+			{
+				_layouter.ArrangeElement(view, finalRect);
+			}
 #else
 			_layouter.ArrangeElement(view, finalRect);
 #endif

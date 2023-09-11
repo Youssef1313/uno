@@ -45,7 +45,7 @@ namespace Windows.UI.Xaml.Controls
 			UpdateBorderLayer();
 		}
 
-		protected override void OnAfterArrange()
+		internal override void OnAfterArrange()
 		{
 			base.OnAfterArrange();
 			UpdateBorderLayer();

@@ -1024,7 +1024,6 @@ namespace Windows.UI.Xaml
 
 			var layouter = ((ILayouterElement)fwe).Layouter;
 			layouter.Arrange(finalRect);
-			layouter.ArrangeChild(fwe, finalRect);
 #endif
 		}
 

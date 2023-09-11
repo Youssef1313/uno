@@ -132,6 +132,17 @@ namespace Uno.UI.Xaml.Core
 			return finalSize;
 		}
 
+		protected override void OnLayoutCore(bool changed, int left, int top, int right, int bottom, bool localIsLayoutRequested)
+		{
+			if (changed)
+			{
+				var rect = new Rect(left, top, right - left, bottom - top).PhysicalToLogicalPixels();
+				this.Arrange(rect);
+			}
+
+			base.OnLayoutCore(changed, left, top, right, bottom, localIsLayoutRequested);
+		}
+
 		// As focus event are either async or cancellable,
 		// the FocusManager will explicitly notify us instead of listing to its events
 		internal static void NotifyFocusChanged()

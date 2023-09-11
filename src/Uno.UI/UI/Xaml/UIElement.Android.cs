@@ -112,12 +112,6 @@ namespace Windows.UI.Xaml
 		}
 
 		/// <summary>
-		/// Gets the **logical** frame (a.k.a. 'finalRect') of the element while it's being arranged by a managed parent.
-		/// </summary>
-		/// <remarks>Used to keep "double" precision of arrange phase.</remarks>
-		private protected Rect? TransientArrangeFinalRect { get; private set; }
-
-		/// <summary>
 		/// The difference between the physical layout width and height taking the origin into account,
 		/// and the physical width and height that would've been calculated for an origin of (0,0).
 		/// The difference may be -1,0, or +1 pixels due to different roundings.
@@ -128,22 +122,6 @@ namespace Windows.UI.Xaml
 		/// The FrameRoundingAdjustment values will be (0,0), (0,1), and (0,0) respectively.
 		/// </summary>
 		internal Size? FrameRoundingAdjustment { get; set; }
-
-		internal void SetFramePriorArrange(Rect frame /* a.k.a 'finalRect' */, Rect physicalFrame)
-		{
-			var physicalWidth = ViewHelper.LogicalToPhysicalPixels(frame.Width);
-			var physicalHeight = ViewHelper.LogicalToPhysicalPixels(frame.Height);
-
-			TransientArrangeFinalRect = frame;
-			FrameRoundingAdjustment = new Size(
-				(int)physicalFrame.Width - physicalWidth,
-				(int)physicalFrame.Height - physicalHeight);
-		}
-
-		internal void ResetFramePostArrange()
-		{
-			TransientArrangeFinalRect = null;
-		}
 
 		partial void ApplyNativeClip(Rect rect)
 		{

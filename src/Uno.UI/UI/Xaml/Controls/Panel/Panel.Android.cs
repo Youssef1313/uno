@@ -119,7 +119,7 @@ namespace Windows.UI.Xaml.Controls
 			Brush.SetupBrushChanged(e.OldValue as Brush, e.NewValue as Brush, ref _backgroundBrushChanged, newOnInvalidateRender);
 		}
 
-		protected override void OnBeforeArrange()
+		internal override void OnBeforeArrange()
 		{
 			base.OnBeforeArrange();
 
@@ -127,7 +127,7 @@ namespace Windows.UI.Xaml.Controls
 			_transitionHelper?.SetInitialChildrenPositions();
 		}
 
-		protected override void OnAfterArrange()
+		internal override void OnAfterArrange()
 		{
 			base.OnAfterArrange();
 

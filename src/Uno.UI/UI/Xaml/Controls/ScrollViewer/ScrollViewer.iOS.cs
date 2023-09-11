@@ -60,7 +60,7 @@ namespace Windows.UI.Xaml.Controls
 
 		private (double? horizontal, double? vertical, bool disableAnimation)? _pendingChangeView;
 
-		protected override void OnAfterArrange()
+		internal override void OnAfterArrange()
 		{
 			base.OnAfterArrange();
 
