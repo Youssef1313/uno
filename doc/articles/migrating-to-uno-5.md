@@ -1,4 +1,4 @@
----
+﻿---
 uid: Uno.Development.MigratingToUno5
 ---
 # Migrating to Uno Platform 5.0
@@ -120,7 +120,7 @@ This method has been removed as it is not available in WinUI. You can migrate co
 
 #### Move `SwipeControl`, `SwipeItem`, `SwipeItemInvokedEventArgs`, `SwipeMode`, `SwipeItems`, `SwipeBehaviorOnInvoked`, `MenuBar`, `MenuBarItem`, and `MenuBarItemFlyout` implementation from WUX namespace to MUX namespace.
 
-These controls were present in both the `Windows.UI.Xaml` and `Microsoft.UI.Xaml`. Those are now located in the `Microsoft.UI.Xaml` namespace for the UWP version of Uno (Uno.UI).
+These controls were present in both the `Microsoft.UI.Xaml` and `Microsoft.UI.Xaml`. Those are now located in the `Microsoft.UI.Xaml` namespace for the UWP version of Uno (Uno.UI).
 
 #### Move `AnimatedVisualPlayer`, `IAnimatedVisualSource `, and `IThemableAnimatedVisualSource` from WUX to MUX and `Microsoft.Toolkit.Uwp.UI.Lottie` namespace to `CommunityToolkit.WinUI.Lottie`
 
@@ -238,6 +238,6 @@ There used two be two `RenderSurfaceType`s, `Uno.UI.Runtime.Skia.RenderSurfaceTy
 
 `Panel`s used to measure and arrange the first child in `MeasureOverride` or `ArrangeOverride`, respectively. This is no longer the case. Now, to match WinUI, `Panel`s just return an empty size in `MeasureOverride`, and the `finalSize` as is in `ArrangeOverride`. You should override these layout-override methods in `Panel`-derived subclasses instead.
 
-#### Remove `Windows.UI.Xaml.Controls.NavigationView` in Uno.WinUI
+#### Remove `Microsoft.UI.Xaml.Controls.NavigationView` in Uno.WinUI
 
-Uno.WinUI used to have NavigationView both in `Microsoft.UI.Xaml.Controls` and `Windows.UI.Xaml.Controls` namespaces. It's now removed from `Windows.UI.Xaml.Controls` and kept only in `Microsoft.UI.Xaml.Controls` namespace.
+Uno.WinUI used to have NavigationView both in `Microsoft.UI.Xaml.Controls` and `Microsoft.UI.Xaml.Controls` namespaces. It's now removed from `Microsoft.UI.Xaml.Controls` and kept only in `Microsoft.UI.Xaml.Controls` namespace.

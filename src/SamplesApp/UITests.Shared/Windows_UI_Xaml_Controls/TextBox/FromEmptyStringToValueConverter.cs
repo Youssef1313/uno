@@ -5,7 +5,7 @@ using System.Text;
 #if WinUI
 using Microsoft.UI.Xaml.Data;
 #else
-using Windows.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Data;
 #endif
 
 namespace UITests.Windows_UI_Xaml_Controls.TextBox
