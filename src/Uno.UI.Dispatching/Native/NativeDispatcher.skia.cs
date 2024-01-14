@@ -7,7 +7,7 @@ namespace Uno.UI.Dispatching
 	internal sealed partial class NativeDispatcher
 	{
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		internal static Action<Action> DispatchOverride;
+		internal static Action<NativeDispatcher, Action> DispatchOverride;
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		internal static Func<bool> HasThreadAccessOverride;
@@ -23,7 +23,7 @@ namespace Uno.UI.Dispatching
 		{
 			Debug.Assert(DispatchOverride != null, "DispatchOverride must be set.");
 
-			DispatchOverride(() => DispatchItems());
+			DispatchOverride(this, static @this => DispatchItems(@this));
 		}
 	}
 }

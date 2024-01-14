@@ -85,13 +85,13 @@ namespace Uno.UI.Dispatching
 		}
 
 #if __ANDROID__ || __WASM__ || __SKIA__ || __MACOS__ || __IOS__ || IS_UNIT_TESTS
-		private void DispatchItems()
+		private static void DispatchItems(NativeDispatcher @this)
 		{
-			if (Rendering != null)
+			if (@this.Rendering != null)
 			{
-				Debug.Assert(RenderingEventArgsGenerator != null);
+				Debug.Assert(@this.RenderingEventArgsGenerator != null);
 
-				Rendering.Invoke(null, RenderingEventArgsGenerator.Invoke(Stopwatch.GetElapsedTime(_startTime)));
+				@this.Rendering.Invoke(null, @this.RenderingEventArgsGenerator.Invoke(Stopwatch.GetElapsedTime(@this._startTime)));
 			}
 
 			Action? action = null;
@@ -100,21 +100,21 @@ namespace Uno.UI.Dispatching
 
 			for (var p = 0; p <= 3; p++)
 			{
-				var queue = _queues[p];
+				var queue = @this._queues[p];
 
-				lock (_gate)
+				lock (@this._gate)
 				{
 					if (queue.Count > 0)
 					{
 						action = Unsafe.As<Action>(queue.Dequeue());
 
-						_currentPriority = (NativeDispatcherPriority)p;
+						@this._currentPriority = (NativeDispatcherPriority)p;
 
-						if (Interlocked.Decrement(ref _globalCount) > 0)
+						if (Interlocked.Decrement(ref @this._globalCount) > 0)
 						{
 							didEnqueue = true;
 
-							EnqueueNative();
+							@this.EnqueueNative();
 						}
 
 						break;
@@ -126,28 +126,28 @@ namespace Uno.UI.Dispatching
 			{
 				try
 				{
-					using (_synchronizationContexts[(int)_currentPriority].Apply())
+					using (@this._synchronizationContexts[(int)@this._currentPriority].Apply())
 					{
 						action();
 					}
 				}
 				catch (Exception exception)
 				{
-					this.Log().Error("NativeDispatcher unhandled exception", exception);
+					@this.Log().Error("NativeDispatcher unhandled exception", exception);
 				}
 			}
-			else if (Rendering == null && this.Log().IsEnabled(LogLevel.Debug))
+			else if (@this.Rendering == null && @this.Log().IsEnabled(LogLevel.Debug))
 			{
-				this.Log().Error("Dispatch queue is empty.");
+				@this.Log().Error("Dispatch queue is empty.");
 			}
 
 			// Restore the priority to the default for native events
 			// (i.e. not dispatched by this running loop)
-			_currentPriority = NativeDispatcherPriority.Normal;
+			@this._currentPriority = NativeDispatcherPriority.Normal;
 
-			if (!didEnqueue && Rendering != null)
+			if (!didEnqueue && @this.Rendering != null)
 			{
-				DispatchWakeUp();
+				@this.DispatchWakeUp();
 			}
 		}
 
