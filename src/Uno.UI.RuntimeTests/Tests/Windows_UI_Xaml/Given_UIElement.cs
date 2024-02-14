@@ -27,6 +27,10 @@ using AppKit;
 using Uno.UI;
 using Windows.UI;
 using Windows.ApplicationModel.Appointments;
+using Uno.UI.RuntimeTests.Helpers;
+using Windows.UI.Input.Preview.Injection;
+using Uno.Extensions;
+using Microsoft.UI.Xaml.Hosting;
 #endif
 
 namespace Uno.UI.RuntimeTests.Tests.Windows_UI_Xaml
@@ -691,6 +695,41 @@ namespace Uno.UI.RuntimeTests.Tests.Windows_UI_Xaml
 
 			sut.ArrangeVisual(rect, null);
 			Assert.IsNull(sut.Visual.ViewBox);
+		}
+
+		[TestMethod]
+		[RunsOnUIThread]
+		[RequiresFullWindow]
+		public async Task When_Visual_Offset_Changes()
+		{
+			var sut = new Button()
+			{
+				Content = "Click",
+			};
+
+			var visual = ElementCompositionPreview.GetElementVisual(sut);
+
+			var clickCount = 0;
+
+			sut.Click += (_, _) =>
+			{
+				clickCount++;
+			};
+
+			var rect = await UITestHelper.Load(sut);
+
+			var (element, _) = VisualTreeHelper.HitTest(rect.GetCenter(), sut.XamlRoot);
+			Assert.IsTrue(sut.IsAncestorOf(element));
+
+			visual.Offset = new Vector3(visual.Offset.X, visual.Offset.Y + (float)rect.Height * 2, visual.Offset.Z);
+
+			sut.UpdateLayout();
+
+			var (element2, _) = VisualTreeHelper.HitTest(rect.GetCenter(), sut.XamlRoot);
+			Assert.IsFalse(sut.IsAncestorOf(element2));
+
+			var (element3, _) = VisualTreeHelper.HitTest(rect.GetCenter().Offset(0, rect.Height * 2), sut.XamlRoot);
+			Assert.IsTrue(sut.IsAncestorOf(element3));
 		}
 #endif
 	}

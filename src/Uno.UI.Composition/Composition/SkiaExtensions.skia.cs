@@ -98,6 +98,17 @@ namespace Microsoft.UI.Composition
 			return ret;
 		}
 
+		public static Matrix3x2 ToMatrix3x2(this SKMatrix m)
+		{
+			return new Matrix3x2(
+				m11: m.ScaleX,
+				m12: m.SkewY,
+				m21: m.SkewX,
+				m22: m.ScaleY,
+				m31: m.TransX,
+				m32: m.TransY);
+		}
+
 		public static SKMatrix ToSKMatrix(this Matrix4x4 m)
 			=> new(
 				m.M11, m.M21, m.M41,

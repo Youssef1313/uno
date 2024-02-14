@@ -438,7 +438,7 @@ namespace Microsoft.UI.Xaml.Media
 #endif
 			if (xamlRoot?.VisualTree.RootElement is UIElement root)
 			{
-				return SearchDownForTopMostElementAt(position, root, getTestability ?? DefaultGetTestability, isStale);
+				return SearchDownForTopMostElementAt(position, parent: null, element: root, getTestability ?? DefaultGetTestability, isStale);
 			}
 
 			return default;
@@ -446,6 +446,7 @@ namespace Microsoft.UI.Xaml.Media
 
 		private static (UIElement? element, Branch? stale) SearchDownForTopMostElementAt(
 			Point posRelToParent,
+			UIElement? parent,
 			UIElement element,
 			GetHitTestability getVisibility,
 			StalePredicate? isStale = null)
@@ -483,12 +484,15 @@ namespace Microsoft.UI.Xaml.Media
 				TRACE($"- renderTransform: {tr.ToMatrix(element.RenderTransformOrigin, element.ActualSize.ToSize())}");
 
 			// First compute the transformation between the element and its parent coordinate space
+#if __SKIA__
+			var matrix = UIElement.GetTransform(element, parent);
+#else
 			var matrix = Matrix3x2.Identity;
 			element.ApplyRenderTransform(ref matrix);
 			element.ApplyLayoutTransform(ref matrix);
 			element.ApplyElementCustomTransform(ref matrix);
 			element.ApplyFlowDirectionTransform(ref matrix);
-
+#endif
 			TRACE($"- transform to parent: [{matrix.M11:F2},{matrix.M12:F2} / {matrix.M21:F2},{matrix.M22:F2} / {matrix.M31:F2},{matrix.M32:F2}]");
 
 			// Build 'position' in the current element coordinate space
@@ -506,7 +510,12 @@ namespace Microsoft.UI.Xaml.Media
 
 			// The maximum region where the current element and its children might draw themselves
 			// This is expressed in element coordinate space.
-			var clippingBounds = element.Viewport is { IsInfinite: false } clipping ? matrix.Transform(clipping) : Rect.Infinite;
+			var clippingBounds =
+#if __SKIA__
+				GetClippingBounds(element);
+#else
+				element.Viewport is { IsInfinite: false } clipping ? matrix.Transform(clipping) : Rect.Infinite;
+#endif
 			TRACE($"- clipping (rel to element): {clippingBounds.ToDebugString()}");
 
 			// The region where the current element draws itself.
@@ -554,7 +563,7 @@ namespace Microsoft.UI.Xaml.Media
 
 			while (child.MoveNext())
 			{
-				var childResult = SearchDownForTopMostElementAt(posRelToElement, child.Current!, getVisibility, isChildStale);
+				var childResult = SearchDownForTopMostElementAt(posRelToElement, parent: element, child.Current!, getVisibility, isChildStale);
 
 				// If we found a stale element in child sub-tree, keep it and stop looking for stale elements
 				if (childResult.stale is not null)
@@ -645,6 +654,18 @@ namespace Microsoft.UI.Xaml.Media
 
 		private static Branch SearchDownForStaleBranch(UIElement staleRoot, StalePredicate isStale)
 			=> new(staleRoot, SearchDownForLeafCore(staleRoot, isStale));
+
+#if __SKIA__
+		private static Rect GetClippingBounds(UIElement element)
+		{
+			if (element.Visual.Clip is Microsoft.UI.Composition.InsetClip insetClip)
+			{
+				return new Rect(insetClip.LeftInset, insetClip.TopInset, insetClip.RightInset - insetClip.LeftInset, insetClip.BottomInset - insetClip.TopInset);
+			}
+
+			return Rect.Infinite;
+		}
+#endif
 
 		internal static UIElement SearchDownForLeaf(UIElement root, StalePredicate predicate)
 		{

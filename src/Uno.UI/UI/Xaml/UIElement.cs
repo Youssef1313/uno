@@ -508,6 +508,15 @@ namespace Microsoft.UI.Xaml
 				return Matrix3x2.Identity;
 			}
 
+#if __SKIA__
+			var fromLastTotalMatrix = from.Visual.LastTotalMatrix;
+			if (to is null)
+			{
+				return fromLastTotalMatrix;
+			}
+
+			return fromLastTotalMatrix * GetTransform(to, null).Inverse();
+#else
 #if UNO_REFERENCE_API // Depth is defined properly only on WASM and Skia
 			// If possible we try to navigate the tree upward so we have a greater chance
 			// to find an element in the parent hierarchy of the other element.
@@ -544,6 +553,7 @@ namespace Microsoft.UI.Xaml
 			}
 
 			return matrix;
+#endif
 		}
 
 		/// <summary>

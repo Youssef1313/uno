@@ -52,6 +52,11 @@ public partial class Visual : global::Microsoft.UI.Composition.CompositionObject
 	internal ShadowState? ShadowState { get; set; }
 
 	/// <summary>
+	/// Gets the total matrix of the last drawing session.
+	/// </summary>
+	internal Matrix3x2 LastTotalMatrix { get; private set; } = Matrix3x2.Identity;
+
+	/// <summary>
 	/// Render a root visual.
 	/// </summary>
 	/// <param name="surface">The surface on which this visual should be rendered.</param>
@@ -131,6 +136,10 @@ public partial class Visual : global::Microsoft.UI.Composition.CompositionObject
 			var skTransform = transform.ToSKMatrix();
 			surface.Canvas.Concat(ref skTransform);
 		}
+
+		// We keep track of the last total matrix to be able to convert (in a really effective way)
+		// an absolute position to the visual space (e.g. pointers)
+		LastTotalMatrix = surface.Canvas.TotalMatrix.ToMatrix3x2();
 
 		// Apply the clipping defined on the element
 		// (Only the Clip property, clipping applied by parent for layout constraints reason it's managed by the ShapeVisual through the ViewBox)
