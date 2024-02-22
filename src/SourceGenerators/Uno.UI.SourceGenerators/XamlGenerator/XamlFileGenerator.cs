@@ -1162,20 +1162,19 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 					{
 						writer.AppendLineIndented($"var owner = Owner;");
 
-						for (var i = 0; i < CurrentScope.Components.Count; i++)
+						BuildxBindEventHandlerInitializers(writer, CurrentScope.xBindEventsHandlers, "owner.");
+
+						for (var i = 1; i <= _xBindCounter; i++)
 						{
-							var component = CurrentScope.Components[i];
-
-							if (HasXBindMarkupExtension(component.XamlObject))
+							using (writer.BlockInvariant($"if ({_xClassName}.TryGetInstance_xBind_{i}(owner, out var bindValue{i}))"))
 							{
-								var isDependencyObject = IsDependencyObject(component.XamlObject);
-
-								var wrapInstance = isDependencyObject ? "" : ".GetDependencyObjectForXBind()";
-
-								writer.AppendLineIndented($"owner.{component.MemberName}{wrapInstance}.ApplyXBind();");
+								writer.AppendLineIndented($"owner.__uno_xbind_{i}.Property/*TODO*/ = bindValue{i}");
 							}
 
-							BuildxBindEventHandlerInitializers(writer, CurrentScope.xBindEventsHandlers, "owner.");
+							using (writer.BlockInvariant("else"))
+							{
+								writer.AppendLineIndented("/*Apply fallback value if one is specified*/");
+							}
 						}
 					}
 					using (writer.BlockInvariant($"void {bindingsInterfaceName}.UpdateResources()"))
@@ -4181,7 +4180,24 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 							ownerType.GetAllInterfaces().Any(i => SymbolEqualityComparer.Default.Equals(i, Generation.DependencyObjectSymbol.Value))
 						);
 
-					if (isDependencyProperty)
+					if (bindNode is not null && !isBindingType)
+					{
+						// This is an x:Bind
+						if (closureName is null)
+						{
+							throw new Exception("TODO");
+						}
+						else
+						{
+							// TODO: We do increment _xBindCounter elsewhere. Align all this.
+							if (_fileDefinition.FilePath.Contains("MainPage"))
+							{
+								Debugger.Launch();
+							}
+							var xBindEvalFunction = BuildXBindEvalFunction(writer, member, bindNode, declaringType!, closureName);
+						}
+					}
+					else if (isDependencyProperty)
 					{
 						var propertyOwner = declaringType;
 
@@ -4207,10 +4223,8 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 						}
 					}
 
-					void WriteBinding(bool isTemplateBindingAttachedProperty, string? prefix = null)
+					(bool ContainsCustomMarkup, string? Closure, string[] Setters) GetBindingInfo(bool isTemplateBindingAttachedProperty)
 					{
-						writer.AppendLineIndented($"{prefix}new {XamlConstants.Types.Binding}()");
-
 						var containsCustomMarkup = bindingOptions.Any(x => IsCustomMarkupExtensionType(x.Objects.FirstOrDefault()?.Type));
 						var closure = containsCustomMarkup ? "___b" : default;
 						var setters = bindingOptions
@@ -4218,6 +4232,14 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 							.Concat(additionalOptions ?? Array.Empty<string>())
 							.Where(x => !string.IsNullOrEmpty(x))
 							.ToArray();
+						return (containsCustomMarkup, closure, setters);
+					}
+
+					void WriteBinding(bool isTemplateBindingAttachedProperty, string? prefix = null)
+					{
+						writer.AppendLineIndented($"{prefix}new {XamlConstants.Types.Binding}()");
+
+						var (containsCustomMarkup, closure, setters) = GetBindingInfo(isTemplateBindingAttachedProperty);
 
 						// members initialization
 						if (setters.Length > 0)
@@ -4251,15 +4273,6 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 									}
 								}
 							}
-						}
-
-						// xbind initialization
-						if (bindNode != null && !isBindingType)
-						{
-							var xBindEvalFunction = BuildXBindEvalFunction(member, bindNode);
-
-							using var _ = writer.Indent();
-							writer.AppendLineIndented(xBindEvalFunction);
 						}
 					}
 				}
@@ -4327,7 +4340,7 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 			return member?.Objects.FirstOrDefault(o => o.Type.Name == "CustomResource")?.Members.FirstOrDefault()?.Value;
 		}
 
-		private string BuildXBindEvalFunction(XamlMemberDefinition member, XamlObjectDefinition bindNode)
+		private string BuildXBindEvalFunction(IIndentedStringBuilder writer, XamlMemberDefinition member, XamlObjectDefinition bindNode, INamedTypeSymbol declaringType, string closureName)
 		{
 			_xBindCounter++;
 			CurrentScope.XBindExpressions.Add(bindNode);
@@ -4360,6 +4373,10 @@ namespace Uno.UI.SourceGenerators.XamlGenerator
 			var applyBindingParameters = _isHotReloadEnabled
 				? "__that, (___b, __that)"
 				: "___b";
+
+			var backingField = $"__uno_xbind_{_xBindCounter}";
+			writer.AppendLineIndented($"__that.{backingField} = {closureName};");
+			RegisterBackingField(declaringType!.GetFullyQualifiedTypeIncludingGlobal(), backingField, Accessibility.Private);
 
 			if (isInsideDataTemplate)
 			{
