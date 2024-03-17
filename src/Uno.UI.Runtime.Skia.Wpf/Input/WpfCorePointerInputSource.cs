@@ -1,7 +1,9 @@
 ﻿#nullable enable
 
 using System;
+using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -157,8 +159,22 @@ internal sealed class WpfCorePointerInputSource : IUnoCorePointerInputSource
 		HostOnMouseEvent(args, PointerCaptureLost);
 	}
 
+	[DllImport("user32.dll", SetLastError = true)]
+	private static extern bool GetPointerType(uint pointerId, out PointerInputType pointerType);
+
+	private enum PointerInputType
+	{
+		PT_NONE = 0x00000000,
+		PT_POINTER = 0x00000001,
+		PT_TOUCH = 0x00000002,
+		PT_PEN = 0x00000003,
+		PT_MOUSE = 0x00000004,
+		PT_TOUCHPAD = 0x00000005
+	}
+
 	private IntPtr OnWmMessage(IntPtr hwnd, int msg, IntPtr wparamOriginal, IntPtr lparamOriginal, ref bool handled)
 	{
+		Console.WriteLine($"[{DateTime.Now.ToString("hh:mm:ss", CultureInfo.InvariantCulture)}]: {msg}");
 		var wparam = (int)(((long)wparamOriginal) & 0xFFFFFFFF);
 		var lparam = (int)(((long)lparamOriginal) & 0xFFFFFFFF);
 
@@ -172,6 +188,8 @@ internal sealed class WpfCorePointerInputSource : IUnoCorePointerInputSource
 			case Win32Messages.WM_MOUSEHWHEEL:
 			case Win32Messages.WM_MOUSEWHEEL:
 				{
+					_ = GetPointerType((uint)wparam, out var pointerType);
+					Console.WriteLine($"PointerType {pointerType}");
 					var keys = (MouseModifierKeys)GetLoWord(wparam);
 
 					// Vertical: https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel
