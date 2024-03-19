@@ -66,7 +66,7 @@ namespace Microsoft.UI.Composition
 			}
 		}
 
-		private protected override void SetAnimatableProperty(ReadOnlySpan<char> propertyName, ReadOnlySpan<char> subPropertyName, object? propertyValue)
+		internal override void SetAnimatableProperty(ReadOnlySpan<char> propertyName, ReadOnlySpan<char> subPropertyName, object? propertyValue)
 		{
 			if (propertyName.Equals(nameof(BottomInset), StringComparison.OrdinalIgnoreCase))
 			{

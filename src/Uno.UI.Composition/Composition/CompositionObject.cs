@@ -18,7 +18,7 @@ namespace Microsoft.UI.Composition
 	{
 		private readonly ContextStore _contextStore = new ContextStore();
 		private CompositionPropertySet? _properties;
-		private Dictionary<string, CompositionAnimation>? _animations;
+		private protected Dictionary<string, (string SubProperty, CompositionAnimation Animation)>? _animations;
 
 		internal CompositionObject()
 		{
@@ -54,34 +54,33 @@ namespace Microsoft.UI.Composition
 		internal virtual object GetAnimatableProperty(string propertyName, string subPropertyName)
 			=> TryGetFromProperties(_properties, propertyName, subPropertyName);
 
-		private protected virtual void SetAnimatableProperty(ReadOnlySpan<char> propertyName, ReadOnlySpan<char> subPropertyName, object? propertyValue)
+		internal virtual void SetAnimatableProperty(ReadOnlySpan<char> propertyName, ReadOnlySpan<char> subPropertyName, object? propertyValue)
 			=> TryUpdateFromProperties(_properties, propertyName, subPropertyName, propertyValue);
 
 		public void StartAnimation(string propertyName, CompositionAnimation animation)
 		{
-			ReadOnlySpan<char> firstPropertyName;
-			ReadOnlySpan<char> subPropertyName;
+			string firstPropertyName;
+			string subPropertyName;
 			var firstDotIndex = propertyName.IndexOf('.');
 			if (firstDotIndex > -1)
 			{
-				firstPropertyName = propertyName.AsSpan().Slice(0, firstDotIndex);
-				subPropertyName = propertyName.AsSpan().Slice(firstDotIndex + 1);
+				firstPropertyName = propertyName.Substring(0, firstDotIndex);
+				subPropertyName = propertyName.Substring(firstDotIndex + 1);
 			}
 			else
 			{
 				firstPropertyName = propertyName;
-				subPropertyName = default;
+				subPropertyName = "";
 			}
 
-			if (_animations?.ContainsKey(propertyName) == true)
+			if (_animations?.ContainsKey(firstPropertyName) == true)
 			{
-				StopAnimation(propertyName);
+				StopAnimation(firstPropertyName);
 			}
 
 			_animations ??= new();
-			_animations[propertyName] = animation;
-			animation.PropertyChanged += ReEvaluateAnimation;
-			var animationValue = animation.Start();
+			_animations[firstPropertyName] = (subPropertyName, animation);
+			var animationValue = animation.Start(animation.Compositor.Timestamp, this, firstPropertyName, subPropertyName);
 
 			try
 			{
@@ -98,43 +97,17 @@ namespace Microsoft.UI.Composition
 			}
 		}
 
-		private void ReEvaluateAnimation(CompositionAnimation animation)
-		{
-			if (_animations == null)
-			{
-				return;
-			}
-
-			foreach (var (key, value) in _animations)
-			{
-				if (value == animation)
-				{
-					var propertyName = key;
-					ReadOnlySpan<char> firstPropertyName;
-					ReadOnlySpan<char> subPropertyName;
-					var firstDotIndex = propertyName.IndexOf('.');
-					if (firstDotIndex > -1)
-					{
-						firstPropertyName = propertyName.AsSpan().Slice(0, firstDotIndex);
-						subPropertyName = propertyName.AsSpan().Slice(firstDotIndex + 1);
-					}
-					else
-					{
-						firstPropertyName = propertyName;
-						subPropertyName = default;
-					}
-
-					this.SetAnimatableProperty(firstPropertyName, subPropertyName, animation.Evaluate());
-				}
-			}
-		}
-
 		public void StopAnimation(string propertyName)
 		{
+			var firstDotIndex = propertyName.IndexOf('.');
+			if (firstDotIndex > -1)
+			{
+				propertyName = propertyName.Substring(0, firstDotIndex);
+			}
+
 			if (_animations?.TryGetValue(propertyName, out var animation) == true)
 			{
-				animation.PropertyChanged -= ReEvaluateAnimation;
-				animation.Stop();
+				animation.Animation.Stop();
 				_animations.Remove(propertyName);
 			}
 		}

@@ -23,11 +23,11 @@ public partial class ExpressionAnimation : CompositionAnimation
 	{
 		if (_parsedExpression is not null)
 		{
-			RaisePropertyChanged();
+			ReEvaluateAnimation();
 		}
 	}
 
-	internal override object? Start()
+	internal override object? Start(long timestamp, CompositionObject animatedObject, string firstPropertyName, string subPropertyName)
 	{
 		if (Expression.Length == 0)
 		{
@@ -40,7 +40,7 @@ public partial class ExpressionAnimation : CompositionAnimation
 		return _parsedExpression.Evaluate(this);
 	}
 
-	internal override object? Evaluate()
+	private object? Evaluate()
 		=> _parsedExpression?.Evaluate(this);
 
 	internal override void Stop()
@@ -48,4 +48,22 @@ public partial class ExpressionAnimation : CompositionAnimation
 		_parsedExpression?.Dispose();
 		_parsedExpression = null;
 	}
+
+	private void ReEvaluateAnimation()
+	{
+		if (_animations == null)
+		{
+			return;
+		}
+
+		foreach (var (key, value) in _animations)
+		{
+			if (value.Animation == this)
+			{
+				var propertyName = key;
+				this.SetAnimatableProperty(propertyName, value.SubProperty, Evaluate());
+			}
+		}
+	}
+
 }

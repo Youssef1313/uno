@@ -124,7 +124,7 @@ public partial class InteractionTracker : CompositionObject
 	public int TryUpdatePositionBy(Vector3 amount, InteractionTrackerClampingOption option)
 		=> TryUpdatePosition(Position + amount, option);
 
-	private protected override void SetAnimatableProperty(ReadOnlySpan<char> propertyName, ReadOnlySpan<char> subPropertyName, object? propertyValue)
+	internal override void SetAnimatableProperty(ReadOnlySpan<char> propertyName, ReadOnlySpan<char> subPropertyName, object? propertyValue)
 	{
 		if (propertyName.Equals(nameof(MinPosition), StringComparison.OrdinalIgnoreCase))
 		{

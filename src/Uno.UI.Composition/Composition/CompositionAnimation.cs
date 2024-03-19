@@ -23,8 +23,6 @@ public partial class CompositionAnimation
 	internal Dictionary<string, Vector2> Vector2Parameters { get; } = new();
 	internal Dictionary<string, Vector3> Vector3Parameters { get; } = new();
 
-	internal event Action<CompositionAnimation>? PropertyChanged;
-
 	public void SetReferenceParameter(string key, CompositionObject compositionObject)
 	{
 		ReferenceParameters[key] = compositionObject;
@@ -45,15 +43,16 @@ public partial class CompositionAnimation
 		Vector3Parameters[key] = value;
 	}
 
+	internal virtual void Update(long timestamp)
+	{
+	}
+
 	public string Target
 	{
 		get => _target;
 		set => _target = value ?? throw new ArgumentException();
 	}
 
-	internal virtual object? Start() => null;
-	internal virtual object? Evaluate() => null;
+	internal virtual object? Start(long timestamp, CompositionObject animatedObject, string firstPropertyName, string subPropertyName) => null;
 	internal virtual void Stop() { }
-
-	private protected void RaisePropertyChanged() => PropertyChanged?.Invoke(this);
 }
