@@ -7,5 +7,26 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 
-	<controls:SampleChooserControl x:Name="sampleControl" />
+	<StackPanel>
+		<TextBlock FontStyle="Italic" FontWeight="Bold" Text="Hello World!" />
+		<TextBlock FontStyle="Normal" FontWeight="Bold" Text="Hello World!" />
+		<TextBlock FontStyle="Italic" FontWeight="Normal" Text="Hello World!" />
+		<TextBlock FontStyle="Normal" FontWeight="Normal" Text="Hello World!" />
+
+		<TextBlock Text="=======" />
+
+		<TextBlock FontStyle="Italic" FontWeight="Bold" Text="Hello World!" FontFamily="ms-appx:///Assets/Fonts/OpenSans-Regular-VariableFont_wdth,wght.ttf" />
+		<TextBlock FontStyle="Normal" FontWeight="Bold" Text="Hello World!" FontFamily="ms-appx:///Assets/Fonts/OpenSans-Regular-VariableFont_wdth,wght.ttf" />
+		<TextBlock FontStyle="Italic" FontWeight="Normal" Text="Hello World!" FontFamily="ms-appx:///Assets/Fonts/OpenSans-Regular-VariableFont_wdth,wght.ttf" />
+		<TextBlock FontStyle="Normal" FontWeight="Normal" Text="Hello World!" FontFamily="ms-appx:///Assets/Fonts/OpenSans-Regular-VariableFont_wdth,wght.ttf" />
+
+		<TextBlock Text="=======" />
+
+		<TextBox FontStyle="Italic" FontWeight="Bold" Text="Hello World!" FontFamily="ms-appx:///Assets/Fonts/OpenSans-Regular-VariableFont_wdth,wght.ttf" />
+		<TextBox FontStyle="Normal" FontWeight="Bold" Text="Hello World!" FontFamily="ms-appx:///Assets/Fonts/OpenSans-Regular-VariableFont_wdth,wght.ttf" />
+		<TextBox FontStyle="Italic" FontWeight="Normal" Text="Hello World!" FontFamily="ms-appx:///Assets/Fonts/OpenSans-Regular-VariableFont_wdth,wght.ttf" />
+		<TextBox FontStyle="Normal" FontWeight="Normal" Text="Hello World!" FontFamily="ms-appx:///Assets/Fonts/OpenSans-Regular-VariableFont_wdth,wght.ttf" />
+
+	</StackPanel>
+	
 </Page>

@@ -12,7 +12,8 @@ namespace SamplesApp
 		{
 			this.InitializeComponent();
 
-			sampleControl.DataContext = new SampleChooserViewModel(sampleControl);
+			//sampleControl.DataContext = new SampleChooserViewModel(sampleControl);
+			new SampleChooserViewModel(new());
 		}
 
 #if UNO_HAS_ENHANCED_LIFECYCLE || !HAS_UNO
