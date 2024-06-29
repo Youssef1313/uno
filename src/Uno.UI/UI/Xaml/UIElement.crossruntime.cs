@@ -58,7 +58,6 @@ namespace Microsoft.UI.Xaml
 			IsLoaded = true;
 
 			OnFwEltLoaded();
-			UpdateHitTest();
 		}
 
 		// Overloads for the FrameworkElement to raise the events
@@ -73,7 +72,6 @@ namespace Microsoft.UI.Xaml
 			Depth = int.MinValue;
 
 			OnFwEltUnloaded();
-			UpdateHitTest();
 		}
 
 		private void OnChildAdded(UIElement child)

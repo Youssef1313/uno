@@ -75,7 +75,6 @@ namespace Microsoft.UI.Xaml
 			);
 
 			InitializePointers();
-			UpdateHitTest();
 		}
 
 		~UIElement()
@@ -357,7 +356,6 @@ namespace Microsoft.UI.Xaml
 		partial void OnVisibilityChangedPartial(Visibility oldValue, Visibility newValue)
 		{
 			InvalidateMeasure();
-			UpdateHitTest();
 
 			WindowManagerInterop.SetVisibility(HtmlId, newValue == Visibility.Visible);
 
@@ -390,8 +388,6 @@ namespace Microsoft.UI.Xaml
 
 		partial void OnIsHitTestVisibleChangedPartial(bool oldValue, bool newValue)
 		{
-			UpdateHitTest();
-
 			if (FeatureConfiguration.UIElement.AssignDOMXamlProperties)
 			{
 				UpdateDOMProperties();
@@ -403,6 +399,9 @@ namespace Microsoft.UI.Xaml
 				// algorithm is doing its layout properly.
 				parent.InvalidateMeasure();
 			}
+
+			// TODO: Do we need WindowManagerInterop.SetPointerEvents on this element and its descendants?
+			// TODO: Same in OnIsEnabledChanged ?
 		}
 
 		public override string ToString()

@@ -116,10 +116,6 @@ namespace Microsoft.UI.Xaml.Controls
 
 		private void OnIsEnabledChanged(DependencyPropertyChangedEventArgs args)
 		{
-#if UNO_HAS_MANAGED_POINTERS || __WASM__
-			UpdateHitTest();
-#endif
-
 			_isEnabledChangedEventArgs ??= new IsEnabledChangedEventArgs();
 			_isEnabledChangedEventArgs.SourceEvent = args;
 
@@ -144,6 +140,8 @@ namespace Microsoft.UI.Xaml.Controls
 				UpdateDOMProperties();
 			}
 #endif
+
+			ClearPointersStateIfNeeded();
 		}
 		#endregion
 
