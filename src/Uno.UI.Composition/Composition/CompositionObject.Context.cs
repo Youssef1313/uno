@@ -43,6 +43,25 @@ namespace Microsoft.UI.Composition
 				_contextEntries = contextEntries;
 			}
 
+			// This is an arbitrary threshold.
+			// We want to avoid the list from growing indefinitely.
+			// NOTE: RemoveContext has the same cleanup logic, but it can happen that
+			// pressure is put in a case where RemoveContext is never called.
+			if (contextEntries.Count > 100)
+			{
+				for (int i = contextEntries.Count - 1; i >= 0; i--)
+				{
+					var contextEntry = contextEntries[i];
+
+					if (!contextEntry.Context.TryGetTarget(out CompositionObject? context))
+					{
+						// Clean up dead references.
+						contextEntries.RemoveAt(i);
+						continue;
+					}
+				}
+			}
+
 			contextEntries.Add(new ContextEntry(newContext, propertyName));
 		}
 
