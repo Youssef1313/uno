@@ -289,10 +289,7 @@ namespace Microsoft.UI.Xaml.Media.Animation
 				this.Log().DebugFormat(
 					"Setting [{0}] to [{1} / {2}] current {3:X8}/{4}={5}",
 					value,
-					Storyboard.GetTargetName(this), Storyboard.GetTargetProperty(this),
-					PropertyInfo?.DataContext?.GetHashCode(),
-					PropertyInfo?.DataContext?.GetType(),
-					PropertyInfo?.Value
+					Storyboard.GetTargetName(this), Storyboard.GetTargetProperty(this)
 				);
 			}
 
@@ -381,32 +378,32 @@ namespace Microsoft.UI.Xaml.Media.Animation
 		/// <returns><c>true</c>, property is dependent, <c>false</c> otherwise.</returns>
 		internal bool IsTargetPropertyDependant()
 		{
-			if (PropertyInfo != null)
-			{
-				var boundProperty = PropertyInfo.GetPathItems().LastOrDefault();
+			//if (PropertyInfo != null)
+			//{
+			//	var boundProperty = PropertyInfo.GetPathItems().LastOrDefault();
 
-				if (boundProperty != null)
-				{
-					//https://msdn.microsoft.com/en-uS/office/office365/jj819807.aspx#dependent
-					//TODO Projection, Clip
+			//	if (boundProperty != null)
+			//	{
+			//		//https://msdn.microsoft.com/en-uS/office/office365/jj819807.aspx#dependent
+			//		//TODO Projection, Clip
 
-					if (boundProperty.PropertyName.EndsWith("Opacity", StringComparison.Ordinal)
-						|| (boundProperty.DataContext is SolidColorBrush && boundProperty.PropertyName.EndsWith("Color", StringComparison.Ordinal))
-						|| boundProperty.PropertyName.Equals("Microsoft.UI.Xaml.Controls:Canvas.Top", StringComparison.Ordinal)
-						|| boundProperty.PropertyName.Equals("Microsoft.UI.Xaml.Controls:Canvas.Left", StringComparison.Ordinal)
-						|| (boundProperty.DataContext is Transform transform)
-					)
-					{
-						//is not dependent if the target is opacity, the color property of a brush, or a Transform property targeting a view as RenderTransform
-						// NOTE that the Transform check isn't necessarily a RenderTransform and is not accurate.
-						// It's there to handle some cases, e.g, a UIElement having RectangleGeometry Clip that has a Transform
-						// Ideally, we want to be specifically checking if the animation is targeting Clip, but no good way to do it so far.
-						// The current approach may consider some dependent animations as independent in niche scenario, but that's not an issue for now.
-						return false;
-					}
-				}
-			}
-			return true;
+			//		if (boundProperty.PropertyName.EndsWith("Opacity", StringComparison.Ordinal)
+			//			|| (boundProperty.DataContext is SolidColorBrush && boundProperty.PropertyName.EndsWith("Color", StringComparison.Ordinal))
+			//			|| boundProperty.PropertyName.Equals("Microsoft.UI.Xaml.Controls:Canvas.Top", StringComparison.Ordinal)
+			//			|| boundProperty.PropertyName.Equals("Microsoft.UI.Xaml.Controls:Canvas.Left", StringComparison.Ordinal)
+			//			|| (boundProperty.DataContext is Transform transform)
+			//		)
+			//		{
+			//			//is not dependent if the target is opacity, the color property of a brush, or a Transform property targeting a view as RenderTransform
+			//			// NOTE that the Transform check isn't necessarily a RenderTransform and is not accurate.
+			//			// It's there to handle some cases, e.g, a UIElement having RectangleGeometry Clip that has a Transform
+			//			// Ideally, we want to be specifically checking if the animation is targeting Clip, but no good way to do it so far.
+			//			// The current approach may consider some dependent animations as independent in niche scenario, but that's not an issue for now.
+			//			return false;
+			//		}
+			//	}
+			//}
+			return false;
 		}
 
 		private protected virtual void Dispose(bool disposing)
