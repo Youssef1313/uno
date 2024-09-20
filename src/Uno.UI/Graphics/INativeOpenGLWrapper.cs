@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.UI.Xaml;
+using Windows.UI.Xaml;
 
 #if WINAPPSDK || WINDOWS_UWP
 namespace Uno.WinUI.Graphics3DGL;

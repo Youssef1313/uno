@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 
 
 using System;
@@ -8,14 +8,14 @@ using Silk.NET.Core.Loader;
 using Silk.NET.OpenGL;
 
 #if WINDOWS_UWP || WINAPPSDK
-using Microsoft.UI.Xaml;
+using Windows.UI.Xaml;
 using Microsoft.Extensions.Logging;
 using Uno.Disposables;
 using Uno.Extensions;
 using Uno.Logging;
 #else
 using System.Windows.Interop;
-using Microsoft.UI.Xaml;
+using Windows.UI.Xaml;
 using Uno.Disposables;
 using Uno.Foundation.Logging;
 using Uno.Graphics;

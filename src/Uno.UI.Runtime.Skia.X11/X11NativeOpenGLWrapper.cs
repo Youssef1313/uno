@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.UI.Xaml;
+using Windows.UI.Xaml;
 using Silk.NET.OpenGL;
 using Uno.Disposables;
 using Uno.Graphics;
